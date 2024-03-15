@@ -1,0 +1,18 @@
+body, html {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #000;
+}
+
+#pongCanvas {
+    background: #fff;
+    display: block; /* キャンバスをブロック要素として表示 */
+}
+
+#startButton {
+    display: block;
+    margin-top: 20px;
+}

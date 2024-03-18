@@ -1,0 +1,16 @@
+services:
+  gamemain_db:
+    image: postgres:13
+    environment: 
+      POSTGRES_DB: gamemaindb
+      POSTGRES_USER: gamemainuser
+      POSTGRES_PASSWORD: gamemainpass
+
+  gamemain:
+      build: ./GameMain
+      volumes:
+        - .:/code
+      ports:
+        - "8000:8000"
+      depends_on:
+        - gamemain_db

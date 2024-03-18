@@ -7,18 +7,15 @@
 ### 手順
 マイクロサービスとして設計する際の考え方として以下のようになる。
 
-'''
+```
 python3 -m django startproject GameMain
-
-'''
-'''
+```
+```
 python3 -m django startproject Result
-
-'''
-'''
+```
+```
 python3 -m django startproject Login_register
-
-'''
+```
 
 機能ごとにパッケージを作成する。
 dockerfile及びdocker-composeで専用のdbを立ち上げ
@@ -30,7 +27,7 @@ setting.py にDBコンテナの情報を紐づける。
 
 次に書くパッケージにpythonサーバーのdockerfileがあることが確認できたら、backendのルートにあるdocker-compose.yamlにserviceとdbの設定を記述していく。
 
-’’’
+```
 services:
   gamemain_db:
     image: postgres:13
@@ -48,12 +45,11 @@ services:
         - "8000:8000"
       depends_on:
         - gamemain_db
-’’’
-
+```
 次にパッケージの中あるsetting.pyを書き換える。
-例　/GameMain/GameMain/setting.py
 
-'''
+例　/GameMain/GameMain/setting.py
+```
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -64,5 +60,5 @@ DATABASES = {
         'PORT': '5432',
     }
 }
-'''
-
+```
+>>>>>>> fe9a0d797f9ded19b582386f98ea4537187391a6

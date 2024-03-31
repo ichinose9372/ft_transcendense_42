@@ -1,18 +1,64 @@
+/* 全体のスタイリング */
 body, html {
     height: 100%;
     margin: 0;
+    padding: 0;
+    overflow: hidden; /* スクロールバーを隠す */
+    background: #dcdcdc;
+    color: #fff;
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* ユーザー情報表示エリアのスタイリング */
+  #userInfo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 820px; /* キャンバスと同じ幅に合わせて、余白を考慮して少し広くする */
+    padding: 10px;
+    margin-bottom: 20px; /* キャンバスとの間に余白を設ける */
+    box-sizing: border-box;
+  }
+
+  #userName1, #userName2 {
+    color: #000;
+    font-size: 20px; /* フォントサイズを大きくする */
+  }
+
+  /* ゲームエリアのスタイリング */
+  #gameArea {
+    width: 806px; /* キャンバス幅 + 枠線 */
+    height: 406px; /* キャンバス高さ + 枠線 */
+    border-top: 3px solid #fff;
+    border-bottom: 3px solid #fff;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #000;
-}
+    background-color: #000; /* キャンバスの背景色と同じ */
+  }
 
-#pongCanvas {
-    background: #fff;
-    display: block; /* キャンバスをブロック要素として表示 */
-}
+  /* キャンバスのスタイリング */
+  #pongCanvas {
+    border: none; /* 枠線を削除 */
+  }
 
-#startButton {
-    display: block;
+  /* スタートボタンのスタイリング */
+  #startButton {
+    padding: 10px 20px;
+    font-size: 18px;
+    color: #fff;
+    background-color: #444; /* ボタンの背景色 */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
     margin-top: 20px;
-}
+  }
+
+  /* ホバー時のボタンスタイル変更 */
+  #startButton:hover {
+    background-color: #555;
+  }

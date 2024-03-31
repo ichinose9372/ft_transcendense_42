@@ -6,14 +6,14 @@ function addPlayer() {
   newPlayerDiv.classList.add("mb-4");
   newPlayerDiv.innerHTML = `
 			<form id="user${playerCount}" class="input-group">
-				<input type="text" class="form-control" id="name${playerCount}" placeholder="player name" oninput="checkStartButtonState()"/>
+				<input type="text" class="form-control" id="name${playerCount}" placeholder="player name" oninput="checkStartButtonValid()"/>
 				<button type="button" class="btn btn-danger input-group-append" onclick="removePlayer('user${playerCount}')")>
 					<i class="bi bi-trash"></i>
 				</button>
 			</form>
 	`;
   playerList.appendChild(newPlayerDiv);
-  checkStartButtonState();
+  checkStartButtonValid();
 }
 
 function removePlayer(userId) {
@@ -22,7 +22,7 @@ function removePlayer(userId) {
   if (parentElement) {
     parentElement.remove();
   }
-  checkStartButtonState();
+  checkStartButtonValid();
 }
 
 function startTournament() {
@@ -53,7 +53,7 @@ function startTournament() {
   }
 }
 
-function checkStartButtonState() {
+function checkStartButtonValid() {
   let playerValid = true;
   const playerList = document.getElementById("playerList");
   const tournamentName = document.getElementById("tournamentName").value.trim();
@@ -80,5 +80,5 @@ document
   .addEventListener("click", startTournament);
 document
   .getElementById("tournamentName")
-  .addEventListener("input", checkStartButtonState);
-document.addEventListener("DOMContentLoaded", checkStartButtonState);
+  .addEventListener("input", checkStartButtonValid);
+document.addEventListener("DOMContentLoaded", checkStartButtonValid);

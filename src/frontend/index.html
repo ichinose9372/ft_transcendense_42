@@ -1,16 +1,25 @@
 <!DOCTYPE html>
 <html lang="ja">
     <head>
-        <meta charset="UTF-8" />
-        <title>Pongゲーム</title>
-        <link rel="stylesheet" href="css/style.css" />
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Pong Game</title>
+        <link rel="stylesheet" href="css/style.css"> <!-- CSSファイルの読み込み -->
     </head>
     <body>
-        <div id="pong-game">
-            <canvas id="pongCanvas"></canvas>
-            <button id="startButton">ゲームスタート</button>
-            <button id="resetButton">リセット</button>
+        <!-- ユーザー名表示エリア -->
+        <div id="userInfo">
+            <span id="userName1">User1</span>
+            <span id="userName2">User2</span>
         </div>
-        <script src="js/script.js"></script>
+
+        <div id="gameArea">
+            <canvas id="pongCanvas" width="800" height="400"></canvas>
+        </div>
+
+        <button id="startButton">ゲーム開始</button>
+
+        <script src="js/pong.js"></script>
     </body>
+
 </html>

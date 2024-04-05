@@ -1,0 +1,7 @@
+# Use the official PostgreSQL image as the base image
+FROM postgres:latest
+# Expose the PostgreSQL port
+#copy init_db.sh
+COPY init_db.sh /docker-entrypoint-initdb.d/
+
+EXPOSE 5432

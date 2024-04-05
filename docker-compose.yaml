@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  db:
+    build: src/postgresql
+    env_file:
+      - .env
+    restart: always
+    ports:
+      - "5432:5432"
+    

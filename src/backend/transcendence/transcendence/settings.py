@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 
+import os
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -55,7 +57,7 @@ ROOT_URLCONF = 'transcendence.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR.parent.parent, 'frontend')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -85,9 +87,7 @@ WSGI_APPLICATION = 'transcendence.wsgi.application'
 #     }
 # }
 
-# snemoto
-# ローカル環境で開発するため
-# 後ほど削除
+# snemoto ローカル環境で開発用
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',

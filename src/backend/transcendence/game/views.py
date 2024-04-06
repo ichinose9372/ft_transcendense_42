@@ -4,7 +4,7 @@ from django.http import HttpResponse
 
 # Create your views here.
 def top(request):
-	return HttpResponse(b"Hello Transcendence")
+	return render(request, "top.html")
 
 def game_start(request):
 	return HttpResponse('トーナメント参加者の登録画面を表示')

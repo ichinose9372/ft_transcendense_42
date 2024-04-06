@@ -17,6 +17,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from game.views import top
+
+# 第１引数：HTTPリクエストのパス
+# 第２引数：ビュー関数
+# nameキーワード引数：URLの逆引きに利用
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+	path('', top, name="top"),
 ]

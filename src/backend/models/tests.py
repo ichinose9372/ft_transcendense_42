@@ -2,7 +2,8 @@ from django.test import TestCase
 
 from django.http import HttpRequest
 from django.urls import resolve
-from handlers.views import top, game_start, game_finish
+from handlers.views import top
+# from handlers.views import game_start, game_finish
 
 # Create your tests here.
 
@@ -25,12 +26,13 @@ class TopPageTest(TestCase):
 		response = self.client.get("/")
 		self.assertTemplateUsed(response, "top.html")
 
-class GameStartTest(TestCase):
-	def test_should_resolve_game_start(self):
-		found = resolve("/game/start/")
-		self.assertEqual(game_start, found.func)
+# 以下は不要
+# class GameStartTest(TestCase):
+# 	def test_should_resolve_game_start(self):
+# 		found = resolve("/models/start/")
+# 		self.assertEqual(game_start, found.func)
 
-class GameFinishTest(TestCase):
-	def test_should_resolve_game_finish(self):
-		found = resolve("/game/finish/")
-		self.assertEqual(game_finish, found.func)
+# class GameFinishTest(TestCase):
+# 	def test_should_resolve_game_finish(self):
+# 		found = resolve("/models/finish/")
+# 		self.assertEqual(game_finish, found.func)

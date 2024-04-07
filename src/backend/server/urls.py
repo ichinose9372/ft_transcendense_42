@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-from game.views import top
+from handlers.views import top
 
 # 第１引数：HTTPリクエストのパス
 # 第２引数：ビュー関数
@@ -26,5 +26,8 @@ from game.views import top
 urlpatterns = [
     path('admin/', admin.site.urls),
 	path('', top, name="top"),
+<<<<<<< HEAD
 	path('game/', include('models.urls')), # game/urls.py の読み込み
+=======
+>>>>>>> e980db18acd9c25d5528e7674caae66d35791463
 ]

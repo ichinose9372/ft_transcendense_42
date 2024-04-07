@@ -12,9 +12,7 @@ RUN pip install --upgrade pip && \
     pip install -r requirements.txt
 
 # change parmissions of the entrypoint script
-RUN chmod +x /app/entrypoint.sh
+RUN chmod +x entrypoint.sh
 
-RUN export DJANGO_SETTINGS_MODULE=server.settings
-
-ENTRYPOINT [ "/app/entrypoint.sh" ]
+ENTRYPOINT [ "./entrypoint.sh" ]
 

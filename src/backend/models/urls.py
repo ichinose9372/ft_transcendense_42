@@ -1,6 +1,6 @@
 from django.urls import path
 
-from game import views
+from handlers import views
 
 # 第１引数：HTTPリクエストのパス
 # 第２引数：ビュー関数

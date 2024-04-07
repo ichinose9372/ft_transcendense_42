@@ -1,0 +1,23 @@
+</head>
+<body>
+    <canvas id="myCanvas" width="500" height="500"></canvas>
+    <script>
+        var canvas = document.getElementById("myCanvas");
+        var ctx = canvas.getContext("2d");
+
+        // Draw rectangles
+        ctx.fillStyle = 'red';
+        ctx.fillRect(50, 50, 100, 100);
+        ctx.fillStyle = 'blue';
+        ctx.fillRect(300, 200, 100, 100);
+
+        // Draw line between rectangles
+        ctx.beginPath();
+        ctx.moveTo(150, 150); // from bottom-right corner of the first rectangle
+        ctx.lineTo(300, 200); // to top-left corner of the second rectangle
+        ctx.strokeStyle = 'black';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+    </script>
+</body>
+</html>

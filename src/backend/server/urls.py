@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-from game.views import top
+from handlers.views import top
 
 # 第１引数：HTTPリクエストのパス
 # 第２引数：ビュー関数

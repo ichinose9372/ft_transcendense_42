@@ -2,6 +2,6 @@
 
 set -e
 
-python3 manage.py migrate --noinput
+python3 ./server/manage.py migrate --noinput
 
-python3 manage.py runserver
+python3 ./server/manage.py runserver

@@ -26,5 +26,4 @@ from handlers.views import top
 urlpatterns = [
     path('admin/', admin.site.urls),
 	path('', top, name="top"),
-	path('game/', include('game.urls')), # game/urls.py の読み込み
 ]

@@ -1,0 +1,105 @@
+[
+	{
+		"tournament": {
+			"name": "Tournament Name",
+			"tournamentId": 834728947312390814904
+		},
+		"matches": [
+			{
+				"matchId": 443248097712,
+				"finishedTimestamp": "2022-01-01T12:00:00Z",
+				"parentMatchId": 543532115,
+				"tournamentId": 834728947312390814904
+			},
+			{
+				"matchId": 34343411135,
+				"finishedTimestamp": "2022-01-01T12:00:00Z",
+				"parentMatchId": 543532115,
+				"tournamentId": 834728947312390814904
+			},
+			{
+				"matchId": 543532115,
+				"finishedTimestamp": "2022-01-01T12:00:00Z",
+				"parentMatchId": null,
+				"tournamentId": 834728947312390814904
+			}
+		],
+		"scores": [
+			{
+				"matchId": 443248097712,
+				"participantName": "Yosuke"
+			},
+			{
+				"matchId": 443248097712,
+				"participantName": "Yosuke"
+			},
+			{
+				"matchId": 443248097712,
+				"participantName": "Yosuke"
+			},
+			{
+				"matchId": 443248097712,
+				"participantName": "Yosuke"
+			},
+			{
+				"matchId": 443248097712,
+				"participantName": "Yosuke"
+			},
+			{
+				"matchId": 443248097712,
+				"participantName": "Yosuke"
+			},
+			{
+				"matchId": 443248097712,
+				"participantName": "Yosuke"
+			},
+			{
+				"matchId": 34343411135,
+				"participantName": "Nikhil"
+			},
+			{
+				"matchId": 543532115,
+				"participantName": "Bob"
+			}
+		]
+	},
+	{
+		"tournament": {
+			"name": "Tournament Name2",
+			"finalMatchId": 1
+		},
+		"rounds": [
+			{
+				"round": 1,
+				"matchId": 1,
+				"leftParticipant": "Yosuke",
+				"rightParticipant": "Nikhil",
+				"leftScore": 3,
+				"rightScore": 2,
+				"finishedTimestamp": "2022-01-01T12:00:00Z",
+				"leftMatch": 2,
+				"rightMatch": 3
+			},
+			{
+				"matchId": 2,
+				"leftParticipant": "Yosuke",
+				"rightParticipant": "Airi",
+				"leftScore": 3,
+				"rightScore": 2,
+				"finishedTimestamp": "2022-01-01T12:00:00Z",
+				"leftMatch": null,
+				"rightMatch": null
+			},
+			{
+				"matchId": 3,
+				"leftParticipant": "Bob",
+				"rightParticipant": "Nikhil",
+				"leftScore": 3,
+				"rightScore": 10,
+				"finishedTimestamp": "2022-01-01T12:00:00Z",
+				"leftMatch": null,
+				"rightMatch": null
+			}
+		]
+	}
+]

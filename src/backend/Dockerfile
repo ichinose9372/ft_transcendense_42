@@ -9,10 +9,10 @@ COPY . /app
 
 # Install the required dependencies
 RUN pip install --upgrade pip && \
-    pip install -r initialize/requirements.txt
+    pip install -r requirements.txt
 
 # change parmissions of the entrypoint script
-RUN chmod +x /app/initialize/entrypoint.sh
+RUN chmod +x entrypoint.sh
 
-ENTRYPOINT [ "/app/initialize/entrypoint.sh" ]
+ENTRYPOINT [ "./entrypoint.sh" ]
 

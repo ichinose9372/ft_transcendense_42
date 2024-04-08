@@ -1,6 +1,9 @@
 {
 	"python.autoComplete.extraPaths": [
 		"src/backend"
+	],
+	"python.analysis.extraPaths": [
+		"src/backend"
 	]
 }
 

@@ -12,6 +12,6 @@ from handlers.storeTournamentResult import storeTournamentResult
 urlpatterns = [
     path('admin/', admin.site.urls),
 	path('', getClientApp, name="getClientApp"),
-	path('gamefinish/', getAchievements, name="getAchievements"),
-	path('dashboard/', storeTournamentResult, name="storeTournamentResult"),
+	path('gamefinish/', storeTournamentResult, name="storeTournamentResult"),
+	path('dashboard/', getAchievements, name="getAchievements"),
 ]

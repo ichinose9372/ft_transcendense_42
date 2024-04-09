@@ -1,7 +1,5 @@
-from django.shortcuts import render
-
-# Create your views here.
 # snemoto test for routing
+from django.shortcuts import render
 def getClientApp(request):
 	return render(request, "getClientApp.html")
 

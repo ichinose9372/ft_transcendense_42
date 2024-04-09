@@ -15,9 +15,11 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path
 
-from handlers.views import top
+from handlers.getClientApp import getClientApp
+# from handlers.getAchievements import xxx
+# from handlers.storeTournamentResult import xxx
 
 # 第１引数：HTTPリクエストのパス
 # 第２引数：ビュー関数
@@ -25,5 +27,7 @@ from handlers.views import top
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-	path('', top, name="top"),
+	path('', getClientApp, name="getClientApp"),
+	# path('/game_finish', xxx, name="xxx"),
+	# path('/dashboard', xxx, name="xxx"),
 ]

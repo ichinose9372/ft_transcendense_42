@@ -5,6 +5,8 @@ until [ -d "/var/lib/postgresql/data" ]; do
   sleep 1
 done
 
+sed -i '$ d' /var/lib/postgresql/data/pg_hba.conf
+
 echo "host all all 0.0.0.0/0 md5" >> /var/lib/postgresql/data/pg_hba.conf
 
 # psql -v ON_ERROR_STOP=1 postgres <<EOSQL

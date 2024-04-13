@@ -7,7 +7,7 @@ class Tournament(models.Model):
     tournament_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
 
     def __str__(self):
-        return self.tournament_name
+        return f"{self.tournament_name} ({self.tournament_id})"
 
 class Match(models.Model):
     match_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)

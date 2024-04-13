@@ -4,6 +4,7 @@ from django.urls import path
 from handlers.getClientApp import getClientApp
 from handlers.getAchievements import getAchievements
 from handlers.storeTournamentResult import storeTournamentResult
+from models.views import test_example
 
 # 第１引数：HTTPリクエストのパス
 # 第２引数：ビュー関数
@@ -14,4 +15,5 @@ urlpatterns = [
 	path('', getClientApp, name="getClientApp"),
 	path('gamefinish/', storeTournamentResult, name="storeTournamentResult"),
 	path('dashboard/', getAchievements, name="getAchievements"),
+	path('test_example/', test_example, name='test_example'),
 ]

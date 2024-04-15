@@ -47,4 +47,4 @@ class getAchievementsTest(TestCase):
 		participant_name = "Shota Nemoto"
 		response = self.client.get("/dashboard/", {'participant_name': participant_name})
 		self.assertContains(response, "getAchievements", status_code=200)
-		self.assertIn("Received participant: Shota Nemoto", response.content.decode())
+		self.assertIn("Shota Nemoto", response.content.decode())

@@ -13,5 +13,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 	path('', getClientApp, name="getClientApp"),
 	path('gamefinish/', storeTournamentResult, name="storeTournamentResult"),
-	path('dashboard/', getAchievements, name="getAchievements"),
+	# path('dashboard/', getAchievements, name="getAchievements"),
+	path('dashboard/<str:participant_name>/', getAchievements, name="getAchievements"),
 ]

@@ -7,10 +7,22 @@
 		<form action="/gamefinish" method="get">
 			<button type="submit">call to storeTournamentResult</button>
 		</form>
-		<form action="/dashboard" method="get">
+		<!-- <form action="/dashboard" method="get">
 			<label for="participant_name">Participant Name</label>
 			<input type="text" id="participant_name" name="participant_name" maxlength="100" required>
 			<button type="submit">call to getAchievements</button>
-		</form>
+		</form> -->
+		<p>Enter participant_name:</p>
+		<input type="text" id="participant_name" placeholder="Please enter here">
+		<button onclick="makeURL()"">Go to dashboard details</button>
+
+		<script>
+			function makeURL()
+			{
+				var participant_name = document.getElementById('participant_name').value;
+				var url = "/dashboard/" + encodeURIComponent(participant_name);
+				window.location.href = url;
+			}
+		</script>
 	</body>
 </html>

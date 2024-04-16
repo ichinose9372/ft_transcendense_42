@@ -40,3 +40,17 @@ class getAchievementsTest(TestCase):
 	def test_uses_expected_template(self):
 		response = self.client.get("/dashboard/")
 		self.assertTemplateUsed(response, "getAchievements.html")
+
+class TournamentCreationTest(TestCase):
+    def test_tournament_creation(self):
+        # トーナメントを作成
+        tournament_instance = Tournament.objects.create(tournament_name="yichinos_tournament")
+        tournament_instance.save()
+        
+        # トーナメントが正しく保存されたか確認
+        self.assertIsNotNone(tournament_instance.pk)  # primary keyがNoneでないことを確認
+        self.assertEqual(tournament_instance.tournament_name, "yichinos_tournament")
+
+        # データベースに保存されているか確認
+        exists = Tournament.objects.filter(tournament_name="yichinos_tournament").exists()
+        self.assertTrue(exists)

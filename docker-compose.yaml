@@ -17,3 +17,10 @@ services:
       - .env
     depends_on:
       - db
+
+  frontend:
+    build: src/frontend
+    restart: always
+    ports:
+      - "3000:3000"
+    tty: true

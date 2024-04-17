@@ -1,6 +1,9 @@
 # Use the official Python 3 base image
 FROM python:3.10.5
 
+# Set psql command 
+RUN apt-get update && apt-get install -y postgresql-client
+
 # Set the working directory in the container
 WORKDIR /app
 

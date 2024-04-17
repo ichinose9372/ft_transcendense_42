@@ -9,7 +9,7 @@ services:
     ports:
       - "5432:5432"
   backend:
-    build: src/backend
+    build: src/backend/
     restart: always
     ports:
       - "8000:8000"

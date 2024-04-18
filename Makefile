@@ -10,3 +10,5 @@ down:
 frontend:
 	docker-compose exec frontend bash
 
+backend:
+	docker-compose exec backend bash

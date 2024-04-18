@@ -17,5 +17,5 @@ services:
       - .env
     depends_on:
       - db
-  
-    
+    volumes:
+      - "${WORKDIR_LOCAL}/src/backend:/app"

@@ -20,9 +20,9 @@ services:
     volumes:
       - "${WORKDIR_LOCAL}/src/backend:/app"
 
-    frontend:
-      build: src/frontend
-      restart: always
-      ports:
-        - "3000:3000"
-      tty: true
+  frontend:
+    build: src/frontend
+    restart: always
+    ports:
+      - "3000:3000"
+    tty: true

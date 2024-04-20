@@ -26,7 +26,9 @@ jobs:
                docker-compose up --build -d
       - name: Run tests
         run: 
-             make test
+             make p
+			 make logs 
+			 make test
       - name: Clean up
         if: always()
         run: |

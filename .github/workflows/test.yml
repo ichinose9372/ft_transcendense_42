@@ -26,9 +26,9 @@ jobs:
                docker-compose up --build -d
       - name: Run tests
         run: 
-        	 make test
+             make test
       - name: Clean up
-         if: always()
-         run: |
-            docker-compose down
-            rm .env
+        if: always()
+        run: |
+             docker-compose down
+             rm .env

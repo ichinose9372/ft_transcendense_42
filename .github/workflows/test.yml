@@ -10,7 +10,7 @@ jobs:
 
     runs-on: ubuntu-latest
 
-  steps:
+steps:
       - uses: actions/checkout@v3
       - name: Set up .env file
        run: |

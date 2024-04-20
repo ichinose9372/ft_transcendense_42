@@ -2,7 +2,7 @@ from django.test import TestCase
 
 from django.http import HttpRequest
 from django.urls import resolve
-
+from models.models import Tournament, Match, Score
 # Create your tests here.
 
 # snemoto frontendからレンダリング

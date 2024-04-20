@@ -7,13 +7,16 @@ stop:
 	docker-compose down
 
 back:
-	@docker ps | grep trascen-backend > /dev/null || (echo "Backend container is not running."; exit 1)
-	docker exec -it trascen-backend bash
+	@docker ps | grep trascen-backend-1 > /dev/null || (echo "Backend container is not running."; exit 1)
+	docker exec -it trascen-backend-1 bash
 
 db: 
-	@docker ps | grep trascen-db > /dev/null || (echo "db container is not running."; exit 1)
-	docker exec -it trascen-db psql -h db -p 5432 -U user42 -d transcendence_db
+	@docker ps | grep trascen-db-1 > /dev/null || (echo "db container is not running."; exit 1)
+	docker exec -it trascen-db-1 psql -h db -p 5432 -U user42 -d transcendence_db
 
+test:
+	@docker ps | grep trascen-backend-1 > /dev/null || (echo "Backend container is not running."; exit 1)
+	docker exec -it trascen-backend-1 python manege.py test models
 
 re:
 	docker-compose down

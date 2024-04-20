@@ -10,7 +10,7 @@ jobs:
 
     runs-on: ubuntu-latest
 
-    steps:
+  steps:
       - uses: actions/checkout@v3
       - name: Set up .env file
        run: |
@@ -22,13 +22,13 @@ jobs:
        run: |
         curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
         chmod +x /usr/local/bin/docker-compose
-    - name: Build and start services
+     - name: Build and start services
         run: |
            docker-compose up --build -d
-    - name: Run tests
+     - name: Run tests
         run: 
     	 make test
-    - name: Clean up
+     - name: Clean up
        if: always()
        run: |
         docker-compose down

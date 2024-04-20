@@ -1,13 +1,16 @@
-.DEFAULT_GOAL := help
+.DEFAULT_GOAL := all
 
 all:
 	docker-compose up --build -d
 
 stop:
+	docker-compose stop
+
+down:
 	docker-compose down
 
 back:
-	@docker ps | grep trascen-backend-1 > /dev/null || (echo "Backend container is not running."; exit 1)
+	@docker ps | grep trascen-backend-1 > /dev/null || (echo "Backend container is not running.")
 	docker exec -it trascen-backend-1 bash
 
 db: 
@@ -15,8 +18,8 @@ db:
 	docker exec -it trascen-db-1 psql -h db -p 5432 -U user42 -d transcendence_db
 
 test:
-	@docker ps | grep trascen-backend-1 > /dev/null || (echo "Backend container is not running."; exit 1)
-	docker exec -it trascen-backend-1 python manege.py test models
+	@docker ps | grep trascen-backend-1 > /dev/null || (echo "Backend container is not running.")
+	docker exec -it trascen-backend-1 python manage.py test models
 
 re:
 	docker-compose down
@@ -43,7 +46,3 @@ help:
 	@echo "  logs     Show logs of all containers"
 	@echo "  logs-<container> Show logs of a specific container"
 	@echo "  help     Show this help message"
-
-
-.DEFAULT:
-	@$(MAKE) help

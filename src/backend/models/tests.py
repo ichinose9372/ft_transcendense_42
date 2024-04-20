@@ -54,3 +54,4 @@ class TournamentCreationTest(TestCase):
         # データベースに保存されているか確認
         exists = Tournament.objects.filter(tournament_name="yichinos_tournament").exists()
         self.assertTrue(exists)
+

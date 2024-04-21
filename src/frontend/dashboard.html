@@ -1,0 +1,27 @@
+{% extends 'base.html' %} {% block content %}
+
+<div class="container-fluid p-5">
+  <div class="mb-5 regular archivo-black-regular"><h1>Dashboard</h1></div>
+  <div class="input-group mb-3 w-25">
+    <input
+      type="text"
+      name="participant_name"
+      id="participantNameInput"
+      class="form-control"
+      placeholder="Input user name"
+      aria-label="Input user name"
+    />
+    <div class="input-group-append">
+      <button class="btn btn-success" id="getAchievementsButton">Search</button>
+    </div>
+  </div>
+  {% if data %}
+  <h1>{{ data.participant_name }}</h1>
+  {% else %}
+  <h1>no data</h1>
+  {% endif %}
+</div>
+{% load static %}
+<script src="{% static 'js/dashboard/dashboard.js' %}"></script>
+
+{% endblock %}

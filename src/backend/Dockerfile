@@ -17,5 +17,9 @@ RUN pip install --upgrade pip && \
 # change parmissions of the entrypoint script
 RUN chmod +x entrypoint.sh
 
+RUN ls -al
+
+RUN pwd
+
 ENTRYPOINT [ "/app/entrypoint.sh" ]
 

@@ -33,7 +33,7 @@ jobs:
               make logs
               make logs
               make logs
-              docker compose exec -it backend_1 python manage.py test models 
+              docker compose exec -it backend python manage.py test models 
       - name: Clean up
         if: always()
         run: |

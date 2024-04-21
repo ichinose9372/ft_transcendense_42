@@ -8,7 +8,7 @@ on:
 jobs: 
   build:
     runs-on: ubuntu-latest
-	environment: transcendence_env
+    environment: transcendence_env
 
 
     steps:

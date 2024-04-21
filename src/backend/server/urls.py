@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import path
 
-from handlers.getClientApp import getClientApp
+from handlers.getClientApp import getClientApp, top
 from handlers.getAchievements import getAchievements
 from handlers.storeTournamentResult import storeTournamentResult
 from models.views import test_example

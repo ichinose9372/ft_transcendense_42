@@ -8,4 +8,4 @@ def storeTournamentResult(request):
 # from handlers.models import TournamentResult
 
 # @receiver(post_save, sender=TournamentResult)
-# # def handle_tournament_result(tournament, matches, scores):
+# def handle_tournament_result(tournament, matches, scores):

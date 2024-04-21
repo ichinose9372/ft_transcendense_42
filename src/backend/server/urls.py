@@ -14,7 +14,11 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 	path('', top, name="top"),
 	path('start/', start, name="start"),
-	path('gamefinish/', storeTournamentResult, name="storeTournamentResult"),
-	path('dashboard/', getAchievements, name="getAchievements"),
+	path('gamefinish/', storeTournamentResult, name="gamefinish"),
 	path('test_example/', test_example, name='test_example'),
+	# for query_paramator
+	path('dashboard/', getAchievements, name="dashboard"),
+	# for path_paramator
+	# path('dashboard/<str:participant_name>/', getAchievements, name="dashboard"),
+	# path('', getClientApp, name=""),
 ]

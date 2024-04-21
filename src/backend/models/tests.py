@@ -42,22 +42,24 @@ class storeTournamentResultTest(TestCase):
 # 		response = self.client.get("/dashboard/")
 # 		self.assertTemplateUsed(response, "getAchievements.html")
 
-# class getAchievementsTest(TestCase):
-# 	def test_submit_participant_name(self):
-# 		participant_name = "Shota Nemoto"
-# 		response = self.client.get("/dashboard/", {'participant_name': participant_name})
-# 		self.assertContains(response, "getAchievements", status_code=200)
-# 		self.assertIn("Shota Nemoto", response.content.decode())
-
-from django.urls import reverse
+# for query_paramator
 class getAchievementsTest(TestCase):
 	def test_submit_participant_name(self):
 		participant_name = "Shota Nemoto"
-		url = reverse('dashboard', kwargs={'participant_name': participant_name})
-		# method = get
-		response = self.client.get(url)
+		response = self.client.get("/dashboard/", {'participant_name': participant_name})
+		self.assertContains(response, "getAchievements", status_code=200)
+		self.assertIn("Shota Nemoto", response.content.decode())
 
-		self.assertEqual(response.status_code, 200)
-		self.assertContains(response, participant_name)
-		self.assertTemplateUsed(response, "getAchievements.html")
-		self.assertIn(participant_name, response.content.decode())
+# for path_paramator
+# from django.urls import reverse
+# class getAchievementsTest(TestCase):
+# 	def test_submit_participant_name(self):
+# 		participant_name = "Shota Nemoto"
+# 		url = reverse('dashboard', kwargs={'participant_name': participant_name})
+# 		# method = get
+# 		response = self.client.get(url)
+
+# 		self.assertEqual(response.status_code, 200)
+# 		self.assertContains(response, participant_name)
+# 		self.assertTemplateUsed(response, "getAchievements.html")
+# 		self.assertIn(participant_name, response.content.decode())

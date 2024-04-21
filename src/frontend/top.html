@@ -10,7 +10,7 @@
         </h1>
       </div>
       <div class="d-grid gap-4 col-4 mx-auto mt-5">
-        <button id="startButton" class="btn btn-primary">
+        <button id="startTournamentButton" class="btn btn-primary">
           Start Tournament
         </button>
         <button id="dashboardButton" class="btn btn-secondary">
@@ -21,14 +21,4 @@
   </div>
 </div>
 
-<script>
-  document.addEventListener("DOMContentLoaded", () => {
-    function init() {
-      bindEventHandlers();
-    }
-    window.addEventListener("popstate", handlePopState);
-
-    init();
-  });
-</script>
 {% endblock %}

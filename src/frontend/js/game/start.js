@@ -24,7 +24,7 @@ function removePlayer(userId) {
   checkStartButtonValid();
 }
 
-function startTournament() {
+function startGame() {
   const playerList = document.getElementById("playerList");
   const players = [];
   for (let i = 0; i < playerList.children.length; i++) {
@@ -56,7 +56,13 @@ function startTournament() {
 function checkStartButtonValid() {
   let playerValid = true;
   const playerList = document.getElementById("playerList");
+  if (playerList === null) {
+    return;
+  }
   const tournamentName = document.getElementById("tournamentName").value.trim();
+  if (tournamentName === null) {
+    return;
+  }
   for (let i = 0; i < playerList.children.length; i++) {
     const playerForm = playerList.children[i].querySelector("form");
     const playerNameInput = playerForm.querySelector("input[type='text']");
@@ -66,7 +72,7 @@ function checkStartButtonValid() {
       break;
     }
   }
-  const startButton = document.getElementById("startButton");
+  const startButton = document.getElementById("startGameButton");
   if (tournamentName !== "" && playerValid) {
     startButton.disabled = false;
   } else {
@@ -74,11 +80,36 @@ function checkStartButtonValid() {
   }
 }
 
-document.getElementById("addPlayer").addEventListener("click", addPlayer);
-document
-  .getElementById("startButton")
-  .addEventListener("click", startTournament);
-document
-  .getElementById("tournamentName")
-  .addEventListener("input", checkStartButtonValid);
-document.addEventListener("DOMContentLoaded", checkStartButtonValid);
+function startEventHandlers() {
+  const startGameButton = document.getElementById("startGameButton");
+  const addPlayerButton = document.getElementById("addPlayer");
+  const tournamentNameInput = document.getElementById("tournamentName");
+
+  if (startGameButton) {
+    startGameButton.addEventListener("click", () => {
+      // TODO : 画面遷移またはmodal
+      startGame();
+    });
+  }
+
+  if (addPlayerButton) {
+    addPlayerButton.addEventListener("click", addPlayer);
+  }
+
+  if (tournamentNameInput) {
+    tournamentNameInput.addEventListener("input", checkStartButtonValid);
+  }
+  checkStartButtonValid();
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  function init() {
+    startEventHandlers();
+  }
+
+  window.addEventListener("popstate", (event) => {
+    handlePopState(event);
+    startEventHandlers();
+  });
+  init();
+});

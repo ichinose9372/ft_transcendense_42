@@ -9,7 +9,9 @@ services:
     ports:
       - "5432:5432"
   backend:
-    build: src/backend/
+    build:
+      context: .
+      dockerfile: src/backend/Dockerfile
     restart: always
     ports:
       - "8000:8000"
@@ -18,4 +20,4 @@ services:
     depends_on:
       - db
     volumes:
-      - "${WORKDIR_LOCAL}/src/backend:/app"
+      - "${WORKDIR_LOCAL}/src:/app"

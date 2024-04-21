@@ -1,3 +1,4 @@
+// TODO : gameディレクトリ以下に移したい
 // キャンバスとコンテキストの取得
 const canvas = document.getElementById('pongCanvas');
 const context = canvas.getContext('2d');

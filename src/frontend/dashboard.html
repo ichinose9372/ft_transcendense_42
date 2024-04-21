@@ -1,7 +1,17 @@
 {% extends 'base.html' %} {% block content %}
 
 <div class="container-fluid p-5">
-  <div class="mb-5 regular archivo-black-regular"><h1>Dashboard</h1></div>
+  <!-- <div class="mb-5 regular archivo-black-regular"><h1>Dashboard</h1></div> -->
+  <div class="row mb-5">
+    <div class="col">
+      <h1 class="regular archivo-black-regular">Dashboard</h1>
+    </div>
+    <div class="col-auto ml-auto">
+      <button class="btn btn-secondary" id="backToTopButton">
+        <i class="bi bi-house-door-fill"></i> Back to Top
+      </button>
+    </div>
+  </div>
   <div class="input-group mb-3 w-25">
     <input
       type="text"
@@ -21,7 +31,6 @@
   <h1>no data</h1>
   {% endif %}
 </div>
-{% load static %}
-<script src="{% static 'js/dashboard/dashboard.js' %}"></script>
+
 
 {% endblock %}

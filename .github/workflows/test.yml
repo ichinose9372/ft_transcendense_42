@@ -31,8 +31,8 @@ jobs:
         run: |
               make p
               make logs
-              ls -al
-              docker exec -it ft_transcendense_42_backend python manage.py test models 
+              make logs
+              docker exec -it backend_1 python manage.py test models 
       - name: Clean up
         if: always()
         run: |

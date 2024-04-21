@@ -4,7 +4,7 @@ from django.shortcuts import render
 # def getAchievements(request):
 # 	return render(request, "getAchievements.html")
 
-# for path_paramator
+# snemoto for path_paramator
 # def getAchievements(request, participant_name):
 # 	return render(request, "getAchievements.html", {'participant_name': participant_name})
 

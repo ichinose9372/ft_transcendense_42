@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import path
 
-from handlers.getClientApp import getClientApp, top
+from handlers.getClientApp import getClientApp, top, start
 from handlers.getAchievements import getAchievements
 from handlers.storeTournamentResult import storeTournamentResult
 from models.views import test_example
@@ -12,7 +12,8 @@ from models.views import test_example
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-	path('', getClientApp, name="getClientApp"),
+	path('', top, name="top"),
+	path('start/', start, name="start"),
 	path('gamefinish/', storeTournamentResult, name="storeTournamentResult"),
 	path('dashboard/', getAchievements, name="getAchievements"),
 	path('test_example/', test_example, name='test_example'),

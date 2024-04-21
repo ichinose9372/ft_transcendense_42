@@ -1,4 +1,3 @@
-
 function addPlayer() {
   const playerList = document.getElementById("playerList");
   const playerCount = playerList.children.length + 1;
@@ -48,6 +47,7 @@ function startTournament() {
       participants: players.map((player) => ({ name: player })),
     };
     console.log("data", data);
+    confirm("check console for data");
   } else {
     alert("Please enter a tournament name and at least two players.");
   }

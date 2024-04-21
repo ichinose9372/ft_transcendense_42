@@ -4,5 +4,8 @@ def getClientApp(request):
 	return render(request, "getClientApp.html")
 
 # snemoto frontendからレンダリング
-# def top(request):
-# 	return render(request, "home.html")
+def top(request):
+	return render(request, "top.html")
+
+def start(request):
+	return render(request, "start.html")

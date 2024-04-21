@@ -30,7 +30,8 @@ jobs:
                docker-compose up --build -d
       - name: Run tests
         run: |
-              docker ps
+              make p
+              make logs
               docker exec -it ft_transcendense_42_backend python manage.py test models 
       - name: Clean up
         if: always()

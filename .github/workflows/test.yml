@@ -30,6 +30,7 @@ jobs:
                docker-compose up --build -d
       - name: Run tests
         run: |
+            make p
             make test
       - name: Clean up
         if: always()

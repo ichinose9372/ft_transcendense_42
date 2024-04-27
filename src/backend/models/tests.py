@@ -5,7 +5,8 @@ from django.test import TestCase
 
 # Create your tests here.
 
-# snemoto frontendからレンダリング
+# snemoto frontend/からレンダリング
+
 class TopPageTest(TestCase):
 	def test_top_page_returns_200_and_expected_title(self):
 		response = self.client.get("/")
@@ -14,6 +15,15 @@ class TopPageTest(TestCase):
 		response = self.client.get("/")
 		self.assertTemplateUsed(response, "top.html")
 
+class PageNotFoundTest(TestCase):
+	def test_returns_404_and_expected_title(self):
+		response = self.client.get("/nosuchpage/")
+		self.assertContains(response, "Page Not Found", status_code=404)
+
+	def test_uses_expected_template(self):
+		response = self.client.get("/nosuchapage/")
+		self.assertTemplateUsed(response, "404.html")
+
 # snemoto for query_paramator
 class getAchievementsTest(TestCase):
 	def test_submit_participant_name(self):
@@ -21,6 +31,15 @@ class getAchievementsTest(TestCase):
 		response = self.client.get("/dashboard/", {'participant_name': participant_name})
 		self.assertContains(response, "getAchievements", status_code=200)
 		self.assertIn("Shota Nemoto", response.content.decode())
+
+# class storeTournamentResultTest(TestCase):
+# 	def test_returns_200_and_expected_title(self):
+# 		response = self.client.get("/gamefinish/")
+# 		self.assertContains(response, "storeTournamentResult", status_code=200)
+
+# 	def test_uses_expected_template(self):
+# 		response = self.client.get("/gamefinish/")
+# 		self.assertTemplateUsed(response, "storeTournamentResult.html")
 
 # snemoto for path_paramator
 # from django.urls import reverse
@@ -45,15 +64,6 @@ class getAchievementsTest(TestCase):
 # 	def test_uses_expected_template(self):
 # 		response = self.client.get("/")
 # 		self.assertTemplateUsed(response, "getClientApp.html")
-
-# class storeTournamentResultTest(TestCase):
-# 	def test_returns_200_and_expected_title(self):
-# 		response = self.client.get("/gamefinish/")
-# 		self.assertContains(response, "storeTournamentResult", status_code=200)
-
-# 	def test_uses_expected_template(self):
-# 		response = self.client.get("/gamefinish/")
-# 		self.assertTemplateUsed(response, "storeTournamentResult.html")
 
 # class getAchievementsTest(TestCase):
 # 	def test_returns_200_and_expected_title(self):

@@ -4,6 +4,7 @@ from django.urls import path
 from handlers.getClientApp import top, start
 from handlers.getAchievements import getAchievements
 from handlers.storeTournamentResult import storeTournamentResult
+from models.views import test_example
 from django.conf.urls import handler404
 
 # 第１引数：HTTPリクエストのパス
@@ -20,7 +21,7 @@ urlpatterns = [
 	# for path_paramator
 	# path('dashboard/<str:participant_name>/', getAchievements, name="dashboard"),
 	# path('', getClientApp, name=""),
-	# path('test_example/', test_example, name='test_example'),
+	path('test_example/', test_example, name='test_example'),
 ]
 
 handler404 = 'models.errors.custom_404'

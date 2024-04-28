@@ -27,9 +27,9 @@ jobs:
           sudo chmod +x /usr/local/bin/docker-compose
       - name: enviroment check
         run: |
-		     pwd
-             ls -la
-             cat .env
+		    pwd
+            ls -la
+            cat .env
       - name: Build and start services
         run: |
                docker-compose up --build -d

@@ -27,10 +27,11 @@ jobs:
           sudo chmod +x /usr/local/bin/docker-compose
       - name: Build and start services
         run: |
-               docker-compose --verbose up --build -d
+               docker-compose up --build -d
+               docker-compose ps
+               docker-compose logs
       - name: Run tests
-        run: |
-              docker compose exec -it backend python manage.py test models 
+        run: docker compose exec -it backend python manage.py test models 
       - name: Clean up
         if: always()
         run: |

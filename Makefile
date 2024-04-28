@@ -6,6 +6,9 @@ all:
 stop:
 	docker-compose stop
 
+start:
+	docker-compose start
+
 down:
 	docker-compose down
 

@@ -28,6 +28,9 @@ SECRET_KEY = 'django-insecure-*cy0ir!0i0=c!stwh7&d7(&2-gar3_r%6(tc2#hz$ki9o^*0cc
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+# 課題提出時はDENUGモードをOFFにする
+# DEBUG = False
+
 ALLOWED_HOSTS = ['*']
 
 
@@ -58,8 +61,8 @@ ROOT_URLCONF = 'server.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
-        # 'DIRS': [os.path.join(BASE_DIR.parent, 'frontend')],
+        # 'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'DIRS': [os.path.join(BASE_DIR.parent, 'frontend')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -132,6 +135,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = 'static/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR.parent, 'frontend')
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field

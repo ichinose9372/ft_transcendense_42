@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Pong</title>
+    <!-- bootstrap -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+    />
+    <!-- dayjs -->
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
+    <!-- Chart.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.min.js"></script>
+    <!-- Three.js -->
+    <!-- TODO : Three.jsのCDNだけconsole errorでてる -->
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://cdn.jsdelivr.net/npm/three@0.163.0/build/three.module.js",
+          "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.163.0/examples/jsm/"
+        }
+      }
+    </script>
+    <!-- <script type="module">
+      import * as THREE from 'three';
+      // import { OrbitControls } from 'three/addons/OrbitControls.js';
+    </script> -->
+    <!-- google fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap"
+      rel="stylesheet"
+    />
+    <!-- custom css -->
+    {% load static %}
+    <link rel="stylesheet" href='{% static "css/font.css" %}' />
+    <link rel="stylesheet" href='{% static "css/global.css" %}' />
+    <!-- custom router js -->
+    <script src="{% static 'js/utils/router.js' %}"></script>
+    <script src="{% static 'js/game/start.js' %}"></script>
+    <script src="{% static 'js/game/top.js' %}"></script>
+    <script src="{% static 'js/dashboard/dashboard.js' %}"></script>
+  </head>
+  <body id="app">
+    {% block content %} {% endblock %}
+    <!-- bootstrap -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

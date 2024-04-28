@@ -17,14 +17,13 @@ function topEventHandlers() {
   }
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  function init() {
-    topEventHandlers();
-  }
-  window.addEventListener("popstate", (event) => {
-    handlePopState(event);
+function initTop() {
+  document.addEventListener("DOMContentLoaded", () => {
+    window.addEventListener("popstate", () => {
+      handlePopState();
+    });
     topEventHandlers();
   });
+}
 
-  init();
-});
+initTop();

@@ -1,3 +1,17 @@
+let myModal = null;
+
+function loadModalWithData(data) {
+  document.getElementById("tournamentNameDisplay").textContent =
+    data.tournament.name;
+  const list = document.getElementById("participantList");
+  list.innerHTML = "";
+  data.participants.forEach(function (participant) {
+    const li = document.createElement("li");
+    li.textContent = participant.name;
+    list.appendChild(li);
+  });
+}
+
 function addPlayer() {
   const playerList = document.getElementById("playerList");
   const playerCount = playerList.children.length + 1;
@@ -5,7 +19,7 @@ function addPlayer() {
   newPlayerDiv.classList.add("mb-4");
   newPlayerDiv.innerHTML = `
 			<form id="user${playerCount}" class="input-group">
-				<input type="text" class="form-control" id="name${playerCount}" placeholder="player name" oninput="checkStartButtonValid()"/>
+				<input type="text" class="form-control" id="name${playerCount}" placeholder="player name" maxlength="10" oninput="checkStartButtonValid()"/>
 				<button type="button" class="btn btn-danger input-group-append" onclick="removePlayer('user${playerCount}')")>
 					<i class="bi bi-trash"></i>
 				</button>
@@ -46,8 +60,14 @@ function startGame() {
       tournament: { name: tournamentName },
       participants: players.map((player) => ({ name: player })),
     };
-    console.log("data", data);
-    confirm("check console for data");
+    appState.setState(data);
+    appState.printState();
+    makeTournament();
+    loadModalWithData(data);
+    myModal = new bootstrap.Modal(document.getElementById("tournamentModal"), {
+      keyboard: false,
+    });
+    myModal.show();
   } else {
     alert("Please enter a tournament name and at least two players.");
   }
@@ -84,10 +104,10 @@ function startEventHandlers() {
   const startGameButton = document.getElementById("startGameButton");
   const addPlayerButton = document.getElementById("addPlayer");
   const tournamentNameInput = document.getElementById("tournamentName");
+  const tournamentModal = document.getElementById("tournamentModal");
 
   if (startGameButton) {
     startGameButton.addEventListener("click", () => {
-      // TODO : 画面遷移またはmodal
       startGame();
     });
   }
@@ -99,6 +119,28 @@ function startEventHandlers() {
   if (tournamentNameInput) {
     tournamentNameInput.addEventListener("input", checkStartButtonValid);
   }
+
+  // modalが閉じるときに背景のmodal-backdropを削除する
+  if (tournamentModal) {
+    tournamentModal.addEventListener("hidden.bs.modal", function () {
+      const backdrops = document.querySelectorAll(".modal-backdrop");
+      backdrops.forEach((backdrop) => backdrop.remove());
+
+      document.body.classList.remove("modal-open");
+    });
+  }
+
+  // Enterキーでsubmitされないようにする
+  const inputs = document.querySelectorAll('#playerList input[type="text"]');
+  inputs.forEach((input) => {
+    input.addEventListener("keydown", function (event) {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        return false;
+      }
+    });
+  });
+
   checkStartButtonValid();
 }
 

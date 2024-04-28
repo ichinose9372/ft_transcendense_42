@@ -44,10 +44,15 @@
     {% load static %}
     <link rel="stylesheet" href='{% static "css/font.css" %}' />
     <link rel="stylesheet" href='{% static "css/global.css" %}' />
+    <!-- favicon reference : https://www.irasutoya.com/2013/06/blog-post_2974.html -->
+    <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" />
     <!-- custom router js -->
+    <script src="{% static 'js/utils/class.js' %}"></script>
+    <script src="{% static 'js/utils/state.js' %}"></script>
     <script src="{% static 'js/utils/router.js' %}"></script>
     <script src="{% static 'js/game/start.js' %}"></script>
     <script src="{% static 'js/game/top.js' %}"></script>
+    <script src="{% static 'js/game/tournament.js' %}"></script>
     <script src="{% static 'js/dashboard/dashboard.js' %}"></script>
   </head>
   <body id="app">

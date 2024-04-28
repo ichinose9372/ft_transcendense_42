@@ -28,7 +28,7 @@ jobs:
       - name: Build and start services
         run: docker-compose up --build -d
       - name: Run tests
-        run: docker compose exec -it backend python manage.py test models 
+        run: docker compose exec backend python backend/manage.py test models
       - name: Clean up
         if: always()
         run: |

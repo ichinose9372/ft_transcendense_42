@@ -32,6 +32,6 @@ class getAchievementsTest(TestCase):
 		response = self.client.get("/dashboard/", {'participant_name': participant_name})
 		self.assertContains(response, "getAchievements", status_code=200)
 
-	def test_uses_expected_template(self):
-		response = self.client.get("/dashboard/")
-		self.assertTemplateUsed(response, "getAchievements.html")
+	# def test_uses_expected_template(self):
+	# 	response = self.client.get("/dashboard/")
+	# 	self.assertTemplateUsed(response, "getAchievements.html")

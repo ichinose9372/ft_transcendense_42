@@ -14,16 +14,15 @@ down:
 
 back:
 	@docker ps | grep trascen-backend-1 > /dev/null || (echo "Backend container is not running.")
-	docker exec -it trascen-backend-1 bash
+	docker-compose exec backend bash
 
 db: 
 	@docker ps | grep trascen-db-1 > /dev/null || (echo "db container is not running."; exit 1)
-	docker exec -it trascen-db-1 psql -h db -p 5432 -U user42 -d transcendence_db
+	docker-compose exec db psql -h db -p 5432 -U user42 -d transcendence_db
 
 test:
 	@docker ps | grep trascen-backend-1 > /dev/null || (echo "Backend container is not running.")
-	docker exec -it trascen-backend-1 python manage.py test models
-
+	docker-compose exec backend python backend/manage.py test models
 re:
 	docker-compose down
 	docker-compose up --build -d

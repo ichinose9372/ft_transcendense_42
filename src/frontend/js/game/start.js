@@ -102,14 +102,13 @@ function startEventHandlers() {
   checkStartButtonValid();
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  function init() {
-    startEventHandlers();
-  }
-
-  window.addEventListener("popstate", (event) => {
-    handlePopState(event);
+function initStart() {
+  document.addEventListener("DOMContentLoaded", () => {
+    window.addEventListener("popstate", () => {
+      handlePopState();
+    });
     startEventHandlers();
   });
-  init();
-});
+}
+
+initStart();

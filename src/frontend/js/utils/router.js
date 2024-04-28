@@ -17,11 +17,30 @@ function loadPage(url, callback) {
     });
 }
 
+// 戻る/進むボタンが押されたときにDOMを更新する関数
+function nonPushLoadPage(url, callback) {
+  fetch(url)
+    .then((response) => response.text())
+    .then((html) => {
+      document.getElementById("app").innerHTML = html;
+      if (callback) {
+        callback();
+      }
+    })
+    .catch((error) => {
+      console.error("Error loading the page: ", error);
+    });
+}
+
 // ブラウザの戻る/進むボタンが押されたときに発火する関数
-function handlePopState(event) {
-  if (event.state) {
-    document.getElementById("app").innerHTML = event.state.html;
-  } else {
-    location.reload();
+function handlePopState() {
+  url = window.location.pathname;
+  if (url === "/") {
+    callback = topEventHandlers;
+  } else if (url === "/start") {
+    callback = startEventHandlers;
+  } else if (url === "/dashboard") {
+    callback = dashboardEventHandlers;
   }
+  nonPushLoadPage(url, callback);
 }

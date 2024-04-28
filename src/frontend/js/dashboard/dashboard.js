@@ -31,6 +31,13 @@ function dashboardEventHandlers() {
         getAchievementsButton
       );
     });
+
+    participantNameInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        getAchievementsButton.click();
+      }
+    });
+
     getAchievementsButton.addEventListener("click", (e) => {
       const url = new URL("/dashboard", window.location.origin);
       url.searchParams.append("participant_name", participantNameInput.value);
@@ -39,16 +46,13 @@ function dashboardEventHandlers() {
   }
 }
 
-dashboardEventHandlers();
-
-document.addEventListener("DOMContentLoaded", () => {
-  function init() {
-    dashboardEventHandlers();
-  }
-
-  window.addEventListener("popstate", (event) => {
-    handlePopState(event);
+function initDashboard() {
+  document.addEventListener("DOMContentLoaded", () => {
+    window.addEventListener("popstate", () => {
+      handlePopState();
+    });
     dashboardEventHandlers();
   });
-  init();
-});
+}
+
+initDashboard();

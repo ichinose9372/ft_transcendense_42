@@ -1,0 +1,10 @@
+body {
+    margin: 0;
+    overflow: hidden;
+  }
+  
+  #game-container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+  }

@@ -7,16 +7,95 @@ function shuffleArray(array) {
   return array;
 }
 
-// 各回線に何試合あるか計算する関数（シードや余りも１試合とカウントされる）　[1回戦の回数，2回戦の回数，3回戦の回数，...]
-function calcRoundTime(participants_length) {
-  let length = participants_length;
-  const rounds = [];
+function makeMatch(
+  participants_length,
+  matchArray,
+  parentMatchId = "",
+  tournamentId,
+  count = 0
+) {
+  if (participants_length < 2) {
+    return;
+  } else if (participants_length > 3) {
+    const newMatch = new Match(parentMatchId, tournamentId);
+    matchArray.push(newMatch);
+    const newMatchId = newMatch.getMatchId();
+    const leftParticipants = Math.ceil(participants_length / 2);
+    const rightParticipants = Math.floor(participants_length / 2);
 
-  while (length > 1) {
-    length = Math.ceil(length / 2);
-    rounds.push(length);
+    makeMatch(
+      leftParticipants,
+      matchArray,
+      newMatchId,
+      tournamentId,
+      count + 1
+    );
+    makeMatch(
+      rightParticipants,
+      matchArray,
+      newMatchId,
+      tournamentId,
+      count + 1
+    );
+  } else if (participants_length === 3 || participants_length === 2) {
+    const newMatch = new Match(parentMatchId, tournamentId);
+    matchArray.push(newMatch);
+    if (participants_length === 3) {
+      parentMatchId = newMatch.getMatchId();
+      matchArray.push(new Match(parentMatchId, tournamentId));
+    }
   }
-  return rounds;
+}
+
+function findMostChildMatches(matches) {
+  // 親IDのセットを作成
+  const parentIds = new Set(matches.map((match) => match.parentMatchId));
+
+  // 親として一度も参照されていないマッチを返す
+  return matches.filter((match) => !parentIds.has(match.matchId));
+}
+
+function countParentMatches(matches, matchId) {
+  const parentMatchIds = matches.map((match) => match.parentMatchId);
+  return parentMatchIds.filter((parentMatchId) => parentMatchId === matchId)
+    .length;
+}
+
+function assignTournament(matchArray, participantArray) {
+  const mostChildMatches = findMostChildMatches(matchArray);
+
+  // mostChildMatchesの中に含まれるマッチに対して、出場者を割り当てる
+  for (const match of mostChildMatches) {
+    const leftParticipant = participantArray.shift();
+    const rightParticipant = participantArray.shift();
+    const matchId = match.getMatchId();
+    matchArray
+      .filter((match) => match.getMatchId() === matchId)
+      .forEach((match) => {
+        match.leftParticipant = leftParticipant.name;
+        match.rightParticipant = rightParticipant.name;
+      });
+  }
+
+  // 出場者が余っている場合、mostChildMatchesの親に対して順に割り当てる
+  if (participantArray.length > 0) {
+    for (const match of mostChildMatches) {
+      if (participantArray.length === 0) {
+        break;
+      }
+      const parentMatchId = match.getParentMatchId();
+      const parentMatchCount = countParentMatches(matchArray, parentMatchId);
+      if (parentMatchCount > 1) {
+        continue;
+      }
+      const leftParticipant = participantArray.shift();
+      matchArray
+        .filter((match) => match.getMatchId() === parentMatchId)
+        .forEach((match) => {
+          match.leftParticipant = leftParticipant.name;
+        });
+    }
+  }
 }
 
 function makeTournament() {
@@ -25,37 +104,32 @@ function makeTournament() {
 
   // 出場者をランダムに並び替える
   const shuffledParticipants = shuffleArray(participants);
-
-  // participantクラスの配列に変換
   const participantArray = shuffledParticipants.map((participant) => {
+    return { name: participant.name };
+  });
+
+  // tournamentクラスのインスタンスを生成
+  const tournamentInstance = new Tournament(tournament.name);
+
+  // 試合を生成
+  const matchArray = [];
+  makeMatch(
+    participantArray.length,
+    matchArray,
+    "",
+    tournamentInstance.getTournamentId(),
+    0
+  );
+
+  // participantArrayの深いコピーを作成
+  const copiedParticipantArray = participantArray.map((participant) => {
     return new Participant(participant.name);
   });
-	// tournamentクラスのインスタンスを生成
-	const tournamentInstance = new Tournament(tournament.name);
-	const totalMatchNumber = participantArray.length - 1;
-
-	console.log(tournamentInstance);
-  console.log(participantArray);
-
-  // 2か3の固まりになるまで割っていきグループにする
-  // 決勝の試合から順に組み合わせを作る，左と右の試合を持つようにする Matchクラスのインスタンスを生成
-	// 2か3の固まりになるまでは試合に出場者を登録しない
-	for (let i = 0; i < participantArray.length; i++) {
-		const match = new Match();
-
-
-	}
-
-  // 2の場合はそのまま，3の場合は1人を2人に分ける
-
-  // 1回戦の組み合わせを作る
-
-  // 2回戦以降の組み合わせを作る
-
-  //
-
-  // 参加者の長さからトーナメントのラウンド数を計算
-  const rounds = calcRoundTime(participants.length);
-
-  console.log(rounds);
+  // トーナメントに出場者を割り当てる
+  assignTournament(matchArray, participantArray);
+  return {
+    tournament: tournamentInstance,
+    participants: copiedParticipantArray,
+    matches: matchArray,
+  };
 }

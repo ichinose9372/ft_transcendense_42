@@ -21,6 +21,10 @@ class AppStore {
 	getStateByKey(key) {
 		return this.state[key];
 	}
+
+  clearState() {
+    this.state = {};
+  }
 }
 
 

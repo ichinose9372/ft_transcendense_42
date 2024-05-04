@@ -1,5 +1,7 @@
+const { v4: uuidv4 } = require("uuid");
+
 class Participant {
-  constructor(participantName, participantId = self.crypto.randomUUID()) {
+  constructor(participantId = uuidv4(), participantName) {
     this.participantId = participantId;
     this.participantName = participantName;
   }
@@ -14,7 +16,7 @@ class Participant {
 
 class Match {
   constructor(parentMatchId, tournamentId) {
-    this.matchId = self.crypto.randomUUID();
+    this.matchId = uuidv4();
     this.leftParticipant = "";
     this.rightParticipant = "";
     this.leftScore = 0;
@@ -75,7 +77,7 @@ class Match {
 
 class Tournament {
   constructor(tournamentName) {
-    this.tournamentId = self.crypto.randomUUID();
+    this.tournamentId = uuidv4();
     this.tournamentName = tournamentName;
   }
 
@@ -86,3 +88,5 @@ class Tournament {
     return this.tournamentName;
   }
 }
+
+module.exports = { Participant, Match, Tournament };

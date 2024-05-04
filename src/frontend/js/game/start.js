@@ -61,8 +61,15 @@ function startGame() {
       participants: players.map((player) => ({ name: player })),
     };
     appState.setState(data);
+    const info = makeTournament();
+    // appState.clearState();
+    appState.setState({
+      tournament: info.tournament,
+      matches: info.matches,
+      participants: info.participants,
+    });
     appState.printState();
-    makeTournament();
+    // TODO ここでモーダルを表示する, モーダル内の描画とデータの渡し方を考える
     loadModalWithData(data);
     myModal = new bootstrap.Modal(document.getElementById("tournamentModal"), {
       keyboard: false,
@@ -105,6 +112,9 @@ function startEventHandlers() {
   const addPlayerButton = document.getElementById("addPlayer");
   const tournamentNameInput = document.getElementById("tournamentName");
   const tournamentModal = document.getElementById("tournamentModal");
+  const startTournamentButton = document.getElementById(
+    "startTournamentButton"
+  );
 
   if (startGameButton) {
     startGameButton.addEventListener("click", () => {
@@ -118,6 +128,12 @@ function startEventHandlers() {
 
   if (tournamentNameInput) {
     tournamentNameInput.addEventListener("input", checkStartButtonValid);
+  }
+
+  if (startTournamentButton) {
+    startTournamentButton.addEventListener("click", () => {
+      console.log("start tournament");
+    });
   }
 
   // modalが閉じるときに背景のmodal-backdropを削除する

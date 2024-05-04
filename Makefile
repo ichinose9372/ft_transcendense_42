@@ -1,5 +1,7 @@
+.DEFAULT_GOAL := all
+
 all:
-	docker-compose up --build
+	docker-compose up --build -d
 
 stop:
 	docker-compose stop
@@ -10,14 +12,28 @@ start:
 down:
 	docker-compose down
 
-backend:
+back:
+	@docker ps | grep trascen-backend-1 > /dev/null || (echo "Backend container is not running.")
 	docker-compose exec backend bash
 
-env:
-	cp .env.example .env
+db:
+	@docker ps | grep trascen-db-1 > /dev/null || (echo "db container is not running."; exit 1)
+	docker-compose exec db psql -h db -p 5432 -U user42 -d transcendence_db
 
-ps:
-	docker-compose ps
+test:
+	@docker ps | grep trascen-backend-1 > /dev/null || (echo "Backend container is not running.")
+	docker-compose exec backend python backend/manage.py test models
+re:
+	docker-compose down
+	docker-compose up --build -d
+p:
+	docker ps
+
+logs-%:
+	docker-compose logs $*
+
+logs:
+	docker-compose logs
 
 front-build:
 	docker build -t frontend-test -f ./src/frontend/Dockerfile ./src/frontend
@@ -25,4 +41,17 @@ front-build:
 front-run:
 	docker run -it --rm -p 3000:3000 -v ./src/frontend/:/app  --name frontend-test frontend-test bash
 
-.PHONY: all stop start down backend env ps
+
+help:
+	@echo "Usage:"
+	@echo "  make [command]"
+	@echo "  Commands:"
+	@echo "  all      Start the application containers"
+	@echo "  stop     Stop the application containers"
+	@echo "  back     exec backend container"
+	@echo "  db       exec db container and login to psql"
+	@echo "  re       Restart the application containers"
+	@echo "  p        Show running containers"
+	@echo "  logs     Show logs of all containers"
+	@echo "  logs-<container> Show logs of a specific container"
+	@echo "  help     Show this help message"

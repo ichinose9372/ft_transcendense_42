@@ -54,6 +54,8 @@
     <script src="{% static 'js/game/top.js' %}"></script>
     <script src="{% static 'js/game/tournament.js' %}"></script>
     <script src="{% static 'js/dashboard/dashboard.js' %}"></script>
+    <!-- TODO : testData.jsは開発用のデータなので本番環境では削除 -->
+    <script src="{% static 'js/game/testData.js' %}"></script>
   </head>
   <body id="app">
     {% block content %} {% endblock %}

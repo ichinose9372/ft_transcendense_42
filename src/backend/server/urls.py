@@ -3,7 +3,7 @@ from django.urls import path
 
 from handlers.getClientApp import top, start
 from handlers.getAchievements import getAchievements
-from handlers.storeTournamentResult import storeTournamentResult
+from handlers.storeTournamentResult import storeTournamentResult, save_test
 from models.views import test_example
 from django.conf.urls import handler404
 
@@ -22,6 +22,7 @@ urlpatterns = [
 	# path('dashboard/<str:participant_name>/', getAchievements, name="dashboard"),
 	# path('', getClientApp, name=""),
 	path('test_example/', test_example, name='test_example'),
+	path('game/save_test/', save_test, name='save_test'),
 ]
 
 handler404 = 'models.errors.custom_404'

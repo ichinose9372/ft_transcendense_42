@@ -38,7 +38,7 @@ function removePlayer(userId) {
   checkStartButtonValid();
 }
 
-function startGame() {
+function getFormData() {
   const playerList = document.getElementById("playerList");
   const players = [];
   for (let i = 0; i < playerList.children.length; i++) {
@@ -56,10 +56,17 @@ function startGame() {
   const tournamentName = document.getElementById("tournamentName").value.trim();
 
   if (players.length > 1 && tournamentName !== "") {
-    const data = {
+    return {
       tournament: { name: tournamentName },
       participants: players.map((player) => ({ name: player })),
     };
+  } else {
+    alert("Please enter a tournament name and at least two players.");
+  }
+}
+
+function startGame() {
+    const data = getFormData();
     appState.setState(data);
     const info = makeTournament();
     // appState.clearState();
@@ -75,9 +82,6 @@ function startGame() {
       keyboard: false,
     });
     myModal.show();
-  } else {
-    alert("Please enter a tournament name and at least two players.");
-  }
 }
 
 function checkStartButtonValid() {
@@ -115,6 +119,8 @@ function startEventHandlers() {
   const startTournamentButton = document.getElementById(
     "startTournamentButton"
   );
+  // TODO : test不要になったら削除する
+  const testDataButton = document.getElementById("testDataButton");
 
   if (startGameButton) {
     startGameButton.addEventListener("click", () => {
@@ -134,6 +140,11 @@ function startEventHandlers() {
     startTournamentButton.addEventListener("click", () => {
       console.log("start tournament");
     });
+  }
+
+  // TODO : test不要になったら削除する
+  if (testDataButton) {
+    testDataButton.addEventListener("click", testDataPush);
   }
 
   // modalが閉じるときに背景のmodal-backdropを削除する

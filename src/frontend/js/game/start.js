@@ -1,3 +1,17 @@
+let myModal = null;
+
+function loadModalWithData(data) {
+  document.getElementById("tournamentNameDisplay").textContent =
+    data.tournament.name;
+  const list = document.getElementById("participantList");
+  list.innerHTML = "";
+  data.participants.forEach(function (participant) {
+    const li = document.createElement("li");
+    li.textContent = participant.name;
+    list.appendChild(li);
+  });
+}
+
 function addPlayer() {
   const playerList = document.getElementById("playerList");
   const playerCount = playerList.children.length + 1;
@@ -5,7 +19,7 @@ function addPlayer() {
   newPlayerDiv.classList.add("mb-4");
   newPlayerDiv.innerHTML = `
 			<form id="user${playerCount}" class="input-group">
-				<input type="text" class="form-control" id="name${playerCount}" placeholder="player name" oninput="checkStartButtonValid()"/>
+				<input type="text" class="form-control" id="name${playerCount}" placeholder="player name" maxlength="10" oninput="checkStartButtonValid()"/>
 				<button type="button" class="btn btn-danger input-group-append" onclick="removePlayer('user${playerCount}')")>
 					<i class="bi bi-trash"></i>
 				</button>
@@ -24,7 +38,7 @@ function removePlayer(userId) {
   checkStartButtonValid();
 }
 
-function startGame() {
+function getFormData() {
   const playerList = document.getElementById("playerList");
   const players = [];
   for (let i = 0; i < playerList.children.length; i++) {
@@ -42,15 +56,32 @@ function startGame() {
   const tournamentName = document.getElementById("tournamentName").value.trim();
 
   if (players.length > 1 && tournamentName !== "") {
-    const data = {
+    return {
       tournament: { name: tournamentName },
       participants: players.map((player) => ({ name: player })),
     };
-    console.log("data", data);
-    confirm("check console for data");
   } else {
     alert("Please enter a tournament name and at least two players.");
   }
+}
+
+function startGame() {
+    const data = getFormData();
+    appState.setState(data);
+    const info = makeTournament();
+    // appState.clearState();
+    appState.setState({
+      tournament: info.tournament,
+      matches: info.matches,
+      participants: info.participants,
+    });
+    appState.printState();
+    // TODO ここでモーダルを表示する, モーダル内の描画とデータの渡し方を考える
+    loadModalWithData(data);
+    myModal = new bootstrap.Modal(document.getElementById("tournamentModal"), {
+      keyboard: false,
+    });
+    myModal.show();
 }
 
 function checkStartButtonValid() {
@@ -84,10 +115,15 @@ function startEventHandlers() {
   const startGameButton = document.getElementById("startGameButton");
   const addPlayerButton = document.getElementById("addPlayer");
   const tournamentNameInput = document.getElementById("tournamentName");
+  const tournamentModal = document.getElementById("tournamentModal");
+  const startTournamentButton = document.getElementById(
+    "startTournamentButton"
+  );
+  // TODO : test不要になったら削除する
+  const testDataButton = document.getElementById("testDataButton");
 
   if (startGameButton) {
     startGameButton.addEventListener("click", () => {
-      // TODO : 画面遷移またはmodal
       startGame();
     });
   }
@@ -99,6 +135,39 @@ function startEventHandlers() {
   if (tournamentNameInput) {
     tournamentNameInput.addEventListener("input", checkStartButtonValid);
   }
+
+  if (startTournamentButton) {
+    startTournamentButton.addEventListener("click", () => {
+      console.log("start tournament");
+    });
+  }
+
+  // TODO : test不要になったら削除する
+  if (testDataButton) {
+    testDataButton.addEventListener("click", testDataPush);
+  }
+
+  // modalが閉じるときに背景のmodal-backdropを削除する
+  if (tournamentModal) {
+    tournamentModal.addEventListener("hidden.bs.modal", function () {
+      const backdrops = document.querySelectorAll(".modal-backdrop");
+      backdrops.forEach((backdrop) => backdrop.remove());
+
+      document.body.classList.remove("modal-open");
+    });
+  }
+
+  // Enterキーでsubmitされないようにする
+  const inputs = document.querySelectorAll('#playerList input[type="text"]');
+  inputs.forEach((input) => {
+    input.addEventListener("keydown", function (event) {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        return false;
+      }
+    });
+  });
+
   checkStartButtonValid();
 }
 

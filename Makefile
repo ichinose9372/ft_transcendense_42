@@ -16,7 +16,7 @@ back:
 	@docker ps | grep trascen-backend-1 > /dev/null || (echo "Backend container is not running.")
 	docker-compose exec backend bash
 
-db: 
+db:
 	@docker ps | grep trascen-db-1 > /dev/null || (echo "db container is not running."; exit 1)
 	docker-compose exec db psql -h db -p 5432 -U user42 -d transcendence_db
 
@@ -34,6 +34,13 @@ logs-%:
 
 logs:
 	docker-compose logs
+
+front-build:
+	docker build -t frontend-test -f ./src/frontend/Dockerfile ./src/frontend
+
+front-run:
+	docker run -it --rm -p 3000:3000 -v ./src/frontend/:/app  --name frontend-test frontend-test bash
+
 
 help:
 	@echo "Usage:"

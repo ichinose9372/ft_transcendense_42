@@ -1,11 +1,9 @@
 function topEventHandlers() {
-  const startTournamentButton = document.getElementById(
-    "startTournamentButton"
-  );
+  const startButton = document.getElementById("startButton");
   const dashboardButton = document.getElementById("dashboardButton");
 
-  if (startTournamentButton) {
-    startTournamentButton.addEventListener("click", () => {
+  if (startButton) {
+    startButton.addEventListener("click", () => {
       loadPage("/start", startEventHandlers);
     });
   }

@@ -52,10 +52,11 @@
     <script src="{% static 'js/utils/router.js' %}"></script>
     <script src="{% static 'js/game/start.js' %}"></script>
     <script src="{% static 'js/game/top.js' %}"></script>
-    <script src="{% static 'js/game/tournament.js' %}"></script>
+    <script src="{% static 'js/tournament/tournament.js' %}"></script>
+    <script src="{% static 'js/tournament/tournamentDraw.js' %}"></script>
     <script src="{% static 'js/dashboard/dashboard.js' %}"></script>
     <!-- TODO : testData.jsは開発用のデータなので本番環境では削除 -->
-    <script src="{% static 'js/game/testData.js' %}"></script>
+    <script src="{% static 'js/tournament/testData.js' %}"></script>
   </head>
   <body id="app">
     {% block content %} {% endblock %}

@@ -16,6 +16,7 @@ services:
     env_file:
       - .env
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     volumes:
       - "${WORKDIR_LOCAL}/src:/app"

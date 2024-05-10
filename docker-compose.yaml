@@ -8,8 +8,8 @@ services:
       - "5432:5432"
     healthcheck:
       test: ["CMD-SHELL", "psql -h db -p 5432 -U ${POSTGRES_USER} -d ${POSTGRES_DB} -c 'SELECT 1'"]
-      interval: 10s
-      timeout: 5s
+      interval: 5s
+      timeout: 2s
       retries: 5
   backend:
     build:

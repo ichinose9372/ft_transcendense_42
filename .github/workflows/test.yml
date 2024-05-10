@@ -19,6 +19,7 @@ jobs:
            echo "POSTGRES_DB=${{ secrets.POSTGRES_DB }}" >> .env
            echo "POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}" >> .env
            echo "POSTGRES_USER=${{ secrets.POSTGRES_USER }}" >> .env
+           echo "PGPASSWORD = ${{ secrets.PGPASSWORD }}" >> .env
            echo "Current .env content:"
            cat .env
       - name: Install Docker Compose
@@ -27,11 +28,6 @@ jobs:
           sudo chmod +x /usr/local/bin/docker-compose
       - name: Build and start services
         run: docker-compose up --build -d
-      - name: docker-compose ps
-        run: |
-            docker-compose ps
-            ls
-            pwd
       - name: Run tests
         run: docker compose exec backend python backend/manage.py test models
       - name: Clean up

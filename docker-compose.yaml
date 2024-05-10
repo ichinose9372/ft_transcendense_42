@@ -6,6 +6,11 @@ services:
     restart: always
     ports:
       - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "psql -h db -p 5432 -U ${POSTGRES_USER} -d ${POSTGRES_DB} -c 'SELECT 1'"]
+      interval: 5s
+      timeout: 2s
+      retries: 5
   backend:
     build:
       context: .
@@ -16,6 +21,7 @@ services:
     env_file:
       - .env
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     volumes:
       - "${WORKDIR_LOCAL}/src:/app"

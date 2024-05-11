@@ -1,4 +1,38 @@
+volumes:
+  es_data:
+    driver: local
+
 services:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch-oss:6.2.4
+    container_name: elasticsearch
+    environment:
+      discovery.type: single-node
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    volumes:
+      - es_data:/usr/share/elasticsearch/data
+
+  logstash:
+    image: docker.elastic.co/logstash/logstash-oss:6.2.4
+    container_name: logstash
+    volumes:
+      - ./pipeline:/usr/share/logstash/pipeline
+      - ./log:/var/log
+    depends_on:
+      - elasticsearch
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana-oss:6.2.4
+    container_name: kibana
+    environment:
+      ELASTICSEARCH_URL: http://elasticsearch:9200
+    ports:
+      - "5601:5601"
+    depends_on:
+      - elasticsearch
+
   db:
     build: src/db
     env_file:
@@ -11,6 +45,7 @@ services:
       interval: 5s
       timeout: 2s
       retries: 5
+
   backend:
     build:
       context: .

@@ -43,7 +43,6 @@ front-build:
 front-run:
 	docker run -it --rm -p 3000:3000 -v ./src/frontend/:/app  --name frontend-test frontend-test bash
 
-
 help:
 	@echo "Usage:"
 	@echo "  make [command]"
@@ -59,3 +58,5 @@ help:
 	@echo "  front-build Build the frontend container"
 	@echo "  front-run Run the frontend container"
 	@echo "  help     Show this help message"
+
+.PHONY: all stop back db re p logs logs-% front-build front-run help

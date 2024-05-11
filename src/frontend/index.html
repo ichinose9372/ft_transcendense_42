@@ -1,26 +1,22 @@
-<!-- TODO : ファイル名変えたい+Djangoの形式に合わせたい -->
 <!DOCTYPE html>
 <html lang="ja">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Pong Game</title>
-        <link rel="stylesheet" href="css/style.css"> <!-- CSSファイルの読み込み -->
-    </head>
-    <body>
-        <!-- ユーザー名表示エリア -->
-        <div id="userInfo">
-            <span id="userName1">User1</span>
-            <span id="userName2">User2</span>
-        </div>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3D Pong Game</title>
+  <link rel="stylesheet" href="./css/pong.css">
+</head>
+<body>
+  <div id="game-container"></div>
 
-        <div id="gameArea">
-            <canvas id="pongCanvas" width="800" height="400"></canvas>
-        </div>
+  <button id="start-button">Start Game</button>
+  <button id="pause-button" style="display: none;">Pause Game</button>
+  <div id="score">
+    <span id="left-score">0</span> - <span id="right-score">0</span>
+  </div>
+  <div id="game-over-message"></div>
 
-        <button id="startButton">ゲーム開始</button>
-
-        <script src="js/pong.js"></script>
-    </body>
-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="./js/game/pong.js"></script>
+</body>
 </html>

@@ -14,7 +14,7 @@ class TopPageTest(TestCase):
 		self.assertContains(response, "Pong", status_code=200)
 	def test_top_page_uses_expected_template(self):
 		response = self.client.get("/")
-		self.assertTemplateUsed(response, "top.html")
+		self.assertTemplateUsed(response, "templates/top.html")
 
 class PageNotFoundTest(TestCase):
 	def test_returns_404_and_expected_title(self):
@@ -23,7 +23,7 @@ class PageNotFoundTest(TestCase):
 
 	def test_uses_expected_template(self):
 		response = self.client.get("/nosuchapage/")
-		self.assertTemplateUsed(response, "404.html")
+		self.assertTemplateUsed(response, "templates/404.html")
 
 # snemoto for query_paramator
 class getAchievementsTest(TestCase):

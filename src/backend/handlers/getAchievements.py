@@ -14,4 +14,4 @@ def getAchievements(request):
     data = {
         'participant_name': participant_name
 	}
-    return render(request, "dashboard.html", {'data': data})
+    return render(request, "templates/dashboard.html", {'data': data})

@@ -99,6 +99,15 @@ function updatePaddles() {
   }
 }
 
+// キーボードのイベントリスナーを追加
+document.addEventListener('keydown', (event) => {
+  keys[event.key] = true;
+});
+
+document.addEventListener('keyup', (event) => {
+  keys[event.key] = false;
+});
+
 // キーボードの入力を保持するオブジェクト
 const keys = {
   w: false,

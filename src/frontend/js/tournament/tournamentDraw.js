@@ -10,6 +10,8 @@ function tournamentDraw() {
   const state = appState.getState();
   const matches = state.matches;
 
+  // TODO : 規則的に配置できるようにする
+
   // leftParticipantとrightParticipantが埋まっているものだけを抽出
   const firstMatches = matches.filter((match) => {
     return match.leftParticipant !== "" && match.rightParticipant !== "";

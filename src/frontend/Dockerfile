@@ -14,3 +14,5 @@ RUN npm install && \
 	npm install --save-dev jest
 
 RUN sed -i 's/"test": "echo \\"Error: no test specified\\" && exit 1"/"test": "jest"/g' /app/package.json
+
+CMD ["npm", "test"]

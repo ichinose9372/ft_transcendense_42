@@ -37,12 +37,8 @@ logs-%:
 logs:
 	docker-compose logs
 
-front-build:
-	docker build -t frontend-test -f ./src/frontend/Dockerfile ./src/frontend
-
-front-run:
-	docker run -it --rm -p 3000:3000 -v ./src/frontend/:/app  --name frontend-test frontend-test bash
-
+frontend-test:
+	docker build -t frontend-test -f ./src/frontend/Dockerfile ./src/frontend && docker run -it --rm -p 3000:3000 -v ./src/frontend:/app --name frontend-test frontend-test
 
 help:
 	@echo "Usage:"
@@ -56,6 +52,5 @@ help:
 	@echo "  p        Show running containers"
 	@echo "  logs     Show logs of all containers"
 	@echo "  logs-<container> Show logs of a specific container"
-	@echo "  front-build Build the frontend container"
-	@echo "  front-run Run the frontend container"
+	@echo "  frontend-test Run frontend tests"
 	@echo "  help     Show this help message"

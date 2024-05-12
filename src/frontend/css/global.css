@@ -1,0 +1,22 @@
+
+.seed-participant {
+	--line-length-w: 100px;
+	--line-length-h: 70px;
+	--line-color: black;
+  border: 1px solid black;
+  border-radius: 5px;
+  width: 12ch;
+  position: relative;
+}
+
+.participant-left,
+.participant-right {
+	--line-length-w: 50px;
+	--line-length-h: 20px;
+	--line-color-left: black;
+	--line-color-right: black;
+  border: 1px solid black;
+  border-radius: 5px;
+  width: 12ch;
+  position: relative;
+}

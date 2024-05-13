@@ -22,9 +22,7 @@ db:
 	docker-compose exec db psql -h db -p 5432 -U user42 -d transcendence_db
 	# If you want to exit the container, use the '\q' command.
 
-test:
-	@docker ps | grep trascen-backend-1 > /dev/null || (echo "Backend container is not running.")
-	docker-compose exec backend python backend/manage.py test models
+
 re:
 	docker-compose down
 	docker-compose up --build -d
@@ -36,6 +34,14 @@ logs-%:
 
 logs:
 	docker-compose logs
+
+# Tests
+
+test: backend-test frontend-test
+
+backend-test:
+	@docker ps | grep trascen-backend-1 > /dev/null || (echo "Backend container is not running.")
+	docker-compose exec backend python backend/manage.py test models
 
 frontend-test:
 	docker build -t frontend-test -f ./src/frontend/Dockerfile ./src/frontend && docker run -it --rm -p 3000:3000 -v ./src/frontend:/app --name frontend-test frontend-test

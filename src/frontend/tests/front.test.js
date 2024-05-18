@@ -1,24 +1,3 @@
-// jsファイル全て読み込む
-// const sum = require("../js/game/tournament.js");
-
-// describe("frontend tests example", () => {
-//   test("adds 1 + 2 to equal 3", () => {
-//     expect(sum(1, 2)).toBe(3);
-//   });
-// });
-
-// jsファイルをすべて読み込んでこのファイルに展開する関数
-// const fs = require("fs");
-// const path = require("path");
-
-// const jsDir = path.join(__dirname, "../js/game/");
-// const files = fs.readdirSync(jsDir);
-// files.forEach((file) => {
-//   if (file.endsWith(".js")) {
-//     require(path.join(jsDir, file));
-//   }
-// });
-
 const { v4: uuidv4 } = require("uuid");
 const { makeMatch } = require("./makeMatch.js");
 const { assignTournament, findMostChildMatches } = require("./assignTournament.js");

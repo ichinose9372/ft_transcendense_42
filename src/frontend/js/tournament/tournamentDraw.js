@@ -1,3 +1,31 @@
+function organizeMatchesByRound(matches) {
+  const matchesByRound = [];
+
+  const finalMatch = matches.find((match) => match.parentMatchId === "");
+  const finalMatchId = finalMatch.matchId;
+  matchesByRound.push([finalMatch]);
+
+  let nextMatches = matches.filter(
+    (match) => match.parentMatchId === finalMatchId
+  );
+  while (nextMatches.length > 0) {
+    matchesByRound.push(nextMatches);
+    const nextMatchIds = nextMatches.map((match) => match.matchId);
+    nextMatches = matches.filter((match) =>
+      nextMatchIds.includes(match.parentMatchId)
+    );
+  }
+  console.log("matchesByRound", matchesByRound);
+  return matchesByRound;
+}
+
+function truncateName(name, maxLength=6) {
+  if (name.length > maxLength) {
+    return name.slice(0, maxLength) + "...";
+  }
+  return name;
+}
+
 function tournamentDraw() {
   const parent = document.getElementById("tournamentDraw");
   if (parent === null) {
@@ -13,169 +41,33 @@ function tournamentDraw() {
   tournamentName.innerHTML = "Tournament : " + state.tournament.tournamentName;
   // TODO : 規則的に配置できるようにする
 
-  // leftParticipantとrightParticipantが埋まっているものだけを抽出
-  const firstMatches = matches.filter((match) => {
-    return match.leftParticipant !== "" && match.rightParticipant !== "";
-  });
-  // const seedMatches = matches.filter((match) => {
-  //   return (
-  //     (match.leftParticipant === "" && match.rightParticipant !== "") ||
-  //     (match.leftParticipant !== "" && match.rightParticipant === "")
-  //   );
-  // });
-  // firstMatchesの中から、親の試合の参加者が片方だけのものを抽出
-  const firstMatchesWithSeed = firstMatches.filter((match) => {
-    const parentMatchId = match.parentMatchId;
-    const parentMatch = matches.find(
-      (match) => match.matchId === parentMatchId
-    );
-    if (parentMatch !== undefined) {
-      return (
-        (parentMatch.leftParticipant === "" &&
-          parentMatch.rightParticipant !== "") ||
-        (parentMatch.leftParticipant !== "" &&
-          parentMatch.rightParticipant === "")
-      );
+  const matchesByRound = organizeMatchesByRound(matches);
+  // 配列の１つめの配列から順番にdiv要素を作成していく，次の配列はその下に並ぶようにしていく
+  for (let i = 0; i < matchesByRound.length; i++) {
+    const matchesInRound = matchesByRound[i];
+    const roundDiv = document.createElement("div");
+    roundDiv.classList.add("round", "mb-3", "mt-3", "p-1");
+    for (let j = 0; j < matchesInRound.length; j++) {
+      const match = matchesInRound[j];
+      const matchDiv = document.createElement("div");
+      matchDiv.classList.add("match", "mb-3", "mt-3", "p-1");
+      matchDiv.setAttribute("data-match-id", match.matchId);
+      const leftParticipantTruncated = truncateName(match.leftParticipant);
+      const rightParticipantTruncated = truncateName(match.rightParticipant);
+
+      const winner = match.getWinner();
+
+      const leftClass = winner === match.leftParticipant ? 'participant-name winner' : 'participant-name';
+      const rightClass = winner === match.rightParticipant ? 'participant-name winner' : 'participant-name';
+
+
+      matchDiv.innerHTML = `<a href="#" class="${leftClass}" data-bs-toggle="tooltip" title="${match.leftParticipant}">${leftParticipantTruncated}</a> ${match.leftScore} - ${match.rightScore} <a href="#" class="${rightClass}" data-bs-toggle="tooltip" title="${match.rightParticipant}">${rightParticipantTruncated}</a>`;
+      roundDiv.appendChild(matchDiv);
     }
-  });
-
-  // firstMatchesの中から，firstMatchesWithSeedに含まれないものを抽出
-  const firstMatchesNoSeed = firstMatches.filter((match) => {
-    return !firstMatchesWithSeed.includes(match);
-  });
-
-  const groupSeedMatches = firstMatchesWithSeed.map((match) => {
-    const parentMatchId = match.parentMatchId;
-    const parentMatch = matches.find(
-      (match) => match.matchId === parentMatchId
-    );
-    return {
-      firstMatch: match,
-      parentMatch: parentMatch,
-    };
-  });
-
-  const otherMatches = matches.filter((match) => {
-    return (
-      !firstMatches.includes(match) && !firstMatchesWithSeed.includes(match)
-    );
-  });
-
-  console.log("firstMatchesNoSeed", firstMatchesNoSeed);
-  console.log("groupSeedMatches", groupSeedMatches);
-  console.log("otherMatches", otherMatches);
-
-  for (let i = 0; i < groupSeedMatches.length; i++) {
-    const groupSeedMatch = groupSeedMatches[i];
-    const firstMatch = groupSeedMatch.firstMatch;
-    const parentMatch = groupSeedMatch.parentMatch;
-    const parentMatchParticipantDiv = document.createElement("div");
-    // const firstMatchLeftParticipantDiv = document.createElement("div");
-    // const firstMatchRightParticipantDiv = document.createElement("div");
-    const firstMatchDiv = document.createElement("div");
-    parentMatchParticipantDiv.classList.add(
-      "seed-participant",
-      "mb-3",
-      "mt-3",
-      "p-1",
-      "text-center"
-    );
-    // firstMatchLeftParticipantDiv.classList.add(
-    //   "participant-left",
-    //   "mb-1",
-    //   "p-1",
-    //   "text-center"
-    // );
-    // firstMatchRightParticipantDiv.classList.add(
-    //   "participant-right",
-    //   "mb-1",
-    //   "p-1",
-    //   "text-center"
-    // );
-    firstMatchDiv.classList.add(
-      "participant-left",
-      "mb-1",
-      "p-1",
-      "text-center"
-    );
-    parentMatchParticipantDiv.innerHTML =
-      parentMatch.leftParticipant || parentMatch.rightParticipant;
-    // firstMatchLeftParticipantDiv.innerHTML = firstMatch.leftParticipant;
-    // firstMatchRightParticipantDiv.innerHTML = firstMatch.rightParticipant;
-    firstMatchDiv.innerHTML =
-      firstMatch.leftParticipant +
-      " : " +
-      firstMatch.leftScore +
-      "<br>vs<br>" +
-      firstMatch.rightParticipant +
-      " : " +
-      firstMatch.rightScore;
-
-    parent.appendChild(parentMatchParticipantDiv);
-    // parent.appendChild(firstMatchLeftParticipantDiv);
-    // parent.appendChild(firstMatchRightParticipantDiv);
-    parent.appendChild(firstMatchDiv);
+    parent.appendChild(roundDiv);
   }
 
-  for (let i = 0; i < firstMatchesNoSeed.length; i++) {
-    const firstMatch = firstMatchesNoSeed[i];
-    // const firstMatchLeftParticipantDiv = document.createElement("div");
-    // const firstMatchRightParticipantDiv = document.createElement("div");
-    // firstMatchLeftParticipantDiv.classList.add(
-    //   "participant-left",
-    //   "mb-1",
-    //   "p-1",
-    //   "text-center"
-    // );
-    // firstMatchRightParticipantDiv.classList.add(
-    //   "participant-right",
-    //   "mb-1",
-    //   "p-1",
-    //   "text-center"
-    // );
-    // firstMatchLeftParticipantDiv.innerHTML = firstMatch.leftParticipant;
-    // firstMatchRightParticipantDiv.innerHTML = firstMatch.rightParticipant;
+  const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+  const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
 
-    // parent.appendChild(firstMatchLeftParticipantDiv);
-    // parent.appendChild(firstMatchRightParticipantDiv);
-
-    const firstMatchDiv = document.createElement("div");
-    firstMatchDiv.classList.add(
-      "participant-left",
-      "mb-1",
-      "p-1",
-      "text-center"
-    );
-    firstMatchDiv.innerHTML =
-      firstMatch.leftParticipant +
-      " : " +
-      firstMatch.leftScore +
-      "<br>vs<br>" +
-      firstMatch.rightParticipant +
-      " : " +
-      firstMatch.rightScore;
-    parent.appendChild(firstMatchDiv);
-  }
-
-  // otherMatchesを子供の位置から計算して配置していく
-  // for (let i = 0; i < otherMatches.length; i++) {
-  //   const otherMatch = otherMatches[i];
-  //   const parentMatch = matches.find(
-  //     (match) => match.matchId === otherMatch.parentMatchId
-  //   );
-  //   const parentMatchDiv = parent.querySelector(
-  //     `[data-match-id="${parentMatch.matchId}"]`
-  //   );
-  //   const parentMatchParticipantDiv = document.createElement("div");
-  //   const otherMatchDiv = document.createElement("div");
-  //   parentMatchParticipantDiv.classList.add("participant", "mb-1", "p-1", "text-center");
-  //   otherMatchDiv.classList.add("participant", "mb-1", "p-1", "text-center");
-  //   parentMatchParticipantDiv.innerHTML =
-  //     parentMatch.leftParticipant || parentMatch.rightParticipant;
-  //   otherMatchDiv.innerHTML =
-  //     otherMatch.leftParticipant || otherMatch.rightParticipant;
-
-  //   parentMatchDiv.appendChild(parentMatchParticipantDiv);
-  //   parentMatchDiv.appendChild(otherMatchDiv);
-  // }
 }

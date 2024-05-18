@@ -36,7 +36,7 @@ function getFormData() {
     if (playerName) {
       if (players.includes(playerName)) {
         alert("Player names must be unique.");
-        return;
+        return null;
       }
       players.push(playerName);
     }
@@ -50,11 +50,15 @@ function getFormData() {
     };
   } else {
     alert("Please enter a tournament name and at least two players.");
+    return null;
   }
 }
 
 function startGame() {
   const data = getFormData();
+  if (data === null) {
+    return;
+  }
   appState.setState(data);
   const info = makeTournament();
   // appState.clearState();

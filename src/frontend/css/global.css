@@ -1,22 +1,30 @@
 
-.seed-participant {
-	--line-length-w: 100px;
-	--line-length-h: 70px;
-	--line-color: black;
+.round {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.match {
   border: 1px solid black;
   border-radius: 5px;
-  width: 12ch;
-  position: relative;
+  padding: 10px;
+  margin: 10px;
+  flex: 1;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.participant-left,
-.participant-right {
-	--line-length-w: 50px;
-	--line-length-h: 20px;
-	--line-color-left: black;
-	--line-color-right: black;
-  border: 1px solid black;
-  border-radius: 5px;
-  width: 12ch;
-  position: relative;
+.participant-name {
+  text-decoration: none;
+  color: black;
+  font-size: 1.5rem;
+  font-weight: bold;
+  font-family: "Roboto", sans-serif;
+  margin: 0 5px;
+}
+
+.winner {
+  color: red;
 }

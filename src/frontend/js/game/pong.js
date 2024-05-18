@@ -66,6 +66,32 @@ const rightGoal = new THREE.Mesh(goalGeometry, goalMaterial);
 rightGoal.position.set(backgroundWidth / 2 - goalWidth, 0, 0);
 scene.add(rightGoal);
 
+// 上下の壁の作成
+const wallWidth = backgroundWidth;
+const wallHeight = 1;
+const wallDepth = 1;
+const wallGeometry = new THREE.BoxGeometry(wallWidth, wallHeight, wallDepth);
+const wallMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
+
+const topWall = new THREE.Mesh(wallGeometry, wallMaterial);
+topWall.position.set(0, backgroundHeight / 2 + 1, 0);
+scene.add(topWall);
+
+const bottomWall = new THREE.Mesh(wallGeometry, wallMaterial);
+bottomWall.position.set(0, -backgroundHeight / 2 - 1, 0);
+scene.add(bottomWall);
+
+// 中央の点線の作成
+const dashedLineWidth = 0.2;
+const dashedLineHeight = backgroundHeight;
+const dashedLineDepth = 1;
+const dashedLineGeometry = new THREE.PlaneGeometry(dashedLineWidth, dashedLineHeight);
+const dashedLineMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.5 });
+
+const dashedLine = new THREE.Mesh(dashedLineGeometry, dashedLineMaterial);
+dashedLine.position.set(0, 0, 0);
+scene.add(dashedLine);
+
 // ボールの初期位置と速度
 const ballSpeed = 0.5;
 const ballVelocity = new THREE.Vector3(ballSpeed, ballSpeed, 0);

@@ -71,7 +71,6 @@ function startGame() {
   myModal = new bootstrap.Modal(document.getElementById("tournamentModal"), {
     keyboard: false,
   });
-  // TODO ここでモーダルを表示する, モーダル内の描画とデータの渡し方を考える
   myModal.show();
   tournamentDraw();
 }

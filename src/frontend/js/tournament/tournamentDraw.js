@@ -39,10 +39,8 @@ function tournamentDraw() {
   const matches = state.matches;
 
   tournamentName.innerHTML = "Tournament : " + state.tournament.tournamentName;
-  // TODO : 規則的に配置できるようにする
 
   const matchesByRound = organizeMatchesByRound(matches);
-  // 配列の１つめの配列から順番にdiv要素を作成していく，次の配列はその下に並ぶようにしていく
   for (let i = 0; i < matchesByRound.length; i++) {
     const matchesInRound = matchesByRound[i];
     const roundDiv = document.createElement("div");
@@ -67,7 +65,9 @@ function tournamentDraw() {
     parent.appendChild(roundDiv);
   }
 
+  // tooltipの初期化
   const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
   const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
 
+  appState.setState({ matchesByRound });
 }

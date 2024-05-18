@@ -20,6 +20,16 @@ const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
 directionalLight.position.set(0, 1, 1);
 scene.add(directionalLight);
 
+// 背景の作成
+const backgroundWidth = 120;
+const backgroundHeight = 50;
+const backgroundDepth = 1;
+const backgroundGeometry = new THREE.BoxGeometry(backgroundWidth, backgroundHeight, backgroundDepth);
+const backgroundMaterial = new THREE.MeshBasicMaterial({ color: 0x000000 });
+const background = new THREE.Mesh(backgroundGeometry, backgroundMaterial);
+background.position.set(0, 0, -5);
+scene.add(background);
+
 // ボールの作成
 const ballRadius = 1;
 const ballGeometry = new THREE.SphereGeometry(ballRadius, 32, 32);
@@ -29,45 +39,61 @@ scene.add(ball);
 
 // パドルの作成
 const paddleWidth = 1;
-const paddleHeight = 4;
-const paddleDepth = 1;
+const paddleHeight = 8;
+const paddleDepth = 2;
 const paddleGeometry = new THREE.BoxGeometry(paddleWidth, paddleHeight, paddleDepth);
 const paddleMaterial = new THREE.MeshStandardMaterial({ color: 0xffffff });
 
 const leftPaddle = new THREE.Mesh(paddleGeometry, paddleMaterial);
-leftPaddle.position.set(-20, 0, 0);
+leftPaddle.position.set(-backgroundWidth / 2 + paddleWidth, 0, 0);
 scene.add(leftPaddle);
 
 const rightPaddle = new THREE.Mesh(paddleGeometry, paddleMaterial);
-rightPaddle.position.set(20, 0, 0);
+rightPaddle.position.set(backgroundWidth / 2 - paddleWidth, 0, 0);
 scene.add(rightPaddle);
 
 // ゴールの作成
 const goalWidth = 1;
-const goalHeight = 10;
+const goalHeight = 50;
 const goalGeometry = new THREE.PlaneGeometry(goalWidth, goalHeight);
-const goalMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000, side: THREE.DoubleSide });
+const goalMaterial = new THREE.MeshStandardMaterial({ color: 0xff0000, side: THREE.DoubleSide });
 
 const leftGoal = new THREE.Mesh(goalGeometry, goalMaterial);
-leftGoal.position.set(-30, 0, 0);
+leftGoal.position.set(-backgroundWidth / 2 + goalWidth, 0, 0);
 scene.add(leftGoal);
 
 const rightGoal = new THREE.Mesh(goalGeometry, goalMaterial);
-rightGoal.position.set(30, 0, 0);
+rightGoal.position.set(backgroundWidth / 2 - goalWidth, 0, 0);
 scene.add(rightGoal);
 
-// 背景の作成
-const backgroundWidth = 100;
-const backgroundHeight = 50;
-const backgroundDepth = 1;
-const backgroundGeometry = new THREE.BoxGeometry(backgroundWidth, backgroundHeight, backgroundDepth);
-const backgroundMaterial = new THREE.MeshBasicMaterial({ color: 0x000000 });
-const background = new THREE.Mesh(backgroundGeometry, backgroundMaterial);
-background.position.set(0, 0, -5);
-scene.add(background);
+// 上下の壁の作成
+const wallWidth = backgroundWidth;
+const wallHeight = 1;
+const wallDepth = 1;
+const wallGeometry = new THREE.BoxGeometry(wallWidth, wallHeight, wallDepth);
+const wallMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
+
+const topWall = new THREE.Mesh(wallGeometry, wallMaterial);
+topWall.position.set(0, backgroundHeight / 2 + 1, 0);
+scene.add(topWall);
+
+const bottomWall = new THREE.Mesh(wallGeometry, wallMaterial);
+bottomWall.position.set(0, -backgroundHeight / 2 - 1, 0);
+scene.add(bottomWall);
+
+// 中央の点線の作成
+const dashedLineWidth = 0.2;
+const dashedLineHeight = backgroundHeight;
+const dashedLineDepth = 1;
+const dashedLineGeometry = new THREE.PlaneGeometry(dashedLineWidth, dashedLineHeight);
+const dashedLineMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.5 });
+
+const dashedLine = new THREE.Mesh(dashedLineGeometry, dashedLineMaterial);
+dashedLine.position.set(0, 0, 0);
+scene.add(dashedLine);
 
 // ボールの初期位置と速度
-const ballSpeed = 0.2;
+const ballSpeed = 0.5;
 const ballVelocity = new THREE.Vector3(ballSpeed, ballSpeed, 0);
 
 function updateBall() {
@@ -98,6 +124,15 @@ function updatePaddles() {
     rightPaddle.position.y -= paddleSpeed;
   }
 }
+
+// キーボードのイベントリスナーを追加
+document.addEventListener('keydown', (event) => {
+  keys[event.key] = true;
+});
+
+document.addEventListener('keyup', (event) => {
+  keys[event.key] = false;
+});
 
 // キーボードの入力を保持するオブジェクト
 const keys = {

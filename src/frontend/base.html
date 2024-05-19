@@ -20,19 +20,8 @@
     <!-- Chart.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.min.js"></script>
     <!-- Three.js -->
-    <!-- TODO : Three.jsのCDNだけconsole errorでてる -->
-    <script type="importmap">
-      {
-        "imports": {
-          "three": "https://cdn.jsdelivr.net/npm/three@0.163.0/build/three.module.js",
-          "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.163.0/examples/jsm/"
-        }
-      }
-    </script>
-    <!-- <script type="module">
-      import * as THREE from 'three';
-      // import { OrbitControls } from 'three/addons/OrbitControls.js';
-    </script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
     <!-- google fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -44,6 +33,7 @@
     {% load static %}
     <link rel="stylesheet" href='{% static "css/font.css" %}' />
     <link rel="stylesheet" href='{% static "css/global.css" %}' />
+    <link rel="stylesheet" href='{% static "css/pong.css" %}' />
     <!-- favicon reference : https://www.irasutoya.com/2013/06/blog-post_2974.html -->
     <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" />
     <!-- custom router js -->
@@ -52,6 +42,7 @@
     <script src="{% static 'js/utils/router.js' %}"></script>
     <script src="{% static 'js/game/start.js' %}"></script>
     <script src="{% static 'js/game/top.js' %}"></script>
+    <script src="{% static 'js/game/pong.js' %}"></script>
     <script src="{% static 'js/tournament/tournament.js' %}"></script>
     <script src="{% static 'js/tournament/tournamentDraw.js' %}"></script>
     <script src="{% static 'js/dashboard/dashboard.js' %}"></script>

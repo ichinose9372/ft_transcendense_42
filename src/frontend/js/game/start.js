@@ -129,7 +129,7 @@ function startEventHandlers() {
 
   if (startTournamentButton) {
     startTournamentButton.addEventListener("click", () => {
-      console.log("start tournament");
+      loadPage("/game", pongEventHandlers);
     });
   }
 

@@ -1,3 +1,22 @@
+function pongEventHandlers() {
+  const gameContainer = document.getElementById('game-container');
+  if(gameContainer){
+    gameContainer.appendChild(renderer.domElement);
+  }
+  // スタートボタン
+  const startButton = document.getElementById('start-button');
+  if (startButton)
+  {
+    startButton.addEventListener('click', startPong);
+  }
+  // 中断ボタン
+  const pauseButton = document.getElementById('pause-button');
+  if(pauseButton)
+  {
+    pauseButton.addEventListener('click', togglePause);
+  }
+}
+
 // シーンの作成
 const scene = new THREE.Scene();
 
@@ -10,7 +29,6 @@ camera.lookAt(0, 0, 0);
 // レンダラーの設定
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
-document.getElementById('game-container').appendChild(renderer.domElement);
 
 // ライティングの設定
 const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
@@ -197,12 +215,21 @@ function resetBall() {
 }
 
 function updateScore() {
+  const leftScoreEl = document.getElementById('left-score');
+  const rightScoreEl = document.getElementById('right-score');
   // スコアを表示するHTML要素を更新
-  document.getElementById('left-score').textContent = leftScore;
-  document.getElementById('right-score').textContent = rightScore;
+
+  if (leftScoreEl){
+    leftScoreEl.textContent = leftScore;
+  }
+  if (rightScoreEl){
+    rightScoreEl.textContent = rightScore;
+  }
 }
 
 function checkGameOver() {
+  const startButton = document.getElementById('start-button');
+  const pauseButton = document.getElementById('pause-button');
   if (leftScore === 11 || rightScore === 11) {
     // ゲームを終了し、勝者を表示
     const winner = leftScore === 11 ? 'Left Player' : 'Right Player';
@@ -215,11 +242,10 @@ function checkGameOver() {
   }
 }
 
-// スタートボタン
-const startButton = document.getElementById('start-button');
-startButton.addEventListener('click', startGame);
-
-function startGame() {
+function startPong() {
+  const startButton = document.getElementById('start-button');
+  const pauseButton = document.getElementById('pause-button');
+  const gameOverMessage = document.getElementById('game-over-message');
   // ゲームを開始する処理を実装
   isPaused = false;
   startButton.style.display = 'none';
@@ -237,13 +263,10 @@ function startGame() {
   gameOverMessage.style.display = 'none';
 }
 
-// 中断ボタン
-const pauseButton = document.getElementById('pause-button');
-pauseButton.addEventListener('click', togglePause);
-
 let isPaused = true; // ゲーム開始前は一時停止状態にする
 
 function togglePause() {
+  const pauseButton = document.getElementById('pause-button');
   isPaused = !isPaused;
   if (isPaused) {
     pauseButton.textContent = 'Resume Game';
@@ -254,8 +277,10 @@ function togglePause() {
 
 function showGameOverMessage(winner) {
   const gameOverMessage = document.getElementById('game-over-message');
-  gameOverMessage.textContent = `Game Over! ${winner} wins!`;
-  gameOverMessage.style.display = 'block';
+  if(gameOverMessage){
+    gameOverMessage.textContent = `Game Over! ${winner} wins!`;
+    gameOverMessage.style.display = 'block';
+  }
 }
 
 function animate() {
@@ -303,3 +328,14 @@ console.log('Right paddle position:', rightPaddle.position);
 // デバッグ用: ゴールの位置を確認
 console.log('Left goal position:', leftGoal.position);
 console.log('Right goal position:', rightGoal.position);
+
+function initPong() {
+  document.addEventListener("DOMContentLoaded", () => {
+    window.addEventListener("popstate", () => {
+      handlePopState();
+    });
+    pongEventHandlers();
+  });
+}
+
+initPong();

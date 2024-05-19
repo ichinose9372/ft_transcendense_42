@@ -41,6 +41,8 @@ function handlePopState() {
     callback = startEventHandlers;
   } else if (url === "/dashboard") {
     callback = dashboardEventHandlers;
+  } else if (url === "/game") {
+    callback = pongEventHandlers;
   }
   nonPushLoadPage(url, callback);
 }

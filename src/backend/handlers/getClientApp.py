@@ -10,3 +10,6 @@ def top(request):
 
 def start(request):
 	return render(request, "templates/start.html")
+
+def game(request):
+	return render(request, "templates/game.html")

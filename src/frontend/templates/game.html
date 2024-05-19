@@ -1,0 +1,12 @@
+{% extends 'base.html' %} {% block content %}
+<div id="game-container"></div>
+
+<button id="start-button">Start Game</button>
+<button id="pause-button" style="display: none;">Pause Game</button>
+<div id="score">
+  <span id="left-score">0</span> - <span id="right-score">0</span>
+</div>
+<div id="game-over-message"></div>
+<!-- {% load static %} -->
+<!-- <script src="{% static 'js/game/pong.js' %}"></script> -->
+{% endblock %}

@@ -1,6 +1,6 @@
-volumes:
-  es_data:
-    driver: local
+networks:
+  tra:
+    driver: bridge
 
 services:
   elasticsearch:
@@ -11,17 +11,30 @@ services:
     ports:
       - "9200:9200"
       - "9300:9300"
-    volumes:
-      - es_data:/usr/share/elasticsearch/data
-
+    networks:
+      - tra
+    platform: linux/amd64
+  
   logstash:
     image: docker.elastic.co/logstash/logstash-oss:6.2.4
     container_name: logstash
+    ports:
+      - "5044:5044"
     volumes:
       - ./pipeline:/usr/share/logstash/pipeline
-      - ./log:/var/log
     depends_on:
       - elasticsearch
+    networks:
+      - tra
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:9600 || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    platform: linux/amd64
+    
+
 
   kibana:
     image: docker.elastic.co/kibana/kibana-oss:6.2.4
@@ -32,6 +45,10 @@ services:
       - "5601:5601"
     depends_on:
       - elasticsearch
+    networks:
+      - tra
+    platform: linux/amd64
+    
 
   db:
     build: src/db
@@ -45,6 +62,16 @@ services:
       interval: 5s
       timeout: 2s
       retries: 5
+    volumes:
+      - ./log/db:/var/log/postgresql
+    logging:
+      driver: "json-file"
+    depends_on:
+      - logstash
+    networks:
+      - tra
+    platform: linux/amd64
+    
 
   backend:
     build:
@@ -60,3 +87,9 @@ services:
         condition: service_healthy
     volumes:
       - "${WORKDIR_LOCAL}/src:/app"
+    logging:
+      driver: "json-file"
+    networks:
+      - tra
+    platform: linux/amd64
+    

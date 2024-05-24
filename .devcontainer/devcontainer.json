@@ -19,7 +19,16 @@
 	"customizations": {
 		"vscode": {
 			"settings": {
-				"terminal.integrated.shell.linux": "/usr/bin/zsh"
+				"terminal.integrated.defaultProfile.linux": "zsh",
+				"terminal.integrated.profiles.linux": {
+					"bash": {
+						"path": "bash"
+					},
+					"zsh": {
+						"path": "zsh"
+					}
+				},
+				"dotfiles.repository": "https://github.com/yuidvg/dotfiles.git"
 			},
 			"extensions": [
 				"ms-python.python",

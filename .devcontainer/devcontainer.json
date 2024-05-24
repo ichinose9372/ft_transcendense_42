@@ -21,11 +21,11 @@
 			"settings": {
 				"terminal.integrated.defaultProfile.linux": "zsh",
 				"terminal.integrated.profiles.linux": {
-					"bash": {
-						"path": "bash"
-					},
 					"zsh": {
 						"path": "zsh"
+					},
+					"bash": {
+						"path": "bash"
 					}
 				},
 				"dotfiles.repository": "https://github.com/yuidvg/dotfiles.git"

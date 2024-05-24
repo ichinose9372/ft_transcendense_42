@@ -1,20 +1,52 @@
 function pongEventHandlers() {
-  const gameContainer = document.getElementById('game-container');
-  if(gameContainer){
+  const gameContainer = document.getElementById("game-container");
+  if (gameContainer) {
     gameContainer.appendChild(renderer.domElement);
   }
   // スタートボタン
-  const startButton = document.getElementById('start-button');
-  if (startButton)
-  {
-    startButton.addEventListener('click', startPong);
+  const startButton = document.getElementById("start-button");
+  if (startButton) {
+    startButton.addEventListener("click", startPong);
   }
   // 中断ボタン
-  const pauseButton = document.getElementById('pause-button');
-  if(pauseButton)
-  {
-    pauseButton.addEventListener('click', togglePause);
+  const pauseButton = document.getElementById("pause-button");
+  if (pauseButton) {
+    pauseButton.addEventListener("click", togglePause);
   }
+  // モーダル
+  const tournamentModal = document.getElementById("tournamentModal");
+  if (tournamentModal) {
+    tournamentModal.addEventListener("hidden.bs.modal", function () {
+      const tournamentDraw = document.getElementById("tournamentDraw");
+      if (tournamentDraw) {
+        tournamentDraw.innerHTML = "";
+      }
+      const backdrops = document.querySelectorAll(".modal-backdrop");
+      backdrops.forEach((backdrop) => backdrop.remove());
+
+      document.body.classList.remove("modal-open");
+    });
+  }
+  // TODO : モーダルテスト用→ボタンではなく試合の流れに合わせて表示するようにする
+  const modalTestButton = document.getElementById("modalTestButton");
+  if (modalTestButton) {
+    modalTestButton.addEventListener("click", () => {
+      // TODO : この関数を適切な位置で呼び出せば良い
+      openModal();
+    });
+  }
+}
+
+// モーダルを開き，トーナメントを描画
+function openModal() {
+  let myModal = new bootstrap.Modal(
+    document.getElementById("tournamentModal"),
+    {
+      keyboard: false,
+    }
+  );
+  myModal.show();
+  tournamentDraw();
 }
 
 // シーンの作成
@@ -42,7 +74,11 @@ scene.add(directionalLight);
 const backgroundWidth = 120;
 const backgroundHeight = 50;
 const backgroundDepth = 1;
-const backgroundGeometry = new THREE.BoxGeometry(backgroundWidth, backgroundHeight, backgroundDepth);
+const backgroundGeometry = new THREE.BoxGeometry(
+  backgroundWidth,
+  backgroundHeight,
+  backgroundDepth
+);
 const backgroundMaterial = new THREE.MeshBasicMaterial({ color: 0x000000 });
 const background = new THREE.Mesh(backgroundGeometry, backgroundMaterial);
 background.position.set(0, 0, -5);
@@ -59,7 +95,11 @@ scene.add(ball);
 const paddleWidth = 1;
 const paddleHeight = 8;
 const paddleDepth = 2;
-const paddleGeometry = new THREE.BoxGeometry(paddleWidth, paddleHeight, paddleDepth);
+const paddleGeometry = new THREE.BoxGeometry(
+  paddleWidth,
+  paddleHeight,
+  paddleDepth
+);
 const paddleMaterial = new THREE.MeshStandardMaterial({ color: 0xffffff });
 
 const leftPaddle = new THREE.Mesh(paddleGeometry, paddleMaterial);
@@ -74,7 +114,10 @@ scene.add(rightPaddle);
 const goalWidth = 1;
 const goalHeight = 50;
 const goalGeometry = new THREE.PlaneGeometry(goalWidth, goalHeight);
-const goalMaterial = new THREE.MeshStandardMaterial({ color: 0xff0000, side: THREE.DoubleSide });
+const goalMaterial = new THREE.MeshStandardMaterial({
+  color: 0xff0000,
+  side: THREE.DoubleSide,
+});
 
 const leftGoal = new THREE.Mesh(goalGeometry, goalMaterial);
 leftGoal.position.set(-backgroundWidth / 2 + goalWidth, 0, 0);
@@ -103,8 +146,15 @@ scene.add(bottomWall);
 const dashedLineWidth = 0.2;
 const dashedLineHeight = backgroundHeight;
 const dashedLineDepth = 1;
-const dashedLineGeometry = new THREE.PlaneGeometry(dashedLineWidth, dashedLineHeight);
-const dashedLineMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.5 });
+const dashedLineGeometry = new THREE.PlaneGeometry(
+  dashedLineWidth,
+  dashedLineHeight
+);
+const dashedLineMaterial = new THREE.MeshBasicMaterial({
+  color: 0xffffff,
+  transparent: true,
+  opacity: 0.5,
+});
 
 const dashedLine = new THREE.Mesh(dashedLineGeometry, dashedLineMaterial);
 dashedLine.position.set(0, 0, 0);
@@ -119,7 +169,10 @@ function updateBall() {
   ball.position.add(ballVelocity);
 
   // ボールが上下の壁に衝突した場合、速度のY成分を反転
-  if (ball.position.y > backgroundHeight / 2 || ball.position.y < -backgroundHeight / 2) {
+  if (
+    ball.position.y > backgroundHeight / 2 ||
+    ball.position.y < -backgroundHeight / 2
+  ) {
     ballVelocity.y = -ballVelocity.y;
   }
 }
@@ -129,26 +182,38 @@ const paddleSpeed = 0.5;
 
 function updatePaddles() {
   // 左パドルの移動
-  if (keys.w && leftPaddle.position.y < backgroundHeight / 2 - paddleHeight / 2) {
+  if (
+    keys.w &&
+    leftPaddle.position.y < backgroundHeight / 2 - paddleHeight / 2
+  ) {
     leftPaddle.position.y += paddleSpeed;
-  } else if (keys.s && leftPaddle.position.y > -backgroundHeight / 2 + paddleHeight / 2) {
+  } else if (
+    keys.s &&
+    leftPaddle.position.y > -backgroundHeight / 2 + paddleHeight / 2
+  ) {
     leftPaddle.position.y -= paddleSpeed;
   }
 
   // 右パドルの移動
-  if (keys.ArrowUp && rightPaddle.position.y < backgroundHeight / 2 - paddleHeight / 2) {
+  if (
+    keys.ArrowUp &&
+    rightPaddle.position.y < backgroundHeight / 2 - paddleHeight / 2
+  ) {
     rightPaddle.position.y += paddleSpeed;
-  } else if (keys.ArrowDown && rightPaddle.position.y > -backgroundHeight / 2 + paddleHeight / 2) {
+  } else if (
+    keys.ArrowDown &&
+    rightPaddle.position.y > -backgroundHeight / 2 + paddleHeight / 2
+  ) {
     rightPaddle.position.y -= paddleSpeed;
   }
 }
 
 // キーボードのイベントリスナーを追加
-document.addEventListener('keydown', (event) => {
+document.addEventListener("keydown", (event) => {
   keys[event.key] = true;
 });
 
-document.addEventListener('keyup', (event) => {
+document.addEventListener("keyup", (event) => {
   keys[event.key] = false;
 });
 
@@ -157,15 +222,15 @@ const keys = {
   w: false,
   s: false,
   ArrowUp: false,
-  ArrowDown: false
+  ArrowDown: false,
 };
 
 // キーボードのイベントリスナーを追加
-document.addEventListener('keydown', (event) => {
+document.addEventListener("keydown", (event) => {
   keys[event.code] = true;
 });
 
-document.addEventListener('keyup', (event) => {
+document.addEventListener("keyup", (event) => {
   keys[event.code] = false;
 });
 
@@ -215,71 +280,71 @@ function resetBall() {
 }
 
 function updateScore() {
-  const leftScoreEl = document.getElementById('left-score');
-  const rightScoreEl = document.getElementById('right-score');
+  const leftScoreEl = document.getElementById("left-score");
+  const rightScoreEl = document.getElementById("right-score");
   // スコアを表示するHTML要素を更新
 
-  if (leftScoreEl){
+  if (leftScoreEl) {
     leftScoreEl.textContent = leftScore;
   }
-  if (rightScoreEl){
+  if (rightScoreEl) {
     rightScoreEl.textContent = rightScore;
   }
 }
 
 function checkGameOver() {
-  const startButton = document.getElementById('start-button');
-  const pauseButton = document.getElementById('pause-button');
+  const startButton = document.getElementById("start-button");
+  const pauseButton = document.getElementById("pause-button");
   if (leftScore === 11 || rightScore === 11) {
     // ゲームを終了し、勝者を表示
-    const winner = leftScore === 11 ? 'Left Player' : 'Right Player';
+    const winner = leftScore === 11 ? "Left Player" : "Right Player";
     showGameOverMessage(winner);
-    
+
     // ゲームを一時停止する
     isPaused = true;
-    pauseButton.style.display = 'none';
-    startButton.style.display = 'inline-block';
+    pauseButton.style.display = "none";
+    startButton.style.display = "inline-block";
   }
 }
 
 function startPong() {
-  const startButton = document.getElementById('start-button');
-  const pauseButton = document.getElementById('pause-button');
-  const gameOverMessage = document.getElementById('game-over-message');
+  const startButton = document.getElementById("start-button");
+  const pauseButton = document.getElementById("pause-button");
+  const gameOverMessage = document.getElementById("game-over-message");
   // ゲームを開始する処理を実装
   isPaused = false;
-  startButton.style.display = 'none';
-  pauseButton.style.display = 'inline-block';
-  
+  startButton.style.display = "none";
+  pauseButton.style.display = "inline-block";
+
   // ボールを初期位置に戻す
   resetBall();
-  
+
   // スコアをリセット
   leftScore = 0;
   rightScore = 0;
   updateScore();
-  
+
   // ゲームオーバーメッセージを非表示にする
-  gameOverMessage.style.display = 'none';
+  gameOverMessage.style.display = "none";
 }
 
 let isPaused = true; // ゲーム開始前は一時停止状態にする
 
 function togglePause() {
-  const pauseButton = document.getElementById('pause-button');
+  const pauseButton = document.getElementById("pause-button");
   isPaused = !isPaused;
   if (isPaused) {
-    pauseButton.textContent = 'Resume Game';
+    pauseButton.textContent = "Resume Game";
   } else {
-    pauseButton.textContent = 'Pause Game';
+    pauseButton.textContent = "Pause Game";
   }
 }
 
 function showGameOverMessage(winner) {
-  const gameOverMessage = document.getElementById('game-over-message');
-  if(gameOverMessage){
+  const gameOverMessage = document.getElementById("game-over-message");
+  if (gameOverMessage) {
     gameOverMessage.textContent = `Game Over! ${winner} wins!`;
-    gameOverMessage.style.display = 'block';
+    gameOverMessage.style.display = "block";
   }
 }
 
@@ -314,20 +379,19 @@ function onWindowResize() {
 }
 
 // ウィンドウのリサイズイベントリスナーを追加
-window.addEventListener('resize', onWindowResize);
-
+window.addEventListener("resize", onWindowResize);
 
 // デバッグ
 // デバッグ用: ボールの位置を確認
-console.log('Ball position:', ball.position);
+console.log("Ball position:", ball.position);
 
 // デバッグ用: パドルの位置を確認
-console.log('Left paddle position:', leftPaddle.position);
-console.log('Right paddle position:', rightPaddle.position);
+console.log("Left paddle position:", leftPaddle.position);
+console.log("Right paddle position:", rightPaddle.position);
 
 // デバッグ用: ゴールの位置を確認
-console.log('Left goal position:', leftGoal.position);
-console.log('Right goal position:', rightGoal.position);
+console.log("Left goal position:", leftGoal.position);
+console.log("Right goal position:", rightGoal.position);
 
 function initPong() {
   document.addEventListener("DOMContentLoaded", () => {

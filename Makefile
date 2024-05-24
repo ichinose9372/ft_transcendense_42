@@ -3,14 +3,15 @@
 all:
 	docker-compose up --build -d
 
-stop:
-	docker-compose stop
-
 start:
 	docker-compose start
 
+stop:
+	docker compose down
+
 down:
 	docker-compose down
+	docker compose up --build
 
 back:
 	@docker ps | grep trascen-backend-1 > /dev/null || (echo "Backend container is not running.")
@@ -21,7 +22,6 @@ db:
 	@docker ps | grep trascen-db-1 > /dev/null || (echo "db container is not running."; exit 1)
 	docker-compose exec db psql -h db -p 5432 -U user42 -d transcendence_db
 	# If you want to exit the container, use the '\q' command.
-
 
 re:
 	docker-compose down

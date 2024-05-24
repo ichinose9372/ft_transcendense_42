@@ -3,10 +3,39 @@
 
 <button id="start-button">Start Game</button>
 <button id="pause-button" style="display: none;">Pause Game</button>
+
+
 <div id="score">
   <span id="left-score">0</span> - <span id="right-score">0</span>
 </div>
 <div id="game-over-message"></div>
+
+<!-- TODO : modal開くか確認用のボタン(右上に表示)→1試合ごとに開くようにする   -->
+<div class="position-absolute top-0 end-0">
+  <button id="modalTestButton">Open Modal</button>
+</div>
+
 <!-- {% load static %} -->
 <!-- <script src="{% static 'js/game/pong.js' %}"></script> -->
-{% endblock %}
+
+<div class="modal fade" id="tournamentModal" tabindex="-1" aria-labelledby="tournamentNameLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="tournamentNameLabel"></h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="tournamentModalBody">
+        <div id="tournamentDraw"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+        <button type="button" class="btn btn-primary" id="startTournamentButton">
+          Start
+        </button>
+      </div>
+    </div>
+  </div>
+  {% endblock %}

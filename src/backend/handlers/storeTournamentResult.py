@@ -6,7 +6,7 @@ from django.views.decorators.csrf import csrf_exempt
 import json
 
 def storeTournamentResult(request):
-	return render(request, "storeTournamentResult.html")
+	return HttpResponse("storeTournamentResult!!!")
 
 # from django.dispatch import receiver
 # from django.db.models.signals import post_save

@@ -1,8 +1,15 @@
-# snemoto test for routing
 from django.shortcuts import render
-def getClientApp(request):
-	return render(request, "getClientApp.html")
+
+# # snemoto test for routing
+# def getClientApp(request):
+# 	return render(request, "getClientApp.html")
 
 # snemoto frontendからレンダリング
-# def top(request):
-# 	return render(request, "home.html")
+def top(request):
+	return render(request, "templates/top.html")
+
+def start(request):
+	return render(request, "templates/start.html")
+
+def game(request):
+	return render(request, "templates/game.html")

@@ -1,23 +1,34 @@
-# # snemoto test for routing
-# # from django.shortcuts import render
-# # def storeTournamentResult(request):
-# # 	return render(request, "storeTournamentResult.html")
+# snemoto test for routing
+from django.shortcuts import render
+from django.http import JsonResponse
+from django.views.decorators.http import require_http_methods
+from django.views.decorators.csrf import csrf_exempt
+import json
+
+def storeTournamentResult(request):
+	return render(request, "storeTournamentResult.html")
 
 # from django.dispatch import receiver
 # from django.db.models.signals import post_save
-# from models.models import Tournament, Match, Score
-# import json
+# from handlers.models import TournamentResult
 
-# def store_tournament_result(tournament, matches, scores):
-# 	new_tournament = Tournament(tournament_name = tournament.name, tournament_id= tournament.id)
-# 	new_tournament.save()
-# 	new_matches = [Match(match_id=match.id, finished_time_stamp=match.finished_time_stamp, parent_match=match.parent_match, tournament=new_tournament.tournament_id) for match in matches]
-# 	Match.objects.bulk_create(new_matches)
-# 	new_scores = [Score(match=score.id, score=score.score, participang_name=score.player, match_id=score.match_id) for score in scores]
-# 	Score.objects.bulk_create(new_scores)
+# @receiver(post_save, sender=TournamentResult)
+# def handle_tournament_result(tournament, matches, scores):
 
-# def parse_tournaments(tournament_json):
-# 	tournament = json.loads(tournament_json)
-# 	matches = tournament['matches']
-# 	scores = tournament['scores']
-# 	return tournament, matches, scores
+@csrf_exempt # TODO: 本番環境では無効化しないほうがいいかも
+@require_http_methods(["POST"])
+def save_test(request):
+    data = json.loads(request.body)
+
+	# TODO : データの処理を行う
+    print("Received data:", data)
+
+    # TODO : 必要があればレスポンスを作成する，現在はデータが受け取れたことを確認するためにそのままデータを返している
+    response_data = {
+        'status': 'success',
+        'message': 'Data received successfully',
+        'data': data,
+    }
+
+    # JSONレスポンスを返す
+    return JsonResponse(response_data)

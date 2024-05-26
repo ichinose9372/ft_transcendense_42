@@ -1,3 +1,4 @@
+let myModal = null;
 
 function addPlayer() {
   const playerList = document.getElementById("playerList");
@@ -6,7 +7,7 @@ function addPlayer() {
   newPlayerDiv.classList.add("mb-4");
   newPlayerDiv.innerHTML = `
 			<form id="user${playerCount}" class="input-group">
-				<input type="text" class="form-control" id="name${playerCount}" placeholder="player name" oninput="checkStartButtonValid()"/>
+				<input type="text" class="form-control" id="name${playerCount}" placeholder="player name" maxlength="10" oninput="checkStartButtonValid()"/>
 				<button type="button" class="btn btn-danger input-group-append" onclick="removePlayer('user${playerCount}')")>
 					<i class="bi bi-trash"></i>
 				</button>
@@ -25,7 +26,7 @@ function removePlayer(userId) {
   checkStartButtonValid();
 }
 
-function startTournament() {
+function getFormData() {
   const playerList = document.getElementById("playerList");
   const players = [];
   for (let i = 0; i < playerList.children.length; i++) {
@@ -35,7 +36,7 @@ function startTournament() {
     if (playerName) {
       if (players.includes(playerName)) {
         alert("Player names must be unique.");
-        return;
+        return null;
       }
       players.push(playerName);
     }
@@ -43,20 +44,47 @@ function startTournament() {
   const tournamentName = document.getElementById("tournamentName").value.trim();
 
   if (players.length > 1 && tournamentName !== "") {
-    const data = {
+    return {
       tournament: { name: tournamentName },
       participants: players.map((player) => ({ name: player })),
     };
-    console.log("data", data);
   } else {
     alert("Please enter a tournament name and at least two players.");
+    return null;
   }
+}
+
+function startGame() {
+  const data = getFormData();
+  if (data === null) {
+    return;
+  }
+  appState.setState(data);
+  const info = makeTournament();
+  // appState.clearState();
+  appState.setState({
+    tournament: info.tournament,
+    matches: info.matches,
+    participants: info.participants,
+  });
+  appState.printState();
+  myModal = new bootstrap.Modal(document.getElementById("tournamentModal"), {
+    keyboard: false,
+  });
+  myModal.show();
+  tournamentDraw();
 }
 
 function checkStartButtonValid() {
   let playerValid = true;
   const playerList = document.getElementById("playerList");
+  if (playerList === null) {
+    return;
+  }
   const tournamentName = document.getElementById("tournamentName").value.trim();
+  if (tournamentName === null) {
+    return;
+  }
   for (let i = 0; i < playerList.children.length; i++) {
     const playerForm = playerList.children[i].querySelector("form");
     const playerNameInput = playerForm.querySelector("input[type='text']");
@@ -66,7 +94,7 @@ function checkStartButtonValid() {
       break;
     }
   }
-  const startButton = document.getElementById("startButton");
+  const startButton = document.getElementById("startGameButton");
   if (tournamentName !== "" && playerValid) {
     startButton.disabled = false;
   } else {
@@ -74,11 +102,77 @@ function checkStartButtonValid() {
   }
 }
 
-document.getElementById("addPlayer").addEventListener("click", addPlayer);
-document
-  .getElementById("startButton")
-  .addEventListener("click", startTournament);
-document
-  .getElementById("tournamentName")
-  .addEventListener("input", checkStartButtonValid);
-document.addEventListener("DOMContentLoaded", checkStartButtonValid);
+function startEventHandlers() {
+  const startGameButton = document.getElementById("startGameButton");
+  const addPlayerButton = document.getElementById("addPlayer");
+  const tournamentNameInput = document.getElementById("tournamentName");
+  const tournamentModal = document.getElementById("tournamentModal");
+  const startTournamentButton = document.getElementById(
+    "startTournamentButton"
+  );
+  // TODO : test不要になったら削除する
+  const testDataButton = document.getElementById("testDataButton");
+
+  if (startGameButton) {
+    startGameButton.addEventListener("click", () => {
+      startGame();
+    });
+  }
+
+  if (addPlayerButton) {
+    addPlayerButton.addEventListener("click", addPlayer);
+  }
+
+  if (tournamentNameInput) {
+    tournamentNameInput.addEventListener("input", checkStartButtonValid);
+  }
+
+  if (startTournamentButton) {
+    startTournamentButton.addEventListener("click", () => {
+      loadPage("/game", pongEventHandlers);
+    });
+  }
+
+  // TODO : test不要になったら削除する
+  if (testDataButton) {
+    testDataButton.addEventListener("click", testDataPush);
+  }
+
+  // modalが閉じるときに背景のmodal-backdropを削除する
+  if (tournamentModal) {
+    tournamentModal.addEventListener("hidden.bs.modal", function () {
+      const tournamentDraw = document.getElementById("tournamentDraw");
+      if (tournamentDraw) {
+        tournamentDraw.innerHTML = "";
+      }
+      const backdrops = document.querySelectorAll(".modal-backdrop");
+      backdrops.forEach((backdrop) => backdrop.remove());
+
+      document.body.classList.remove("modal-open");
+    });
+  }
+
+  // Enterキーでsubmitされないようにする
+  const inputs = document.querySelectorAll('#playerList input[type="text"]');
+  inputs.forEach((input) => {
+    input.addEventListener("keydown", function (event) {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        return false;
+      }
+    });
+  });
+
+  checkStartButtonValid();
+}
+
+function initStart() {
+  document.addEventListener("DOMContentLoaded", () => {
+    window.addEventListener("popstate", () => {
+      handlePopState();
+    });
+    startEventHandlers();
+  });
+}
+
+initStart();

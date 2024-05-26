@@ -1,0 +1,22 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "migrate",
+			"command": "python3",
+			"type": "shell",
+			"args": [
+				"${workspaceFolder}/src/backend/manage.py",
+				"migrate",
+				"--noinput"
+			],
+			"presentation": {
+				"reveal": "always"
+			},
+			"group": "build",
+			"dependsOn": [
+
+			]
+		}
+	]
+}

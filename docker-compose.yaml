@@ -6,6 +6,7 @@ services:
     restart: always
     ports:
       - "5432:5432"
+
   backend:
     build: src/backend
     restart: always
@@ -15,3 +16,4 @@ services:
       - .env
     depends_on:
       - db
+

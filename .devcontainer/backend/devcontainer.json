@@ -1,11 +1,14 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the
 // README at: https://github.com/devcontainers/templates/tree/main/src/docker-in-docker
 {
-	"name": "Base Container",
+	"name": "Backend Container",
 	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
-	"build": {
-		"dockerfile": "Dockerfile"
-	},
+	"dockerComposeFile": [
+		"../../docker-compose.yaml",
+		"./docker-compose.extend.yaml"
+	],
+	"workspaceFolder": "/workspace",
+	"service": "backend",
 	"features": {
 		"ghcr.io/devcontainers/features/docker-outside-of-docker:1": {
 			"version": "latest"
@@ -14,7 +17,7 @@
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],
 	// Use 'postCreateCommand' to run commands after the container is created.
-	// "postCreateCommand": "docker --version",
+	// "postCreateCommand": "pip install --upgrade pip && pip install -r ${containerWorkspaceFolder}/src/backend/requirements.txt",
 	// Configure tool-specific properties.
 	"customizations": {
 		"vscode": {

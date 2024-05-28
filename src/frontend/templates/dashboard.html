@@ -13,20 +13,22 @@
     </div>
   </div>
   <div class="input-group mb-3 w-25">
-    <input
-      type="text"
-      name="participant_name"
-      id="participantNameInput"
-      class="form-control"
-      placeholder="Input user name"
-      aria-label="Input user name"
-    />
+    <input type="text" name="participant_name" id="participantNameInput" class="form-control"
+      placeholder="Input user name" aria-label="Input user name" />
     <div class="input-group-append">
       <button class="btn btn-success" id="getAchievementsButton">Search</button>
     </div>
   </div>
   {% if data %}
-  <h1>{{ data.participant_name }}</h1>
+  <div>
+    <h1>{{ data.participant_name }}'s Achievements</h1>
+    <ul>
+      {% for achievement in data.achievements %}
+      <li>Score {{ achievement.score }}, Match ID {{ achievement.match_id }}
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
   {% else %}
   <h1>no data</h1>
   {% endif %}

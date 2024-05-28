@@ -8,7 +8,7 @@
 	},
 	"features": {
 		"ghcr.io/devcontainers/features/docker-outside-of-docker:1": {
-			"version": "latest"
+			"moby": true
 		}
 	},
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.

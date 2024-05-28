@@ -14,9 +14,11 @@
 				"reveal": "always"
 			},
 			"group": "build",
-			"dependsOn": [
-
-			]
+			"dependsOn": [],
+			"problemMatcher": [],
+			"runOptions": {
+				"runOn": "default"
+			}
 		}
 	]
 }

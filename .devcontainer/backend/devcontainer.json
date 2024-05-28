@@ -18,7 +18,7 @@
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],
 	// Use 'postCreateCommand' to run commands after the container is created.
-	"postCreateCommand": "git config --global --add safe.directory ${containerWorkspaceFolder} && pip install --upgrade pip && pip install -r ${containerWorkspaceFolder}/src/backend/requirements.txt",
+	"postCreateCommand": "pip install --upgrade pip && pip install -r ${containerWorkspaceFolder}/src/backend/requirements.txt && git config --global --add safe.directory ${containerWorkspaceFolder}",
 	// Configure tool-specific properties.
 	"customizations": {
 		"vscode": {

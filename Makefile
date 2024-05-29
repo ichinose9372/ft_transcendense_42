@@ -41,7 +41,7 @@ test: backend-test frontend-test
 
 backend-test:
 	@docker ps | grep trascen-backend-1 > /dev/null || (echo "Backend container is not running.")
-	docker-compose exec backend python backend/manage.py test models
+	docker-compose exec backend python backend/manage.py test models handlers
 
 frontend-test:
 	docker build -t frontend-test -f ./src/frontend/Dockerfile ./src/frontend && docker run -it --rm -p 3000:3000 -v ./src/frontend:/app --name frontend-test frontend-test
@@ -60,3 +60,5 @@ help:
 	@echo "  logs-<container> Show logs of a specific container"
 	@echo "  frontend-test Run frontend tests"
 	@echo "  help     Show this help message"
+
+.PHONY: all stop back db re p logs logs-% front-build front-run help

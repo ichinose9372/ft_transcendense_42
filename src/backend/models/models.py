@@ -13,7 +13,7 @@ class Tournament(models.Model):
 class Match(models.Model):
     app_label = 'backend'
     match_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    finished_time_stamp = models.DateTimeField(auto_now_add=True)
+    finished_time_stamp = models.DateTimeField()
     parent_match = models.ForeignKey('self', on_delete=models.CASCADE, null=True)
     tournament = models.ForeignKey(Tournament, on_delete=models.CASCADE)
 

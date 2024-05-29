@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import path
 
-from handlers.getClientApp import top, start
+from handlers.getClientApp import top, start, game
 from handlers.getAchievements import getAchievements
 from handlers.storeTournamentResult import storeTournamentResult, save_test
 from models.views import test_example
@@ -23,6 +23,7 @@ urlpatterns = [
 	# path('', getClientApp, name=""),
 	path('test_example/', test_example, name='test_example'),
 	path('game/save_test/', save_test, name='save_test'),
+	path('game/', game, name='game'),
 ]
 
 handler404 = 'models.errors.custom_404'

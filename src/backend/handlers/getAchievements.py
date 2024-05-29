@@ -1,5 +1,6 @@
 # snemoto test for routing
 from django.shortcuts import render
+from models.models import Score
 
 # def getAchievements(request):
 # 	return render(request, "getAchievements.html")
@@ -10,8 +11,10 @@ from django.shortcuts import render
 
 def getAchievements(request):
     participant_name = request.GET.get('participant_name', '')
-    # TODO : 名前を元にDBからデータを取得してdataに格納，現状は名前だけを格納
+    achievements = Score.objects.filter(participant_name=participant_name)
+    achievements_list = [{'score': achievement.score, 'match_id': achievement.match_id} for achievement in achievements]
     data = {
-        'participant_name': participant_name
-	}
-    return render(request, "dashboard.html", {'data': data})
+        'participant_name': participant_name,
+        'achievements': achievements_list
+    }
+    return render(request, "templates/dashboard.html", {'data': data})

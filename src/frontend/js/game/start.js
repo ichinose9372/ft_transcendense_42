@@ -1,17 +1,5 @@
 let myModal = null;
 
-function loadModalWithData(data) {
-  document.getElementById("tournamentNameDisplay").textContent =
-    data.tournament.name;
-  const list = document.getElementById("participantList");
-  list.innerHTML = "";
-  data.participants.forEach(function (participant) {
-    const li = document.createElement("li");
-    li.textContent = participant.name;
-    list.appendChild(li);
-  });
-}
-
 function addPlayer() {
   const playerList = document.getElementById("playerList");
   const playerCount = playerList.children.length + 1;
@@ -48,7 +36,7 @@ function getFormData() {
     if (playerName) {
       if (players.includes(playerName)) {
         alert("Player names must be unique.");
-        return;
+        return null;
       }
       players.push(playerName);
     }
@@ -62,26 +50,29 @@ function getFormData() {
     };
   } else {
     alert("Please enter a tournament name and at least two players.");
+    return null;
   }
 }
 
 function startGame() {
-    const data = getFormData();
-    appState.setState(data);
-    const info = makeTournament();
-    // appState.clearState();
-    appState.setState({
-      tournament: info.tournament,
-      matches: info.matches,
-      participants: info.participants,
-    });
-    appState.printState();
-    // TODO ここでモーダルを表示する, モーダル内の描画とデータの渡し方を考える
-    loadModalWithData(data);
-    myModal = new bootstrap.Modal(document.getElementById("tournamentModal"), {
-      keyboard: false,
-    });
-    myModal.show();
+  const data = getFormData();
+  if (data === null) {
+    return;
+  }
+  appState.setState(data);
+  const info = makeTournament();
+  // appState.clearState();
+  appState.setState({
+    tournament: info.tournament,
+    matches: info.matches,
+    participants: info.participants,
+  });
+  appState.printState();
+  myModal = new bootstrap.Modal(document.getElementById("tournamentModal"), {
+    keyboard: false,
+  });
+  myModal.show();
+  tournamentDraw();
 }
 
 function checkStartButtonValid() {
@@ -138,7 +129,7 @@ function startEventHandlers() {
 
   if (startTournamentButton) {
     startTournamentButton.addEventListener("click", () => {
-      console.log("start tournament");
+      loadPage("/game", pongEventHandlers);
     });
   }
 
@@ -150,6 +141,10 @@ function startEventHandlers() {
   // modalが閉じるときに背景のmodal-backdropを削除する
   if (tournamentModal) {
     tournamentModal.addEventListener("hidden.bs.modal", function () {
+      const tournamentDraw = document.getElementById("tournamentDraw");
+      if (tournamentDraw) {
+        tournamentDraw.innerHTML = "";
+      }
       const backdrops = document.querySelectorAll(".modal-backdrop");
       backdrops.forEach((backdrop) => backdrop.remove());
 

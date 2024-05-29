@@ -1,0 +1,42 @@
+body {
+    margin: 0;
+    overflow: hidden;
+  }
+  
+#game-container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+  }
+
+#score {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 24px;
+    color: white;
+  }
+  
+  #start-button,
+  #pause-button {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 18px;
+    padding: 10px 20px;
+    background-color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  #game-over-message {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 36px;
+    color: white;
+    display: none;
+  }

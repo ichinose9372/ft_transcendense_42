@@ -22,9 +22,7 @@ db:
 	docker-compose exec db psql -h db -p 5432 -U user42 -d transcendence_db
 	# If you want to exit the container, use the '\q' command.
 
-test:
-	@docker ps | grep trascen-backend-1 > /dev/null || (echo "Backend container is not running.")
-	docker-compose exec backend python backend/manage.py test models
+
 re:
 	docker-compose down
 	docker-compose up --build -d
@@ -37,11 +35,16 @@ logs-%:
 logs:
 	docker-compose logs
 
-front-build:
-	docker build -t frontend-test -f ./src/frontend/Dockerfile ./src/frontend
+# Tests
 
-front-run:
-	docker run -it --rm -p 3000:3000 -v ./src/frontend/:/app  --name frontend-test frontend-test bash
+test: backend-test frontend-test
+
+backend-test:
+	@docker ps | grep trascen-backend-1 > /dev/null || (echo "Backend container is not running.")
+	docker-compose exec backend python backend/manage.py test models
+
+frontend-test:
+	docker build -t frontend-test -f ./src/frontend/Dockerfile ./src/frontend && docker run -it --rm -p 3000:3000 -v ./src/frontend:/app --name frontend-test frontend-test
 
 help:
 	@echo "Usage:"
@@ -55,8 +58,7 @@ help:
 	@echo "  p        Show running containers"
 	@echo "  logs     Show logs of all containers"
 	@echo "  logs-<container> Show logs of a specific container"
-	@echo "  front-build Build the frontend container"
-	@echo "  front-run Run the frontend container"
+	@echo "  frontend-test Run frontend tests"
 	@echo "  help     Show this help message"
 
 .PHONY: all stop back db re p logs logs-% front-build front-run help

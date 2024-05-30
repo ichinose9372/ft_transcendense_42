@@ -4,8 +4,16 @@ services:
     container_name: elasticsearch
     environment:
       discovery.type: single-node
+      xpack.security.enabled: "false"
+      xpack.security.http.ssl.enabled: "true"
+      xpack.security.http.ssl.key: /usr/share/elasticsearch/config/elastic-certificates/elasticsearch/elasticsearch.key
+      xpack.security.http.ssl.certificate: /usr/share/elasticsearch/config/elastic-certificates/elasticsearch/elasticsearch.crt
+      xpack.security.http.ssl.certificate_authorities: /usr/share/elasticsearch/config/elastic-stack-ca/ca/ca.crt
     ports:
       - "9200:9200"
+    volumes:
+      - ./elastic-certificates:/usr/share/elasticsearch/config/elastic-certificates
+      - ./elastic-stack-ca:/usr/share/elasticsearch/config/elastic-stack-ca
 
   logstash:
     image: logstash:8.13.4
@@ -14,15 +22,15 @@ services:
       - "5044:5044"
     volumes:
       - ./pipeline:/usr/share/logstash/pipeline
-    networks:
-      - tra
+      - ./elastic-stack-ca:/usr/share/logstash/config/elastic-stack-ca
     healthcheck:
-      test: ["CMD-SHELL", "curl -f http://localhost:5044 || exit 1"]
+      test: [ "CMD-SHELL", "curl -f http://localhost:5044 || exit 1" ]
       interval: 10s
       timeout: 5s
       retries: 5
       start_period: 10s
-
+    depends_on:
+      - elasticsearch
 
   kibana:
     image: kibana:8.13.4
@@ -33,7 +41,6 @@ services:
       - "5601:5601"
     depends_on:
       - elasticsearch
-    
 
   db:
     build: src/db
@@ -43,7 +50,11 @@ services:
     ports:
       - "5432:5432"
     healthcheck:
-      test: ["CMD-SHELL", "psql -h db -p 5432 -U ${POSTGRES_USER} -d ${POSTGRES_DB} -c 'SELECT 1'"]
+      test:
+        [
+          "CMD-SHELL",
+          "psql -h db -p 5432 -U ${POSTGRES_USER} -d ${POSTGRES_DB} -c 'SELECT 1'"
+        ]
       interval: 5s
       timeout: 2s
       retries: 5
@@ -55,7 +66,6 @@ services:
     #     syslog-address: "tcp://logstash:5044"
     depends_on:
       - logstash
-    
 
   backend:
     build:
@@ -75,4 +85,4 @@ services:
     #   driver: "syslog"
     #   options:
     #     syslog-address: "tcp://logstash:5044"
-    
+

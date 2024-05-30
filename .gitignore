@@ -3,6 +3,10 @@
 .DS_Store
 .vscode/
 
+*.zip
+*.crt
+*.key
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

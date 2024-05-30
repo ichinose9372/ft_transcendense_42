@@ -20,16 +20,9 @@ services:
     image: logstash:8.13.4
     container_name: logstash
     ports:
-      - "5044:5044"
+      - "12201:12201/udp"
     volumes:
       - ./pipeline:/usr/share/logstash/pipeline
-      - ./elastic-stack-ca:/usr/share/logstash/config/elastic-stack-ca
-    healthcheck:
-      test: [ "CMD-SHELL", "curl -f http://localhost:5044 || exit 1" ]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-      start_period: 10s
     depends_on:
       - elasticsearch
     environment:
@@ -67,9 +60,9 @@ services:
     volumes:
       - ./log/db:/var/log/postgresql
     # logging:
-    #   driver: "syslog"
+    #  driver: "gelf"
     #   options:
-    #     syslog-address: "tcp://logstash:5044"
+    #    gelf-address: udp://localhost:12201
     depends_on:
       - logstash
 
@@ -88,7 +81,7 @@ services:
     volumes:
       - "${WORKDIR_LOCAL}/src:/app"
     # logging:
-    #   driver: "syslog"
+    #   driver: "gelf"
     #   options:
-    #     syslog-address: "tcp://logstash:5044"
+    #    gelf-address: udp://localhost:12201
 

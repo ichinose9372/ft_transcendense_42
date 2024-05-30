@@ -10,29 +10,24 @@ services:
       discovery.type: single-node
     ports:
       - "9200:9200"
-      - "9300:9300"
     networks:
       - tra
-    platform: linux/amd64
-  
-  logstash:
-    image: docker.elastic.co/logstash/logstash-oss:6.2.4
-    container_name: logstash
-    ports:
-      - "5044:5044"
-    volumes:
-      - ./pipeline:/usr/share/logstash/pipeline
-    depends_on:
-      - elasticsearch
-    networks:
-      - tra
-    healthcheck:
-      test: ["CMD-SHELL", "curl -f http://localhost:9600 || exit 1"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-      start_period: 10s
-    platform: linux/amd64
+
+  # logstash:
+  #   image: docker.elastic.co/logstash/logstash-oss:6.2.4
+  #   container_name: logstash
+  #   ports:
+  #     - "5044:5044"
+  #   volumes:
+  #     - ./pipeline:/usr/share/logstash/pipeline
+  #   networks:
+  #     - tra
+  #   healthcheck:
+  #     test: ["CMD-SHELL", "curl -f http://elasticsearch:9200 || exit 1"]
+  #     interval: 10s
+  #     timeout: 5s
+  #     retries: 5
+  #     start_period: 10s
     
 
 
@@ -47,7 +42,6 @@ services:
       - elasticsearch
     networks:
       - tra
-    platform: linux/amd64
     
 
   db:
@@ -66,11 +60,10 @@ services:
       - ./log/db:/var/log/postgresql
     logging:
       driver: "json-file"
-    depends_on:
-      - logstash
+    # depends_on:
+    #   - logstash
     networks:
       - tra
-    platform: linux/amd64
     
 
   backend:
@@ -91,5 +84,4 @@ services:
       driver: "json-file"
     networks:
       - tra
-    platform: linux/amd64
     

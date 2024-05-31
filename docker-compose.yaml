@@ -43,6 +43,7 @@ services:
 
   db:
     build: src/db
+    container_name: db
     env_file:
       - .env
     restart: always
@@ -59,14 +60,15 @@ services:
       retries: 5
     volumes:
       - ./log/db:/var/log/postgresql
-    # logging:
-    #  driver: "gelf"
-    #   options:
-    #    gelf-address: udp://localhost:12201
+    logging:
+      driver: "gelf"
+      options:
+       gelf-address: udp://localhost:12201
     depends_on:
       - logstash
 
   backend:
+    container_name: backend
     build:
       context: .
       dockerfile: src/backend/Dockerfile
@@ -80,8 +82,8 @@ services:
         condition: service_healthy
     volumes:
       - "${WORKDIR_LOCAL}/src:/app"
-    # logging:
-    #   driver: "gelf"
-    #   options:
-    #    gelf-address: udp://localhost:12201
+    logging:
+      driver: "gelf"
+      options:
+       gelf-address: udp://localhost:12201
 

@@ -21,6 +21,7 @@ services:
     container_name: logstash
     ports:
       - "12201:12201/udp"
+      - "5044:5044"
     volumes:
       - ./pipeline:/usr/share/logstash/pipeline
     depends_on:
@@ -28,6 +29,11 @@ services:
     environment:
       - ELASTIC_USERNAME=elastic
       - ELASTIC_PASSWORD=user42
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://elasticsearch:9200/ || exit 1"]
+      interval: 10s
+      timeout: 30s
+      retries: 5
 
   kibana:
     image: kibana:8.13.4
@@ -61,11 +67,12 @@ services:
     volumes:
       - ./log/db:/var/log/postgresql
     logging:
-      driver: "gelf"
+      driver: "syslog"
       options:
-       gelf-address: udp://localhost:12201
+       syslog-address: "tcp://localhost:5044"
     depends_on:
-      - logstash
+      logstash:
+        condition: service_healthy
 
   backend:
     container_name: backend
@@ -83,7 +90,7 @@ services:
     volumes:
       - "${WORKDIR_LOCAL}/src:/app"
     logging:
-      driver: "gelf"
+      driver: "syslog"
       options:
-       gelf-address: udp://localhost:12201
+       syslog-address: "tcp://localhost:5044"
 

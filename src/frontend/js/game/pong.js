@@ -35,6 +35,17 @@ function pongEventHandlers() {
       openModal();
     });
   }
+
+  // pongの画面上でリロードした場合、トップページにリダイレクト
+  if (gameContainer) {
+    window.addEventListener('load', () => {
+      const perfEntries = performance.getEntriesByType("navigation");
+      const isReload = perfEntries[0].type === 'reload';
+      if (isReload) {
+        window.location.href = '/';
+      }
+    });
+  }
 }
 
 // モーダルを開き，トーナメントを描画

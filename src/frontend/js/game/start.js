@@ -163,6 +163,17 @@ function startEventHandlers() {
     });
   });
 
+  // reload時にtopに戻る
+  if (startGameButton) {
+    window.addEventListener('load', () => {
+      const perfEntries = performance.getEntriesByType("navigation");
+      const isReload = perfEntries[0].type === 'reload';
+      if (isReload) {
+        window.location.href = '/';
+      }
+    });
+  }
+
   checkStartButtonValid();
 }
 

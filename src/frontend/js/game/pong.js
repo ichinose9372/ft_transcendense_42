@@ -40,7 +40,7 @@ function pongEventHandlers() {
   if (gameContainer) {
     window.addEventListener('load', () => {
       const perfEntries = performance.getEntriesByType("navigation");
-      isReload = perfEntries[0].type === 'reload';
+      const isReload = perfEntries[0].type === 'reload';
       if (isReload) {
         window.location.href = '/';
       }

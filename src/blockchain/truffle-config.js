@@ -44,7 +44,9 @@
 // require('dotenv').config();
 // const { MNEMONIC, PROJECT_ID } = process.env;
 
-// const HDWalletProvider = require('@truffle/hdwallet-provider');
+const HDWalletProvider = require('@truffle/hdwallet-provider');
+const infuraKey = "cef9ebe0beac4c8dabccdc71ef259312";
+const privateKey = "8a057979fb735877e7b35149f18451d87b1a9e423dd326717609702fc3e8e0d5"
 
 module.exports = {
   /**
@@ -67,7 +69,14 @@ module.exports = {
     development: {
       host: "127.0.0.1",     // Localhost (default: none)
       port: 8545,            // Standard Ethereum port (default: none)
-      network_id: "*",       // Any network (default: none)
+      network_id: "5777",       // Any network (default: none)
+      from: "0x4f3edf983ac636a65a842ce7c78d9aa706d3b113b2fd9eaa0b2e5ea07a6be6e9"
+    },
+    sepholia: {
+      provider: () => new HDWalletProvider({ privateKeys: [privateKey], providerOrUrl: `https://sepolia.infura.io/v3/${infuraKey}` }),
+      network_id: 11155111,       // Sepholia's id
+      gas: 4500000,         // Gas limit
+      gasPrice: 19049298370 // 10 gwei
     },
     //
     // An additional network, but with some advanced options…

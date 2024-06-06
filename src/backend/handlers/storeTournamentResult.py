@@ -9,7 +9,7 @@ from models.models import Tournament, Match, Score
 import json
 from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import csrf_exempt
-
+from storeTournamentResultToBlockchain import add_score
 
 @csrf_exempt
 @require_http_methods(["POST"])
@@ -77,6 +77,7 @@ def storeTournamentResult(request):
                 participant_name=participant_name,
                 defaults={'score': score_value}
             )
+            add_score(match_id, participant_name, score_value)
 
         return JsonResponse({'status': 'success', 'message': 'Tournament results stored successfully'})
 

@@ -29,10 +29,3 @@ services:
         condition: service_healthy
     volumes:
       - "${WORKDIR_LOCAL}/src:/app"
-  blockchain:
-    build:
-      context: .
-      dockerfile: src/blockchain/Dockerfile
-    restart: always
-    ports:
-      - "8545:8545"

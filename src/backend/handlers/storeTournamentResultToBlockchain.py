@@ -112,17 +112,21 @@ print(contract.get_function_by_name('addScore'))
 
 # Example function to add a score
 def add_score(tournament_id, player_id, score):
-    private_key = os.getenv('CALLER_PRIVATEKEY')
-    tx = contract.functions.addScore(tournament_id, player_id, score).build_transaction({
-        'chainId': 11155111,  # Chain ID for Sepolia
-        'gas': 2000000,
-        'gasPrice': w3.to_wei('50', 'gwei'),
-        'nonce': w3.eth.get_transaction_count(caller),
-    })
+    try:
+        private_key = os.getenv('CALLER_PRIVATEKEY')
+        tx = contract.functions.addScore(tournament_id, player_id, score).build_transaction({
+            'chainId': 11155111,  # Chain ID for Sepolia
+            'gas': 2000000,
+            'gasPrice': w3.to_wei('50', 'gwei'),
+            'nonce': w3.eth.get_transaction_count(caller),
+        })
 
-    signed_tx = w3.eth.account.sign_transaction(tx, private_key)
-    tx_hash = w3.eth.send_raw_transaction(signed_tx.rawTransaction)
-    return tx_hash.hex()
+        signed_tx = w3.eth.account.sign_transaction(tx, private_key)
+        tx_hash = w3.eth.send_raw_transaction(signed_tx.rawTransaction)
+        return tx_hash.hex()
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return None
 
 def get_score(index):
     return contract.functions.getScore(index).call()

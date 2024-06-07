@@ -13,6 +13,14 @@
 			"django": true,
 			"justMyCode": true,
 			"preLaunchTask": "migrate"
+		},
+		{
+			"name": "Python Debugger: test",
+			"type": "debugpy",
+			"request": "launch",
+			"program": "${workspaceFolder}/src/backend/manage.py",
+			"console": "integratedTerminal",
+			"args": "test ${command:pickArgs}"
 		}
 	]
 }

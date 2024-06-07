@@ -1,0 +1,12 @@
+FROM node:latest
+
+RUN npm install -g truffle
+RUN npm install -g ganache
+
+WORKDIR /app
+
+EXPOSE 8545
+
+EXPOSE 24012
+
+ENTRYPOINT ganache-cli --db /app/db -i 5777 --account="0x4f3edf983ac636a65a842ce7c78d9aa706d3b113b2fd9eaa0b2e5ea07a6be6e9,99999999999999999999999999999999999999999999999999999999999999999"

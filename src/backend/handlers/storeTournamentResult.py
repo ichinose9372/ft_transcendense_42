@@ -83,6 +83,7 @@ def storeTournamentResult(request):
 
     except Exception as e:
         return JsonResponse({'status': 'error', 'message': str(e)})
+
 # from django.dispatch import receiver
 # from django.db.models.signals import post_save
 # from handlers.models import TournamentResult
@@ -90,7 +91,7 @@ def storeTournamentResult(request):
 # @receiver(post_save, sender=TournamentResult)
 # def handle_tournament_result(tournament, matches, scores):
 
-@csrf_exempt # TODO: 本番環���では無効化しないほうがいいかも
+@csrf_exempt # TODO: 本番環境では無効化しないほうがいいかも
 @require_http_methods(["POST"])
 def save_test(request):
     data = json.loads(request.body)

@@ -19,7 +19,7 @@
       <button class="btn btn-success" id="getAchievementsButton">Search</button>
     </div>
   </div>
-  {% if data %}
+  {% if data.participant_name %}
   <div>
     <h1>{{ data.participant_name }}'s Achievements</h1>
     <ul>
@@ -29,8 +29,6 @@
       {% endfor %}
     </ul>
   </div>
-  {% else %}
-  <h1>no data</h1>
   {% endif %}
 </div>
 

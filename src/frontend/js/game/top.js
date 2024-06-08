@@ -13,6 +13,15 @@ function topEventHandlers() {
       loadPage("/dashboard", dashboardEventHandlers);
     });
   }
+
+  document.querySelectorAll('input[name="btnradio"]').forEach((elem) => {
+    elem.addEventListener("change", (event) => {
+      if (event.target.checked) {
+        const language = event.target.id.split("-")[1];
+        translate(language);
+      }
+    });
+  })
 }
 
 function initTop() {

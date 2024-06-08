@@ -304,6 +304,11 @@ function checkGameOver() {
     isPaused = true;
     pauseButton.style.display = "none";
     startButton.style.display = "inline-block";
+
+    // 1秒後にモーダルを自動で開く
+    setTimeout(() => {
+      openModal();
+    }, 1000);
   }
 }
 

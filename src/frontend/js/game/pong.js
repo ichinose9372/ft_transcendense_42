@@ -2,6 +2,7 @@ function pongEventHandlers() {
   const gameContainer = document.getElementById("game-container");
   if (gameContainer) {
     gameContainer.appendChild(renderer.domElement);
+    initParticipantText();
   }
   // スタートボタン
   const startButton = document.getElementById("start-button");
@@ -264,6 +265,59 @@ function checkPaddleCollision() {
   }
 }
 
+// 参加者名を表示するテキストの作成
+let leftParticipantText;
+let rightParticipantText;
+
+function updateParticipantNames(leftName, rightName) {
+  if (leftParticipantText) {
+    leftParticipantText.textContent = leftName;
+  }
+  if (rightParticipantText) {
+    rightParticipantText.textContent = rightName;
+  }
+}
+
+function initParticipantText() {
+  leftParticipantText = document.getElementById("left-participant");
+  rightParticipantText = document.getElementById("right-participant");
+  console.log("leftParticipantText: ", leftParticipantText);
+  console.log("rightParticipantText: ", rightParticipantText);
+
+  const matches = appState.getStateByKey("matches");
+  console.log("matches: ", matches);
+  let currentMatch = null;
+
+  if (matches && matches.length > 0) {
+    // 最後の配列から最初の配列に向かって探索
+    for (let i = matches.length - 1; i >= 0; i--) {
+      const matchArray = matches[i];
+      console.log("matchArray: ", matchArray);
+
+      if (
+        matchArray &&
+        matchArray.leftParticipant !== "" &&
+        matchArray.rightParticipant !== "" &&
+        matchArray.leftScore === 0 &&
+        matchArray.rightScore === 0
+      ) {
+        currentMatch = matchArray;
+        break;
+      }
+    }
+  }
+
+  if (currentMatch) {
+    updateParticipantNames(
+      currentMatch.leftParticipant,
+      currentMatch.rightParticipant
+    );
+  } else {
+    console.warn("No match found with both participants.");
+    updateParticipantNames("", "");
+  }
+}
+
 let leftScore = 0;
 let rightScore = 0;
 
@@ -315,6 +369,11 @@ function checkGameOver() {
     isPaused = true;
     pauseButton.style.display = "none";
     startButton.style.display = "inline-block";
+
+    // 1秒後にモーダルを自動で開く
+    setTimeout(() => {
+      openModal();
+    }, 1000);
   }
 }
 
@@ -368,6 +427,7 @@ function animate() {
     checkGoalCollision();
     updateScore();
     checkGameOver();
+    initParticipantText();
   }
 
   // シーンをレンダリング

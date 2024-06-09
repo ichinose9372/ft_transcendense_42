@@ -344,10 +344,19 @@ let isPaused = true; // ゲーム開始前は一時停止状態にする
 function togglePause() {
   const pauseButton = document.getElementById("pause-button");
   isPaused = !isPaused;
-  if (isPaused) {
-    pauseButton.textContent = "Resume Game";
+  let label = ""
+  const language = appState.getStateByKey("language");
+  if (language === "ja") {
+    label = isPaused ? "ゲーム再開" : "ゲーム一時停止";
+  } else if (language === "fr") {
+    label = isPaused ? "Reprendre le jeu" : "Mettre le jeu en pause";
   } else {
-    pauseButton.textContent = "Pause Game";
+    label = isPaused ? "Resume Game" : "Pause Game";
+  }
+  if (isPaused) {
+    pauseButton.textContent = label;
+  } else {
+    pauseButton.textContent = label;
   }
 }
 

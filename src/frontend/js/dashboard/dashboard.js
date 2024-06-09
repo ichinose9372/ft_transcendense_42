@@ -15,7 +15,8 @@ function dashboardEventHandlers() {
 
   if (backToTopButton) {
     backToTopButton.addEventListener("click", () => {
-      loadPage("/", topEventHandlers);
+      const url = "/" + appState.getStateByKey("language") + "/";
+      loadPage(url, topEventHandlers);
     });
   }
 
@@ -39,7 +40,10 @@ function dashboardEventHandlers() {
     });
 
     getAchievementsButton.addEventListener("click", (e) => {
-      const url = new URL("/dashboard", window.location.origin);
+      const url = new URL(
+        "/" + appState.getStateByKey("language") + "/dashboard",
+        window.location.origin
+      );
       url.searchParams.append("participant_name", participantNameInput.value);
       loadPage(url, dashboardEventHandlers);
     });
@@ -47,11 +51,11 @@ function dashboardEventHandlers() {
 
   // reload時にtopに戻る
   if (getAchievementsButton && participantNameInput) {
-    window.addEventListener('load', () => {
+    window.addEventListener("load", () => {
       const perfEntries = performance.getEntriesByType("navigation");
-      const isReload = perfEntries[0].type === 'reload';
+      const isReload = perfEntries[0].type === "reload";
       if (isReload) {
-        window.location.href = '/';
+        window.location.href = "/";
       }
     });
   }

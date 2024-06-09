@@ -29,3 +29,4 @@ class AppStore {
 
 
 const appState = new AppStore();
+appState.setState({ language: "en" });

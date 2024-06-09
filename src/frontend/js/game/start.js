@@ -4,10 +4,18 @@ function addPlayer() {
   const playerList = document.getElementById("playerList");
   const playerCount = playerList.children.length + 1;
   const newPlayerDiv = document.createElement("div");
+  let playerLabel = "player name";
+  if (appState.getStateByKey("language") === "ja") {
+    playerLabel = "プレイヤー名";
+  } else if (appState.getStateByKey("language") === "en") {
+    playerLabel = "player name";
+  } else if (appState.getStateByKey("language") === "fr") {
+    playerLabel = "nom du joueur";
+  }
   newPlayerDiv.classList.add("mb-4");
   newPlayerDiv.innerHTML = `
 			<form id="user${playerCount}" class="input-group">
-				<input type="text" class="form-control" id="name${playerCount}" placeholder="player name" maxlength="10" oninput="checkStartButtonValid()"/>
+				<input type="text" class="form-control" id="name${playerCount}" placeholder="${playerLabel}" maxlength="10" oninput="checkStartButtonValid()"/>
 				<button type="button" class="btn btn-danger input-group-append" onclick="removePlayer('user${playerCount}')")>
 					<i class="bi bi-trash"></i>
 				</button>
@@ -129,7 +137,8 @@ function startEventHandlers() {
 
   if (startTournamentButton) {
     startTournamentButton.addEventListener("click", () => {
-      loadPage("/game", pongEventHandlers);
+      const url = "/" + appState.getStateByKey("language") + "/game";
+      loadPage(url, pongEventHandlers);
     });
   }
 

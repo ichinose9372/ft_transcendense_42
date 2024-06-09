@@ -1,34 +1,40 @@
 {% extends 'index.html' %} {% block content %}
 
+{% load i18n %}
+
 <div class="btn-group position-fixed top-0 end-0 p-3" role="group" aria-label="Basic radio toggle button group">
-  <input type="radio" class="btn-check" name="btnradio" id="btn-en" autocomplete="off" checked>
+  {% get_current_language as LANGUAGE_CODE %}
+  <input type="radio" class="btn-check" name="btnradio" id="btn-en" autocomplete="off" {% if LANGUAGE_CODE == 'en' %}checked{% endif %}>
   <label class="btn btn-light" for="btn-en">EN</label>
 
-  <input type="radio" class="btn-check" name="btnradio" id="btn-ja" autocomplete="off">
+  <input type="radio" class="btn-check" name="btnradio" id="btn-ja" autocomplete="off" {% if LANGUAGE_CODE == 'ja' %}checked{% endif %}>
   <label class="btn btn-light" for="btn-ja">JA</label>
 
-  <input type="radio" class="btn-check" name="btnradio" id="btn-fr" autocomplete="off">
+  <input type="radio" class="btn-check" name="btnradio" id="btn-fr" autocomplete="off" {% if LANGUAGE_CODE == 'fr' %}checked{% endif %}>
   <label class="btn btn-light" for="btn-fr">FR</label>
 </div>
 
-<div
-  class="container-fluid d-flex flex-column justify-content-center align-items-center min-vh-100"
->
+<div class="container-fluid d-flex flex-column justify-content-center align-items-center min-vh-100">
   <div class="container">
     <div class="d-grid gap-4">
       <div>
         <h1 class="text-center archivo-black-regular" style="font-size: 5rem" glot-model="pong">
-          Pong
+          {% blocktranslate %}Pong{% endblocktranslate %}
         </h1>
       </div>
       <div class="d-grid gap-4 col-4 mx-auto mt-5">
-        <button id="startButton" class="btn btn-primary" glot-model="start">Start</button>
-        <button id="dashboardButton" class="btn btn-secondary" glot-model="dashboard">
-          Dashboard
+        <button id="startButton" class="btn btn-primary">{% blocktranslate %}Start{% endblocktranslate %}</button>
+        <button id="dashboardButton" class="btn btn-secondary">
+          {% blocktranslate %}Dashboard{% endblocktranslate %}
         </button>
       </div>
     </div>
   </div>
 </div>
+
+<script>
+  const csrf_token = "{{ csrf_token }}"
+  const set_language_url = "{% url 'set_language' %}"
+</script>
 
 {% endblock %}

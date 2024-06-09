@@ -1,8 +1,9 @@
 {% extends 'base.html' %} {% block content %}
+{% load i18n %}
 <div id="game-container"></div>
 
-<button id="start-button">Start Game</button>
-<button id="pause-button" style="display: none;">Pause Game</button>
+<button id="start-button">{% blocktranslate %}Start Game{% endblocktranslate %}</button>
+<button id="pause-button" style="display: none;">{% blocktranslate %}Pause Game{% endblocktranslate %}</button>
 
 
 <div id="score">
@@ -30,10 +31,10 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-          Close
+          {% blocktranslate %}Close{% endblocktranslate %}
         </button>
         <button type="button" class="btn btn-primary" id="startTournamentButton">
-          Start
+          {% blocktranslate %}Start{% endblocktranslate %}
         </button>
       </div>
     </div>

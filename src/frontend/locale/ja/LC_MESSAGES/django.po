@@ -1,0 +1,79 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-06-09 10:13+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+#: server/settings.py:128
+msgid "Japanese"
+msgstr ""
+
+#: server/settings.py:129
+msgid "English"
+msgstr ""
+
+#: server/settings.py:130
+msgid "French"
+msgstr ""
+
+# python manage.py makemessages -l ja -e htmlなどで上手くいかないので手書きで箇所を埋めてく
+# 行数やファイル名はなくても動く
+# 編集後 python manage.py compilemessagesをコンテナ内で実行する
+
+#: templates/top.html:26
+msgid "Start"
+msgstr "開始"
+
+#: templates/top.html:28
+msgid "Dashboard"
+msgstr "ダッシュボード"
+
+#: templates/top.html
+msgid "Pong"
+msgstr "ポン"
+
+msgid "Tournament Registration"
+msgstr "トーナメント登録画面"
+
+msgid "Make Tournament"
+msgstr "トーナメントを作成"
+
+msgid "Close"
+msgstr "閉じる"
+
+msgid "tournament name"
+msgstr "トーナメント名"
+
+msgid "player name"
+msgstr "プレイヤー名"
+
+msgid "Start Game"
+msgstr "ゲーム開始"
+
+msgid "Pause Game"
+msgstr "ゲーム一時停止"
+
+msgid "Back to Top"
+msgstr "トップへ戻る"
+
+msgid "Search"
+msgstr "検索"
+
+msgid "'s Achievements"
+msgstr " の成績"
+
+msgid "Input user name"
+msgstr "ユーザ名を入力"

@@ -278,21 +278,19 @@ function updateParticipantNames(leftName, rightName) {
   }
 }
 
+// 現在の試合オブジェクトの作成
+let currentMatch = null;
+
 function initParticipantText() {
   leftParticipantText = document.getElementById("left-participant");
   rightParticipantText = document.getElementById("right-participant");
-  console.log("leftParticipantText: ", leftParticipantText);
-  console.log("rightParticipantText: ", rightParticipantText);
 
   const matches = appState.getStateByKey("matches");
-  console.log("matches: ", matches);
-  let currentMatch = null;
+  currentMatch = null;
 
   if (matches && matches.length > 0) {
-    // 最後の配列から最初の配列に向かって探索
     for (let i = matches.length - 1; i >= 0; i--) {
       const matchArray = matches[i];
-      console.log("matchArray: ", matchArray);
 
       if (
         matchArray &&
@@ -316,6 +314,64 @@ function initParticipantText() {
     console.warn("No match found with both participants.");
     updateParticipantNames("", "");
   }
+}
+
+function updateMatchData(winner) {
+  if (currentMatch) {
+    const matches = appState.getStateByKey("matches");
+    const updatedMatches = matches.map((match) => {
+      if (match.matchId === currentMatch.matchId) {
+        return {
+          ...match,
+          leftScore: leftScore,
+          rightScore: rightScore,
+          finishedTimestamp: getCurrentTimestamp(),
+        };
+      }
+      return match;
+    });
+
+    const parentMatch = matches.find(
+      (match) => match.matchId === currentMatch.parentMatchId
+    );
+
+    if (parentMatch) {
+      const updatedParentMatch = {
+        ...parentMatch,
+        leftParticipant:
+          parentMatch.leftParticipant === ""
+            ? winner
+            : parentMatch.leftParticipant,
+        rightParticipant:
+          parentMatch.leftParticipant !== "" && parentMatch.rightParticipant === ""
+            ? winner
+            : parentMatch.rightParticipant,
+      };
+
+      const updatedMatchesWithParent = updatedMatches.map((match) => {
+        if (match.matchId === parentMatch.matchId) {
+          return updatedParentMatch;
+        }
+        return match;
+      });
+
+      appState.setState({ matches: updatedMatchesWithParent });
+    } else {
+      appState.setState({ matches: updatedMatches });
+    }
+  }
+}
+
+function getCurrentTimestamp() {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, "0");
+  const day = String(now.getDate()).padStart(2, "0");
+  const hours = String(now.getHours()).padStart(2, "0");
+  const minutes = String(now.getMinutes()).padStart(2, "0");
+  const seconds = String(now.getSeconds()).padStart(2, "0");
+
+  return `${year}/${month}/${day} ${hours}:${minutes}:${seconds}`;
 }
 
 let leftScore = 0;
@@ -360,15 +416,18 @@ function updateScore() {
 function checkGameOver() {
   const startButton = document.getElementById("start-button");
   const pauseButton = document.getElementById("pause-button");
-  if (leftScore === 11 || rightScore === 11) {
+  if (leftScore === 2 || rightScore === 2) {
     // ゲームを終了し、勝者を表示
-    const winner = leftScore === 11 ? "Left Player" : "Right Player";
+    const winner = leftScore === 2 ? currentMatch.leftParticipant : currentMatch.rightParticipant;
     showGameOverMessage(winner);
 
     // ゲームを一時停止する
     isPaused = true;
     pauseButton.style.display = "none";
     startButton.style.display = "inline-block";
+
+    // 試合データを更新
+    updateMatchData(winner);
 
     // 1秒後にモーダルを自動で開く
     setTimeout(() => {

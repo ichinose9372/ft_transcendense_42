@@ -2,6 +2,7 @@ function pongEventHandlers() {
   const gameContainer = document.getElementById("game-container");
   if (gameContainer) {
     gameContainer.appendChild(renderer.domElement);
+    initParticipantText();
   }
   // スタートボタン
   const startButton = document.getElementById("start-button");
@@ -264,6 +265,115 @@ function checkPaddleCollision() {
   }
 }
 
+// 参加者名を表示するテキストの作成
+let leftParticipantText;
+let rightParticipantText;
+
+function updateParticipantNames(leftName, rightName) {
+  if (leftParticipantText) {
+    leftParticipantText.textContent = leftName;
+  }
+  if (rightParticipantText) {
+    rightParticipantText.textContent = rightName;
+  }
+}
+
+// 現在の試合オブジェクトの作成
+let currentMatch = null;
+
+function initParticipantText() {
+  leftParticipantText = document.getElementById("left-participant");
+  rightParticipantText = document.getElementById("right-participant");
+
+  const matches = appState.getStateByKey("matches");
+  currentMatch = null;
+
+  if (matches && matches.length > 0) {
+    for (let i = matches.length - 1; i >= 0; i--) {
+      const matchArray = matches[i];
+
+      if (
+        matchArray &&
+        matchArray.leftParticipant !== "" &&
+        matchArray.rightParticipant !== "" &&
+        matchArray.leftScore === 0 &&
+        matchArray.rightScore === 0
+      ) {
+        currentMatch = matchArray;
+        break;
+      }
+    }
+  }
+
+  if (currentMatch) {
+    updateParticipantNames(
+      currentMatch.leftParticipant,
+      currentMatch.rightParticipant
+    );
+  } else {
+    console.warn("No match found with both participants.");
+    updateParticipantNames("", "");
+  }
+}
+
+function updateMatchData(winner) {
+  if (currentMatch) {
+    const matches = appState.getStateByKey("matches");
+    const updatedMatches = matches.map((match) => {
+      if (match.matchId === currentMatch.matchId) {
+        return {
+          ...match,
+          leftScore: leftScore,
+          rightScore: rightScore,
+          finishedTimestamp: getCurrentTimestamp(),
+        };
+      }
+      return match;
+    });
+
+    const parentMatch = matches.find(
+      (match) => match.matchId === currentMatch.parentMatchId
+    );
+
+    if (parentMatch) {
+      const updatedParentMatch = {
+        ...parentMatch,
+        leftParticipant:
+          parentMatch.leftParticipant === ""
+            ? winner
+            : parentMatch.leftParticipant,
+        rightParticipant:
+          parentMatch.leftParticipant !== "" && parentMatch.rightParticipant === ""
+            ? winner
+            : parentMatch.rightParticipant,
+      };
+
+      const updatedMatchesWithParent = updatedMatches.map((match) => {
+        if (match.matchId === parentMatch.matchId) {
+          return updatedParentMatch;
+        }
+        return match;
+      });
+
+      appState.setState({ matches: updatedMatchesWithParent });
+    } else {
+      appState.setState({ matches: updatedMatches });
+    }
+  }
+}
+
+function getCurrentTimestamp() {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, "0");
+  const day = String(now.getDate()).padStart(2, "0");
+  const hours = String(now.getHours()).padStart(2, "0");
+  const minutes = String(now.getMinutes()).padStart(2, "0");
+  const seconds = String(now.getSeconds()).padStart(2, "0");
+
+  return `${year}/${month}/${day} ${hours}:${minutes}:${seconds}`;
+}
+
 let leftScore = 0;
 let rightScore = 0;
 
@@ -306,15 +416,23 @@ function updateScore() {
 function checkGameOver() {
   const startButton = document.getElementById("start-button");
   const pauseButton = document.getElementById("pause-button");
-  if (leftScore === 11 || rightScore === 11) {
+  if (leftScore === 2 || rightScore === 2) {
     // ゲームを終了し、勝者を表示
-    const winner = leftScore === 11 ? "Left Player" : "Right Player";
+    const winner = leftScore === 2 ? currentMatch.leftParticipant : currentMatch.rightParticipant;
     showGameOverMessage(winner);
 
     // ゲームを一時停止する
     isPaused = true;
     pauseButton.style.display = "none";
     startButton.style.display = "inline-block";
+
+    // 試合データを更新
+    updateMatchData(winner);
+
+    // 1秒後にモーダルを自動で開く
+    setTimeout(() => {
+      openModal();
+    }, 1000);
   }
 }
 
@@ -377,6 +495,7 @@ function animate() {
     checkGoalCollision();
     updateScore();
     checkGameOver();
+    initParticipantText();
   }
 
   // シーンをレンダリング

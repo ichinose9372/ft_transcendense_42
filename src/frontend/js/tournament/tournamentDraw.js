@@ -46,7 +46,15 @@ function tournamentDraw() {
     const roundDiv = document.createElement("div");
     roundDiv.classList.add("round", "mb-3", "mt-3", "p-1");
     for (let j = 0; j < matchesInRound.length; j++) {
-      const match = matchesInRound[j];
+      const matchData = matchesInRound[j];
+      const match = new Match(matchData.parentMatchId, matchData.tournamentId);
+      match.matchId = matchData.matchId;
+      match.leftParticipant = matchData.leftParticipant;
+      match.rightParticipant = matchData.rightParticipant;
+      match.leftScore = matchData.leftScore;
+      match.rightScore = matchData.rightScore;
+      match.finishedTimestamp = matchData.finishedTimestamp;
+
       const matchDiv = document.createElement("div");
       matchDiv.classList.add("match", "mb-3", "mt-3", "p-1");
       matchDiv.setAttribute("data-match-id", match.matchId);

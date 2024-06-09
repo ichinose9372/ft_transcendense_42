@@ -38,7 +38,7 @@ function tournamentDraw() {
   const state = appState.getState();
   const matches = state.matches;
 
-  tournamentName.innerHTML = "Tournament : " + state.tournament.tournamentName;
+  tournamentName.innerHTML = state.tournament.tournamentName;
 
   const matchesByRound = organizeMatchesByRound(matches);
   for (let i = 0; i < matchesByRound.length; i++) {

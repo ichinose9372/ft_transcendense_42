@@ -1,46 +1,30 @@
 {% extends "base.html" %} {% block content %}
 
+{% load i18n %}
+
 <div class="container-fluid">
   <div class="row justify-content-center">
     <div>
       <h1 class="text-center my-5 regular archivo-black-regular">
-        Tournament Registration
+        {% blocktranslate %}Tournament Registration{% endblocktranslate %}
       </h1>
     </div>
     <div>
       <div class="d-grid col-4 mx-auto mb-5">
-        <input
-          type="text"
-          class="form-control"
-          id="tournamentName"
-          placeholder="tournament name"
-          maxlength="30"
-        />
+        <input type="text" class="form-control" id="tournamentName" placeholder="{% blocktranslate %}tournament name{% endblocktranslate %}" maxlength="30" />
       </div>
     </div>
     <div class="col-4" id="playerList">
       <div class="mb-4">
         <form id="user1" class="input-group">
-          <input
-            type="text"
-            class="form-control"
-            id="name1"
-            placeholder="player name"
-            maxlength="10"
-            oninput="checkStartButtonValid()"
-          />
+          <input type="text" class="form-control" id="name1" placeholder="{% blocktranslate %}player name{% endblocktranslate %}" maxlength="10"
+            oninput="checkStartButtonValid()" />
         </form>
       </div>
       <div class="mb-4">
         <form id="user2" class="input-group">
-          <input
-            type="text"
-            class="form-control"
-            id="name2"
-            placeholder="player name"
-            maxlength="10"
-            oninput="checkStartButtonValid()"
-          />
+          <input type="text" class="form-control" id="name2" placeholder="{% blocktranslate %}player name{% endblocktranslate %}" maxlength="10"
+            oninput="checkStartButtonValid()" />
         </form>
       </div>
     </div>
@@ -53,7 +37,7 @@
 
     <div class="d-grid gap-4 col-4 mx-auto mt-5">
       <button type="button" id="startGameButton" class="btn btn-primary">
-        Make Tournament
+        {% blocktranslate %}Make Tournament{% endblocktranslate %}
       </button>
 
       <!-- TODO : test用ボタン 不要になったら削除 -->
@@ -63,41 +47,22 @@
     </div>
 
     <!-- Modal -->
-    <div
-      class="modal fade"
-      id="tournamentModal"
-      tabindex="-1"
-      aria-labelledby="tournamentNameLabel"
-      aria-hidden="true"
-    >
+    <div class="modal fade" id="tournamentModal" tabindex="-1" aria-labelledby="tournamentNameLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-scrollable modal-xl">
         <div class="modal-content">
           <div class="modal-header">
             <h1 class="modal-title fs-5" id="tournamentNameLabel"></h1>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body" id="tournamentModalBody">
             <div id="tournamentDraw"></div>
           </div>
           <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
-              Close
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+              {% blocktranslate %}Close{% endblocktranslate %}
             </button>
-            <button
-              type="button"
-              class="btn btn-primary"
-              id="startTournamentButton"
-            >
-              Start
+            <button type="button" class="btn btn-primary" id="startTournamentButton">
+              {% blocktranslate %}Start{% endblocktranslate %}
             </button>
           </div>
         </div>

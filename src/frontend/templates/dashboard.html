@@ -1,27 +1,29 @@
 {% extends 'base.html' %} {% block content %}
 
+{% load i18n %}
+
 <div class="container-fluid p-5">
   <!-- <div class="mb-5 regular archivo-black-regular"><h1>Dashboard</h1></div> -->
   <div class="row mb-5">
     <div class="col">
-      <h1 class="regular archivo-black-regular">Dashboard</h1>
+      <h1 class="regular archivo-black-regular">{% blocktranslate %}Dashboard{% endblocktranslate %}</h1>
     </div>
     <div class="col-auto ml-auto">
       <button class="btn btn-secondary" id="backToTopButton">
-        <i class="bi bi-house-door-fill"></i> Back to Top
+        <i class="bi bi-house-door-fill"></i>{% blocktranslate %}Back to Top{% endblocktranslate %}
       </button>
     </div>
   </div>
   <div class="input-group mb-3 w-25">
     <input type="text" name="participant_name" id="participantNameInput" class="form-control"
-      placeholder="Input user name" aria-label="Input user name" />
+      placeholder="{% blocktranslate %}Input user name{% endblocktranslate %}" aria-label="Input user name" />
     <div class="input-group-append">
-      <button class="btn btn-success" id="getAchievementsButton">Search</button>
+      <button class="btn btn-success" id="getAchievementsButton">{% blocktranslate %}Search{% endblocktranslate %}</button>
     </div>
   </div>
-  {% if data %}
+  {% if data.participant_name %}
   <div>
-    <h1>{{ data.participant_name }}'s Achievements</h1>
+    <h1>{{ data.participant_name }}{% blocktranslate %}'s Achievements{% endblocktranslate %}</h1>
     <ul>
       {% for achievement in data.achievements %}
       <li>Score {{ achievement.score }}, Match ID {{ achievement.match_id }}
@@ -29,8 +31,6 @@
       {% endfor %}
     </ul>
   </div>
-  {% else %}
-  <h1>no data</h1>
   {% endif %}
 </div>
 

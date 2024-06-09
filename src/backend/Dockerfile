@@ -2,7 +2,7 @@
 FROM python:3.10.5
 
 # Set psql command
-RUN apt-get update && apt-get install -y postgresql-client
+RUN apt-get update && apt-get install -y postgresql-client gettext
 
 # Set the working directory in the container
 WORKDIR /app

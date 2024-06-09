@@ -5,18 +5,15 @@ services:
     environment:
       discovery.type: single-node
       ELASTIC_PASSWORD: user42
-      xpack.security.enabled: "false"
-      xpack.security.http.ssl.enabled: "true"
-      xpack.security.http.ssl.key: /usr/share/elasticsearch/config/elastic-certificates/elasticsearch/elasticsearch.key
-      xpack.security.http.ssl.certificate: /usr/share/elasticsearch/config/elastic-certificates/elasticsearch/elasticsearch.crt
-      xpack.security.http.ssl.certificate_authorities: /usr/share/elasticsearch/config/elastic-stack-ca/ca/ca.crt
+      xpack.security.enabled: true
+      xpack.security.http.ssl.enabled: true
+      xpack.security.http.ssl.key: /usr/share/elasticsearch/config/certs/elasticsearch.key
+      xpack.security.http.ssl.certificate: /usr/share/elasticsearch/config/certs/elasticsearch.crt
+      xpack.security.http.ssl.certificate_authorities: "/usr/share/elasticsearch/config/certs/elasticsearch.crt" 
     ports:
       - "9200:9200"
     volumes:
-      - ./elastic-certificates:/usr/share/elasticsearch/config/elastic-certificates
-      - ./elastic-stack-ca:/usr/share/elasticsearch/config/elastic-stack-ca
-      - ./init-es.sh:/usr/share/elasticsearch/init-es.sh
-    
+      - ./ssl:/usr/share/elasticsearch/config/certs
 
   logstash:
     image: logstash:8.13.4
@@ -26,13 +23,19 @@ services:
       - "5044:5044"
     volumes:
       - ./pipeline:/usr/share/logstash/pipeline
+      - ./ssl:/etc/logstash/config/certs
     depends_on:
       - elasticsearch
     environment:
-      - ELASTIC_USERNAME=elastic
-      - ELASTIC_PASSWORD=user42
+      xpack.monitoring.enabled: true
+      xpack.monitoring.elasticsearch.username: elastic
+      xpack.monitoring.elasticsearch.password: user42
+      xpack.monitoring.elasticsearch.hosts: https://elasticsearch:9200
+      xpack.monitoring.elasticsearch.ssl.certificate_authority: "/etc/logstash/config/certs/elasticsearch.crt"
+      xpack.monitoring.elasticsearch.ssl.verification_mode: none
+
     healthcheck:
-      test: ["CMD-SHELL", "curl -f http://elasticsearch:9200/ || exit 1"]
+      test: ["CMD-SHELL", "curl -u elastic:user42 -k https://elasticsearch:9200/ || exit 1"]
       interval: 10s
       timeout: 30s
       retries: 5
@@ -42,12 +45,16 @@ services:
     container_name: kibana
     environment:
       ELASTICSEARCH_URL: https://elasticsearch:9200
-      # ELASTICSEARCH_USERNAME: elastic
-      # ELASTICSEARCH_PASSWORD: user42
+      server.ssl.enabled: true
+      server.ssl.certificate: /usr/share/kibana/config/certs/elasticsearch.crt
+      server.ssl.key: /usr/share/kibana/config/certs/elasticsearch.crt
+      elasticsearch.ssl.certificateAuthorities: "/usr/share/kibana/config/certs/elasticsearch.crt" 
     ports:
       - "5601:5601"
     depends_on:
       - elasticsearch
+    volumes:
+      - ./ssl:/usr/share/kibana/config/certs
 
   db:
     build: src/db

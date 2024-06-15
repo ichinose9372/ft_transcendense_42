@@ -52,7 +52,8 @@ function topEventHandlers() {
     const perfEntries = performance.getEntriesByType("navigation");
     const isReload = perfEntries[0].type === 'reload';
     if (isReload) {
-      window.location.href = '/';
+      const lang = appState.getStateByKey("language");
+      window.location.href = '/' + lang + '/';
     }
   });
 }

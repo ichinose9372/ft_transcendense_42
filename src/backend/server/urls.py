@@ -3,7 +3,7 @@ from django.contrib import admin
 from django.urls import path, include
 
 from handlers.getClientApp import top, start, game
-from handlers.getAchievements import getAchievements
+from handlers.getAchievements import dashboard, getAchievements
 from handlers.storeTournamentResult import storeTournamentResult, save_test
 from models.views import test_example
 from django.conf.urls import handler404
@@ -23,7 +23,8 @@ urlpatterns += i18n_patterns(
 	path('start/', start, name="start"),
 	path('gamefinish/', storeTournamentResult, name="gamefinish"),
 	# for query_paramator
-	path('dashboard/', getAchievements, name="dashboard"),
+	path('dashboard/', dashboard, name="dashboard"),
+	path('getAchievements/', getAchievements, name='getAchievements'),
 	# for path_paramator
 	# path('dashboard/<str:participant_name>/', getAchievements, name="dashboard"),
 	# path('', getClientApp, name=""),

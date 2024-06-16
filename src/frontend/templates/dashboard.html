@@ -21,18 +21,14 @@
       <button class="btn btn-success" id="getAchievementsButton">{% blocktranslate %}Search{% endblocktranslate %}</button>
     </div>
   </div>
-  {% if data.participant_name %}
-  <div>
-    <h1>{{ data.participant_name }}{% blocktranslate %}'s Achievements{% endblocktranslate %}</h1>
-    <ul>
-      {% for achievement in data.achievements %}
-      <li>Score {{ achievement.score }}, Match ID {{ achievement.match_id }}
-      </li>
-      {% endfor %}
-    </ul>
-  </div>
-  {% endif %}
-</div>
 
+  <div>
+    <h1 id="name-achievements"></h1>
+  </div>
+
+  <div class="mt-5 p-5">
+    <canvas id="chart" width="400" height="400"></canvas>
+  </div>
+</div>
 
 {% endblock %}

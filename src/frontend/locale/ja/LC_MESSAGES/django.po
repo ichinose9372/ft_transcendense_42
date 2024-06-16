@@ -77,3 +77,15 @@ msgstr " の成績"
 
 msgid "Input user name"
 msgstr "ユーザ名を入力"
+
+msgid "First to score 11 points wins."
+msgstr "11点先取した方の勝ち"
+
+msgid "Left player: W (up), S (down) to move the paddle."
+msgstr "左のプレイヤー: W (上), S (下)でパドルを動かす"
+
+msgid "Right player: ↑ (up), ↓ (down) to move the paddle."
+msgstr "右のプレイヤー: ↑ (上), ↓ (下)でパドルを動かす"
+
+msgid "Rules"
+msgstr "ルール"

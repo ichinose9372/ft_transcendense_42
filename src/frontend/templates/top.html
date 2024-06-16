@@ -32,6 +32,37 @@
   </div>
 </div>
 
+<button type="button" class="btn btn-light btn-lg position-fixed bottom-0 m-3 border-0" id="helpButton">
+  <i class="bi bi-question-circle"></i>
+</button>
+
+<div class="modal fade" id="helpModal" tabindex="-1" aria-labelledby="tournamentNameLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-md modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5">
+          {% blocktranslate %}Rules{% endblocktranslate %}
+        </h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="helpModalBody">
+        <div>
+          <ul>
+            <li>{% blocktranslate %}First to score 11 points wins.{% endblocktranslate %}</li>
+            <li>{% blocktranslate %}Left player: W (up), S (down) to move the paddle.{% endblocktranslate %}</li>
+            <li>{% blocktranslate %}Right player: ↑ (up), ↓ (down) to move the paddle.{% endblocktranslate %}</li>
+          </ul>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          {% blocktranslate %}Close{% endblocktranslate %}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
   const csrf_token = "{{ csrf_token }}"
   const set_language_url = "{% url 'set_language' %}"

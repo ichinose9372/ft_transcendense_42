@@ -73,3 +73,15 @@ msgstr " Réalisations"
 
 msgid "Input user name"
 msgstr "Saisir le nom d'utilisateur"
+
+msgid "First to score 11 points wins."
+msgstr "Le premier à marquer 11 points gagne."
+
+msgid "Left player: W (up), S (down) to move the paddle."
+msgstr "Joueur gauche : W (haut), S (bas) pour déplacer la palette."
+
+msgid "Right player: ↑ (up), ↓ (down) to move the paddle."
+msgstr "Joueur de droite : ↑ (haut), ↓ (bas) pour déplacer la pagaie."
+
+msgid "Rules"
+msgstr "Règles"

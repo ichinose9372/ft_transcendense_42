@@ -74,3 +74,15 @@ msgstr ""
 
 msgid "Input user name"
 msgstr ""
+
+msgid "First to score 11 points wins."
+msgstr ""
+
+msgid "Left player: W (up), S (down) to move the paddle."
+msgstr ""
+
+msgid "Right player: ↑ (up), ↓ (down) to move the paddle."
+msgstr ""
+
+msgid "Rules"
+msgstr ""

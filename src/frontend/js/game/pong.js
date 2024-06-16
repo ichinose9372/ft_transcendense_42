@@ -359,6 +359,8 @@ function updateMatchData(winner) {
       appState.setState({ matches: updatedMatchesWithParent });
     } else {
       appState.setState({ matches: updatedMatches });
+      const currentLang = window.location.pathname.split('/')[1];
+      window.location.href = `/${currentLang}/game/end?winner=${encodeURIComponent(winner)}`;
     }
   }
 }

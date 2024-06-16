@@ -85,3 +85,6 @@ msgstr "Joueur de droite : ↑ (haut), ↓ (bas) pour déplacer la pagaie."
 
 msgid "Rules"
 msgstr "Règles"
+
+msgid "End Tournament"
+msgstr "Fin du tournoi"

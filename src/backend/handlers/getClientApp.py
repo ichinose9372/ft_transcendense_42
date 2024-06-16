@@ -13,3 +13,6 @@ def start(request):
 
 def game(request):
 	return render(request, "templates/game.html")
+
+def end_tournament_view(request):
+	return render(request, "templates/end.html")

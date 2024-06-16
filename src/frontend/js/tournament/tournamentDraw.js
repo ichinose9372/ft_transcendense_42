@@ -15,7 +15,7 @@ function organizeMatchesByRound(matches) {
       nextMatchIds.includes(match.parentMatchId)
     );
   }
-  console.log("matchesByRound", matchesByRound);
+  // console.log("matchesByRound", matchesByRound);
   return matchesByRound;
 }
 

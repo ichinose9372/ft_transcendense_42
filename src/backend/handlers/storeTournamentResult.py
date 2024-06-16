@@ -91,20 +91,3 @@ def storeTournamentResult(request):
 
 # @receiver(post_save, sender=TournamentResult)
 # def handle_tournament_result(tournament, matches, scores):
-
-# TODO : テスト不要になったら削除
-@csrf_exempt # TODO: 本番環境では無効化しないほうがいいかも
-@require_http_methods(["POST"])
-def save_test(request):
-    data = json.loads(request.body)
-
-    print("Received data:", data)
-
-    response_data = {
-        'status': 'success',
-        'message': 'Data received successfully',
-        'data': data,
-    }
-
-    # JSONレスポンスを返す
-    return JsonResponse(response_data)

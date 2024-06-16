@@ -4,7 +4,7 @@ from django.urls import path, include
 
 from handlers.getClientApp import top, start, game
 from handlers.getAchievements import dashboard, getAchievements
-from handlers.storeTournamentResult import storeTournamentResult, save_test
+from handlers.storeTournamentResult import storeTournamentResult
 from models.views import test_example
 from django.conf.urls import handler404
 from django.conf.urls.i18n import i18n_patterns
@@ -29,7 +29,6 @@ urlpatterns += i18n_patterns(
 	# path('dashboard/<str:participant_name>/', getAchievements, name="dashboard"),
 	# path('', getClientApp, name=""),
 	path('test_example/', test_example, name='test_example'),
-	path('game/save_test/', save_test, name='save_test'),
 	path('game/', game, name='game'),
 )
 

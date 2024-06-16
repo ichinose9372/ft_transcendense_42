@@ -9,7 +9,7 @@ function testDataPush() {
 		participants: info.participants,
 	});
   const state = appState.getState();
-  console.log(state);
+  // console.log(state);
   // テストデータをdjangoに送信し，djangoからの返り値をコンソールに表示する
   // djangoのurlをここで指定する
   fetch("/game/save_test/", {

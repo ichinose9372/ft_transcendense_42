@@ -118,8 +118,7 @@ function startEventHandlers() {
   const startTournamentButton = document.getElementById(
     "startTournamentButton"
   );
-  // TODO : test不要になったら削除する
-  const testDataButton = document.getElementById("testDataButton");
+
 
   if (startGameButton) {
     startGameButton.addEventListener("click", () => {
@@ -140,11 +139,6 @@ function startEventHandlers() {
       const url = "/" + appState.getStateByKey("language") + "/game";
       loadPage(url, pongEventHandlers);
     });
-  }
-
-  // TODO : test不要になったら削除する
-  if (testDataButton) {
-    testDataButton.addEventListener("click", testDataPush);
   }
 
   // modalが閉じるときに背景のmodal-backdropを削除する

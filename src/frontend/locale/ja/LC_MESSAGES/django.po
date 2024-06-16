@@ -89,3 +89,6 @@ msgstr "右のプレイヤー: ↑ (上), ↓ (下)でパドルを動かす"
 
 msgid "Rules"
 msgstr "ルール"
+
+msgid "End Tournament"
+msgstr "トーナメント終了"

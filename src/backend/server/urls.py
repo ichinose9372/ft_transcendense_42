@@ -2,7 +2,7 @@ from sys import prefix
 from django.contrib import admin
 from django.urls import path, include
 
-from handlers.getClientApp import top, start, game
+from handlers.getClientApp import top, start, game, end_tournament_view
 from handlers.getAchievements import dashboard, getAchievements
 from handlers.storeTournamentResult import storeTournamentResult
 from models.views import test_example
@@ -30,6 +30,7 @@ urlpatterns += i18n_patterns(
 	# path('', getClientApp, name=""),
 	path('test_example/', test_example, name='test_example'),
 	path('game/', game, name='game'),
+	path('game/end/', end_tournament_view, name='end_tournament'),
 )
 
 handler404 = 'models.errors.custom_404'

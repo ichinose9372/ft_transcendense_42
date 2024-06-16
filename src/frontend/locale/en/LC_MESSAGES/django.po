@@ -86,3 +86,6 @@ msgstr ""
 
 msgid "Rules"
 msgstr ""
+
+msgid "End Tournament"
+msgstr ""

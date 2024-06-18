@@ -359,6 +359,7 @@ function updateMatchData(winner) {
       appState.setState({ matches: updatedMatchesWithParent });
     } else {
       appState.setState({ matches: updatedMatches });
+      saveMatchesToStorage();
       const currentLang = window.location.pathname.split('/')[1];
       window.location.href = `/${currentLang}/game/end?winner=${encodeURIComponent(winner)}`;
     }
@@ -510,6 +511,13 @@ function animate() {
 
 // アニメーションループを開始
 animate();
+
+// ゲーム終了時に matches をローカルストレージに保存
+function saveMatchesToStorage() {
+  const matches = appState.getStateByKey("matches");
+  console.log("pong.js end -> matches: ", matches)
+  localStorage.setItem("savedMatches", JSON.stringify(matches));
+}
 
 function onWindowResize() {
   // カメラのアスペクト比を更新

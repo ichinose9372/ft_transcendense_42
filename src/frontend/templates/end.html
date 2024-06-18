@@ -12,6 +12,8 @@
 <script>
   document.addEventListener('DOMContentLoaded', function() {
     const urlParams = new URLSearchParams(window.location.search);
+    const savedMatches = JSON.parse(localStorage.getItem("savedMatches"));
+    console.log("Retrieved matches:", savedMatches);
     const winner = urlParams.get('winner');
     if (winner) {
       document.getElementById('winner-name').textContent = `🎉 ${winner} 🎉`;

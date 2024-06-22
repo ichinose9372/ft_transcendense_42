@@ -27,7 +27,3 @@ COPY ./src/backend/entrypoint.sh /app/backend/entrypoint.sh
 RUN chmod +x /app/backend/entrypoint.sh
 
 ENTRYPOINT [ "/app/backend/entrypoint.sh" ]
-
-# WORKDIR /app/backend
-# CMD [ "gunicorn", "--bind", "0.0.0.0:8000", "server.wsgi:application" ]
-# CMD [ "gunicorn", "--bind", "0.0.0.0:443", "--certfile=/etc/ssl/server.key", "--keyfile=/etc/ssl/server.key", "server.wsgi:application" ]

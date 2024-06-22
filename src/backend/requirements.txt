@@ -2,4 +2,3 @@ Django==3.2.7
 psycopg2
 faker
 web3
-# gunicorn

@@ -3,6 +3,12 @@
 import os
 import sys
 
+# runserverコマンドをオーバーライド
+# import socket
+# import ssl
+# from django.core.management.commands.runserver import Command as runserver
+# CERT = '/etc/ssl/server.crt'
+# KEY = '/etc/ssl/server.key'
 
 def main():
     """Run administrative tasks."""

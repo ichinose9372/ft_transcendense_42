@@ -29,13 +29,13 @@ function pongEventHandlers() {
     });
   }
   // TODO : モーダルテスト用→ボタンではなく試合の流れに合わせて表示するようにする
-  const modalTestButton = document.getElementById("modalTestButton");
-  if (modalTestButton) {
-    modalTestButton.addEventListener("click", () => {
-      // TODO : この関数を適切な位置で呼び出せば良い
-      openModal();
-    });
-  }
+  // const modalTestButton = document.getElementById("modalTestButton");
+  // if (modalTestButton) {
+  //   modalTestButton.addEventListener("click", () => {
+  //     // TODO : この関数を適切な位置で呼び出せば良い
+  //     openModal();
+  //   });
+  // }
 
   // pongの画面上でリロードした場合、トップページにリダイレクト
   if (gameContainer) {
@@ -312,7 +312,6 @@ function initParticipantText() {
       currentMatch.rightParticipant
     );
   } else {
-    console.warn("No match found with both participants.");
     updateParticipantNames("", "");
   }
 }
@@ -320,6 +319,7 @@ function initParticipantText() {
 function updateMatchData(winner) {
   if (currentMatch) {
     const matches = appState.getStateByKey("matches");
+    console.log("appState at game now", appState.getState());
     const updatedMatches = matches.map((match) => {
       if (match.matchId === currentMatch.matchId) {
         return {
@@ -359,9 +359,9 @@ function updateMatchData(winner) {
       appState.setState({ matches: updatedMatchesWithParent });
     } else {
       appState.setState({ matches: updatedMatches });
-      saveMatchesToStorage();
       const currentLang = window.location.pathname.split('/')[1];
-      window.location.href = `/${currentLang}/game/end?winner=${encodeURIComponent(winner)}`;
+      const url = "/" + appState.getStateByKey("language") + "/game/end?winner=" + encodeURIComponent(winner);
+      loadPage(url, gameFinishEventHandlers);
     }
   }
 }
@@ -374,8 +374,15 @@ function getCurrentTimestamp() {
   const hours = String(now.getHours()).padStart(2, "0");
   const minutes = String(now.getMinutes()).padStart(2, "0");
   const seconds = String(now.getSeconds()).padStart(2, "0");
+  const milliseconds = String(now.getMilliseconds()).padStart(3, "0");
 
-  return `${year}/${month}/${day} ${hours}:${minutes}:${seconds}`;
+  // タイムゾーンのオフセットを計算（分単位）
+  const tzOffset = -now.getTimezoneOffset();
+  const tzOffsetHours = String(Math.floor(Math.abs(tzOffset) / 60)).padStart(2, '0');
+  const tzOffsetMinutes = String(Math.abs(tzOffset) % 60).padStart(2, '0');
+  const tzSign = tzOffset >= 0 ? '+' : '-';
+
+  return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}.${milliseconds}${tzSign}${tzOffsetHours}:${tzOffsetMinutes}`;
 }
 
 let leftScore = 0;
@@ -423,7 +430,7 @@ function checkGameOver() {
   if (leftScore === 2 || rightScore === 2) {
     // ゲームを終了し、勝者を表示
     const winner = leftScore === 2 ? currentMatch.leftParticipant : currentMatch.rightParticipant;
-    showGameOverMessage(winner);
+    // showGameOverMessage(winner);
 
     // ゲームを一時停止する
     isPaused = true;
@@ -433,10 +440,8 @@ function checkGameOver() {
     // 試合データを更新
     updateMatchData(winner);
 
-    // 1秒後にモーダルを自動で開く
-    setTimeout(() => {
-      openModal();
-    }, 1000);
+    // モーダルを自動で開く
+    openModal();
   }
 }
 
@@ -465,6 +470,8 @@ let isPaused = true; // ゲーム開始前は一時停止状態にする
 
 function togglePause() {
   const pauseButton = document.getElementById("pause-button");
+  // console.log("tournamentName: ", getTournamentName())
+  console.log("appState at game finish:", appState.getState());
   isPaused = !isPaused;
   let label = ""
   const language = appState.getStateByKey("language");
@@ -533,15 +540,14 @@ window.addEventListener("resize", onWindowResize);
 
 // デバッグ
 // デバッグ用: ボールの位置を確認
-console.log("Ball position:", ball.position);
+// console.log("Ball position:", ball.position);
 
 // デバッグ用: パドルの位置を確認
-console.log("Left paddle position:", leftPaddle.position);
-console.log("Right paddle position:", rightPaddle.position);
+// console.log("Left paddle position:", leftPaddle.position);
+// console.log("Right paddle position:", rightPaddle.position);
 
 // デバッグ用: ゴールの位置を確認
-console.log("Left goal position:", leftGoal.position);
-console.log("Right goal position:", rightGoal.position);
+// console.log("Left goal position:", leftGoal.position);
 
 function initPong() {
   document.addEventListener("DOMContentLoaded", () => {

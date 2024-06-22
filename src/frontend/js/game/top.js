@@ -3,6 +3,7 @@ function topEventHandlers() {
   const dashboardButton = document.getElementById("dashboardButton");
   const helpButton = document.getElementById("helpButton");
   const helpModal = document.getElementById("helpModal");
+  const gameFinishButton = document.getElementById("gameFinishButton");
 
   if (startButton) {
     startButton.addEventListener("click", () => {
@@ -15,6 +16,13 @@ function topEventHandlers() {
     dashboardButton.addEventListener("click", () => {
       const url = "/" + appState.getStateByKey("language") + "/dashboard";
       loadPage(url, dashboardEventHandlers);
+    });
+  }
+
+  if (gameFinishButton) {
+    gameFinishButton.addEventListener("click", () => {
+      const url = "/" + appState.getStateByKey("language") + "/game/end";
+      loadPage(url, gameFinishEventHandlers);
     });
   }
 

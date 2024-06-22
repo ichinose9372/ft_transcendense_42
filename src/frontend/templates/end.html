@@ -8,7 +8,10 @@
     <h2 id="winner-name" class="text-center" style="text-align: center; margin-top: 20px;"></h2>
   </div>
 
-  <button id="gameFinishButton" class="btn btn-primary" style="margin-top: 20px; padding: 10px 20px; font-size: 18px; color: #fff; background-color: #555; border: none; border-radius: 5px; cursor: pointer;">{% blocktranslate %}End Tournament{% endblocktranslate %}</button>
+  <!-- <button type="button" class="btn btn-primary" id="gameFinishButton"  style="margin-top: 20px; padding: 10px 20px; font-size: 18px; color: #fff; background-color: #555; border: none; border-radius: 5px; cursor: pointer;">{% blocktranslate %}End Tournament{% endblocktranslate %}</button> -->
+  <button type="button" class="btn btn-primary" id="gameFinishButton">
+    {% blocktranslate %}End Tournament{% endblocktranslate %}
+  </button>
 </div>
 <script src="{% static 'js/end.js' %}"></script>
 {% endblock %}

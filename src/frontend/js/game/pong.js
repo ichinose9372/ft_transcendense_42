@@ -357,6 +357,8 @@ function updateMatchData(winner) {
       });
 
       appState.setState({ matches: updatedMatchesWithParent });
+      // モーダルを自動で開く
+      openModal();
     } else {
       appState.setState({ matches: updatedMatches });
       const currentLang = window.location.pathname.split('/')[1];
@@ -430,7 +432,6 @@ function checkGameOver() {
   if (leftScore === 2 || rightScore === 2) {
     // ゲームを終了し、勝者を表示
     const winner = leftScore === 2 ? currentMatch.leftParticipant : currentMatch.rightParticipant;
-    // showGameOverMessage(winner);
 
     // ゲームを一時停止する
     isPaused = true;
@@ -439,9 +440,6 @@ function checkGameOver() {
 
     // 試合データを更新
     updateMatchData(winner);
-
-    // モーダルを自動で開く
-    openModal();
   }
 }
 

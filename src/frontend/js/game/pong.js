@@ -28,14 +28,6 @@ function pongEventHandlers() {
       document.body.classList.remove("modal-open");
     });
   }
-  // TODO : モーダルテスト用→ボタンではなく試合の流れに合わせて表示するようにする
-  // const modalTestButton = document.getElementById("modalTestButton");
-  // if (modalTestButton) {
-  //   modalTestButton.addEventListener("click", () => {
-  //     // TODO : この関数を適切な位置で呼び出せば良い
-  //     openModal();
-  //   });
-  // }
 
   // pongの画面上でリロードした場合、トップページにリダイレクト
   if (gameContainer) {
@@ -319,7 +311,7 @@ function initParticipantText() {
 function updateMatchData(winner) {
   if (currentMatch) {
     const matches = appState.getStateByKey("matches");
-    console.log("appState at game now", appState.getState());
+    // console.log("appState at game now", appState.getState());
     const updatedMatches = matches.map((match) => {
       if (match.matchId === currentMatch.matchId) {
         return {
@@ -469,7 +461,7 @@ let isPaused = true; // ゲーム開始前は一時停止状態にする
 function togglePause() {
   const pauseButton = document.getElementById("pause-button");
   // console.log("tournamentName: ", getTournamentName())
-  console.log("appState at game finish:", appState.getState());
+  // console.log("appState at game finish:", appState.getState());
   isPaused = !isPaused;
   let label = ""
   const language = appState.getStateByKey("language");
@@ -520,7 +512,7 @@ animate();
 // ゲーム終了時に matches をローカルストレージに保存
 function saveMatchesToStorage() {
   const matches = appState.getStateByKey("matches");
-  console.log("pong.js end -> matches: ", matches)
+  // console.log("pong.js end -> matches: ", matches)
   localStorage.setItem("savedMatches", JSON.stringify(matches));
 }
 

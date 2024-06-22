@@ -75,7 +75,7 @@ function startGame() {
     matches: info.matches,
     participants: info.participants,
   });
-  appState.printState();
+  // appState.printState();
   myModal = new bootstrap.Modal(document.getElementById("tournamentModal"), {
     keyboard: false,
   });

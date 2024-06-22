@@ -19,14 +19,18 @@ function handleGameFinish() {
     // const savedMatches = JSON.parse(localStorage.getItem("savedMatches"));
     const matches = appState.getStateByKey("matches");
     // console.log("savedMatches: ", savedMatches);
-    console.log("appState at game finish:", appState.getState());
-    console.log("matches: ", matches);
+    // console.log("appState at game finish:", appState.getState());
+    // console.log("matches: ", matches);
     const tournamentData = appState.getStateByKey("tournament");
+    if (!tournamentData) {
+        console.log("No tournament data found");
+        return;
+    }
     const tournament = {
         tournamentId: tournamentData.tournamentId,
         name: tournamentData.tournamentName
     };
-    console.log("tournament: ", tournament);
+    // console.log("tournament: ", tournament);
     const scores = matches.flatMap(match => ([
         {
             matchId: match.matchId,
@@ -39,12 +43,12 @@ function handleGameFinish() {
             participantName: match.rightParticipant
         }
     ]));
-    console.log("scores: ", scores);
+    // console.log("scores: ", scores);
     const url = new URL(
         "/" + appState.getStateByKey("language") + "/gamefinish/",
         window.location.origin
       );
-    console.log("url: ", url);
+    // console.log("url: ", url);
     fetch(url, {
         method: "POST",
         headers: {
@@ -54,15 +58,15 @@ function handleGameFinish() {
         body: JSON.stringify({scores: scores, tournament: tournament, matches: matches}),
     })
     .then(response => {
-        console.log("response: ", response);
+        // console.log("response: ", response);
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
         return response.json();
     })
     .then(data => {
-        console.log('Success:', data);
-        window.location.href = "/" + appState.getStateByKey("language");
+        // console.log('Success:', data);
+        loadPage('/' + appState.getStateByKey("language"), topEventHandlers);
     })
     .catch((error) => {
         console.error('Error:', error);
@@ -77,6 +81,5 @@ function initGameFinish() {
       gameFinishEventHandlers();
     });
   }
-  
+
   initGameFinish();
-  

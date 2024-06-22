@@ -53,6 +53,20 @@ function dashboardEventHandlers() {
         })
         .then((data) => {
           const achievements = data.achievements;
+          if (achievements.length === 0) {
+            const lang = appState.getStateByKey("language");
+            let message = "No Data";
+            if (lang === "ja") {
+              message = "データがありません。";
+            } else if (lang === "fr") {
+              message = "Pas de données";
+            }
+            document.getElementById("name-achievements").innerText = message;
+            if (chartInstance) {
+              chartInstance.destroy();
+            }
+            return ;
+          }
           const scores = achievements.map((achievement) => achievement.score);
 
           // getAchievements関数にscoresを追加して仮のデータとして取得する時
@@ -97,7 +111,8 @@ function drawChart(scores) {
   const scoreCounts = Array(12).fill(0);
   let winRatePercentage = 0;
   if (scores.length > 0) {
-    const winRate = scores.filter((score) => score === 11).length / scores.length;
+    const winRate =
+      scores.filter((score) => score === 11).length / scores.length;
     winRatePercentage = Math.round(winRate * 100);
   }
   scores.forEach((score) => {

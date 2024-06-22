@@ -1,5 +1,6 @@
 {% extends 'index.html' %} {% block content %}
 {% load i18n %}
+{% load static %}
 <div id="game-over-message"></div>
 
 <div class="content-wrapper" style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100vh;">
@@ -7,21 +8,10 @@
     <h2 id="winner-name" class="text-center" style="text-align: center; margin-top: 20px;"></h2>
   </div>
 
-  <button id="end-tournament-button" class="btn btn-primary" style="margin-top: 20px; padding: 10px 20px; font-size: 18px; color: #fff; background-color: #555; border: none; border-radius: 5px; cursor: pointer;">{% blocktranslate %}End Tournament{% endblocktranslate %}</button>
+  <!-- <button type="button" class="btn btn-primary" id="gameFinishButton"  style="margin-top: 20px; padding: 10px 20px; font-size: 18px; color: #fff; background-color: #555; border: none; border-radius: 5px; cursor: pointer;">{% blocktranslate %}End Tournament{% endblocktranslate %}</button> -->
+  <button type="button" class="btn btn-primary" id="gameFinishButton">
+    {% blocktranslate %}End Tournament{% endblocktranslate %}
+  </button>
 </div>
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const winner = urlParams.get('winner');
-    if (winner) {
-      document.getElementById('winner-name').textContent = `🎉 ${winner} 🎉`;
-    }
-  });
-</script>
-
-<script>
-  document.getElementById('end-tournament-button').addEventListener('click', function() {
-    window.location.href = '/';
-  });
-</script>
-  {% endblock %}
+<script src="{% static 'js/end.js' %}"></script>
+{% endblock %}

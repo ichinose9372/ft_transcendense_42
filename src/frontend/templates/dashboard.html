@@ -1,0 +1,34 @@
+{% extends 'index.html' %} {% block content %}
+
+{% load i18n %}
+
+<div class="container-fluid p-5">
+  <!-- <div class="mb-5 regular archivo-black-regular"><h1>Dashboard</h1></div> -->
+  <div class="row mb-5">
+    <div class="col">
+      <h1 class="regular archivo-black-regular">{% blocktranslate %}Dashboard{% endblocktranslate %}</h1>
+    </div>
+    <div class="col-auto ml-auto">
+      <button class="btn btn-secondary" id="backToTopButton" aria-label="back to top">
+        <i class="bi bi-house-door-fill"></i>{% blocktranslate %}Back to Top{% endblocktranslate %}
+      </button>
+    </div>
+  </div>
+  <div class="input-group mb-3 w-25">
+    <input type="text" name="participant_name" id="participantNameInput" class="form-control"
+      placeholder="{% blocktranslate %}Input user name{% endblocktranslate %}" aria-label="Input user name" />
+    <div class="input-group-append">
+      <button class="btn btn-success" id="getAchievementsButton" aria-label="search">{% blocktranslate %}Search{% endblocktranslate %}</button>
+    </div>
+  </div>
+
+  <div>
+    <h1 id="name-achievements"></h1>
+  </div>
+
+  <div class="mt-5 p-5">
+    <canvas id="chart" width="400" height="400"></canvas>
+  </div>
+</div>
+
+{% endblock %}

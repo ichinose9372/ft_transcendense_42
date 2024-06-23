@@ -1,0 +1,50 @@
+{% extends 'index.html' %} {% block content %}
+{% load i18n %}
+<div id="game-container"></div>
+
+<button id="start-button" aria-label="start game">{% blocktranslate %}Start Game{% endblocktranslate %}</button>
+<button id="pause-button" style="display: none;" aria-label="pause game">{% blocktranslate %}Pause Game{% endblocktranslate %}</button>
+
+<div id="participant-names">
+  <div id="left-participant"></div>
+  <div id="right-participant"></div>
+</div>
+
+<div id="score">
+  <span id="left-score">0</span> - <span id="right-score">0</span>
+</div>
+<div id="game-over-message"></div>
+
+<!-- {% load static %} -->
+<!-- <script src="{% static 'js/game/pong.js' %}"></script> -->
+
+<div
+  class="modal fade"
+  id="tournamentModal"
+  tabindex="-1"
+  aria-labelledby="tournamentNameLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-scrollable modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="tournamentNameLabel"></h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body" id="tournamentModalBody">
+        <div id="tournamentDraw"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="close">
+          {% blocktranslate %}Close{% endblocktranslate %}
+        </button>
+      </div>
+    </div>
+  </div>
+  {% endblock %}
+</div>

@@ -1,0 +1,97 @@
+{% extends "index.html" %} {% block content %}
+
+{% load i18n %}
+
+<style>
+  html,
+  body {
+    height: 100%;
+    margin: 0;
+  }
+
+  .container-fluid {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .row {
+    flex: 1;
+    overflow-y: auto;
+  }
+
+  #startGameButton {
+    width: 200px;
+    height: 50px;
+    margin: 0 auto;
+  }
+</style>
+
+<div class="container-fluid p-2">
+  <div class="row justify-content-center">
+    <div>
+      <h1 class="text-center my-5 regular archivo-black-regular">
+        {% blocktranslate %}Tournament Registration{% endblocktranslate %}
+      </h1>
+    </div>
+    <div>
+      <div class="d-grid col-4 mx-auto mb-5">
+        <input type="text" class="form-control" id="tournamentName"
+          placeholder="{% blocktranslate %}tournament name{% endblocktranslate %}" maxlength="30" />
+      </div>
+    </div>
+    <div class="col-4" id="playerList">
+      <div class="mb-4">
+        <form id="user1" class="input-group">
+          <input type="text" class="form-control" id="name1"
+            placeholder="{% blocktranslate %}player name{% endblocktranslate %}" maxlength="10"
+            oninput="checkStartButtonValid()" />
+        </form>
+      </div>
+      <div class="mb-4">
+        <form id="user2" class="input-group">
+          <input type="text" class="form-control" id="name2"
+            placeholder="{% blocktranslate %}player name{% endblocktranslate %}" maxlength="10"
+            oninput="checkStartButtonValid()" />
+        </form>
+      </div>
+    </div>
+
+    <div class="text-center mb-4">
+      <button id="addPlayer" class="btn btn-secondary" aria-label="add player">
+        <i class="bi bi-person-plus"></i>
+      </button>
+    </div>
+
+    <div class="d-grid gap-2 col-4 mx-auto mt-1">
+      <button type="button" id="startGameButton" class="btn btn-primary" aria-label="make tournament">
+        {% blocktranslate %}Make Tournament{% endblocktranslate %}
+      </button>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="tournamentModal" tabindex="-1" aria-labelledby="tournamentNameLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-scrollable modal-xl">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="tournamentNameLabel"></h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body" id="tournamentModalBody">
+            <div id="tournamentDraw"></div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="close">
+              {% blocktranslate %}Close{% endblocktranslate %}
+            </button>
+            <button type="button" class="btn btn-primary" id="startTournamentButton" aria-label="start">
+              {% blocktranslate %}Start{% endblocktranslate %}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

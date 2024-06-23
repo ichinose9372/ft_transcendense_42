@@ -1,0 +1,79 @@
+{% extends 'index.html' %} {% block content %}
+
+{% load i18n %}
+
+<div class="btn-group position-fixed top-0 end-0 p-3" role="group" aria-label="Basic radio toggle button group">
+  {% get_current_language as LANGUAGE_CODE %}
+  <input type="radio" class="btn-check" name="btnradio" id="btn-en" autocomplete="off" {% if LANGUAGE_CODE == 'en' %}checked{% endif %}>
+  <label class="btn btn-light btnlabel" for="btn-en" tabindex="0" aria-label="en">EN</label>
+
+  <input type="radio" class="btn-check" name="btnradio" id="btn-ja" autocomplete="off" {% if LANGUAGE_CODE == 'ja' %}checked{% endif %}>
+  <label class="btn btn-light btnlabel" for="btn-ja" tabindex="0" aria-label="ja" >JA</label>
+
+  <input type="radio" class="btn-check" name="btnradio" id="btn-fr" autocomplete="off" {% if LANGUAGE_CODE == 'fr' %}checked{% endif %}>
+  <label class="btn btn-light btnlabel" for="btn-fr" tabindex="0" aria-label="fr">FR</label>
+</div>
+
+<div class="btn-group position-fixed top-0 end-1 p-3 text-right">
+      <button id="small-button" class="btn btn-light">{% blocktranslate %}Small{% endblocktranslate %}</button>
+      <button id="medium-button" class="btn btn-light">{% blocktranslate %}Medium{% endblocktranslate %}</button>
+      <button id="large-button" class="btn btn-light">{% blocktranslate %}Large{% endblocktranslate %}</button>
+  </div>
+</div>
+
+
+<div class="container-fluid d-flex flex-column justify-content-center align-items-center min-vh-100">
+  <div class="container">
+    <div class="d-grid gap-4">
+      <div>
+        <h1 class="text-center archivo-black-regular" style="font-size: 5rem" glot-model="pong">
+          {% blocktranslate %}Pong{% endblocktranslate %}
+        </h1>
+      </div>
+      <div class="d-grid gap-4 col-4 mx-auto mt-5">
+        <button id="startButton" class="btn btn-primary" aria-label="start">{% blocktranslate %}Start{% endblocktranslate %}</button>
+        <button id="dashboardButton" class="btn btn-secondary" aria-label="dashboard">
+          {% blocktranslate %}Dashboard{% endblocktranslate %}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<button type="button" class="btn btn-light btn-lg position-fixed bottom-0 m-3 border-0" id="helpButton" aria-label="help">
+  <i class="bi bi-question-circle"></i>
+</button>
+
+<div class="modal fade" id="helpModal" tabindex="-1" aria-labelledby="tournamentNameLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-md modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5">
+          {% blocktranslate %}Rules{% endblocktranslate %}
+        </h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="helpModalBody">
+        <div>
+          <ul>
+            <li>{% blocktranslate %}First to score 11 points wins.{% endblocktranslate %}</li>
+            <li>{% blocktranslate %}Left player: W (up), S (down) to move the paddle.{% endblocktranslate %}</li>
+            <li>{% blocktranslate %}Right player: ↑ (up), ↓ (down) to move the paddle.{% endblocktranslate %}</li>
+          </ul>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="close">
+          {% blocktranslate %}Close{% endblocktranslate %}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const csrf_token = "{{ csrf_token }}"
+  const set_language_url = "{% url 'set_language' %}"
+</script>
+
+{% endblock %}

@@ -1,25 +1,21 @@
 let myModal = null;
 
-function loadModalWithData(data) {
-  document.getElementById("tournamentNameDisplay").textContent =
-    data.tournament.name;
-  const list = document.getElementById("participantList");
-  list.innerHTML = "";
-  data.participants.forEach(function (participant) {
-    const li = document.createElement("li");
-    li.textContent = participant.name;
-    list.appendChild(li);
-  });
-}
-
 function addPlayer() {
   const playerList = document.getElementById("playerList");
   const playerCount = playerList.children.length + 1;
   const newPlayerDiv = document.createElement("div");
+  let playerLabel = "player name";
+  if (appState.getStateByKey("language") === "ja") {
+    playerLabel = "プレイヤー名";
+  } else if (appState.getStateByKey("language") === "en") {
+    playerLabel = "player name";
+  } else if (appState.getStateByKey("language") === "fr") {
+    playerLabel = "nom du joueur";
+  }
   newPlayerDiv.classList.add("mb-4");
   newPlayerDiv.innerHTML = `
 			<form id="user${playerCount}" class="input-group">
-				<input type="text" class="form-control" id="name${playerCount}" placeholder="player name" maxlength="10" oninput="checkStartButtonValid()"/>
+				<input type="text" class="form-control" id="name${playerCount}" placeholder="${playerLabel}" maxlength="10" oninput="checkStartButtonValid()"/>
 				<button type="button" class="btn btn-danger input-group-append" onclick="removePlayer('user${playerCount}')")>
 					<i class="bi bi-trash"></i>
 				</button>
@@ -48,7 +44,7 @@ function getFormData() {
     if (playerName) {
       if (players.includes(playerName)) {
         alert("Player names must be unique.");
-        return;
+        return null;
       }
       players.push(playerName);
     }
@@ -62,26 +58,29 @@ function getFormData() {
     };
   } else {
     alert("Please enter a tournament name and at least two players.");
+    return null;
   }
 }
 
 function startGame() {
-    const data = getFormData();
-    appState.setState(data);
-    const info = makeTournament();
-    // appState.clearState();
-    appState.setState({
-      tournament: info.tournament,
-      matches: info.matches,
-      participants: info.participants,
-    });
-    appState.printState();
-    // TODO ここでモーダルを表示する, モーダル内の描画とデータの渡し方を考える
-    loadModalWithData(data);
-    myModal = new bootstrap.Modal(document.getElementById("tournamentModal"), {
-      keyboard: false,
-    });
-    myModal.show();
+  const data = getFormData();
+  if (data === null) {
+    return;
+  }
+  appState.setState(data);
+  const info = makeTournament();
+  // appState.clearState();
+  appState.setState({
+    tournament: info.tournament,
+    matches: info.matches,
+    participants: info.participants,
+  });
+  // appState.printState();
+  myModal = new bootstrap.Modal(document.getElementById("tournamentModal"), {
+    keyboard: false,
+  });
+  myModal.show();
+  tournamentDraw();
 }
 
 function checkStartButtonValid() {
@@ -119,8 +118,7 @@ function startEventHandlers() {
   const startTournamentButton = document.getElementById(
     "startTournamentButton"
   );
-  // TODO : test不要になったら削除する
-  const testDataButton = document.getElementById("testDataButton");
+
 
   if (startGameButton) {
     startGameButton.addEventListener("click", () => {
@@ -138,18 +136,18 @@ function startEventHandlers() {
 
   if (startTournamentButton) {
     startTournamentButton.addEventListener("click", () => {
-      console.log("start tournament");
+      const url = "/" + appState.getStateByKey("language") + "/game";
+      loadPage(url, pongEventHandlers);
     });
-  }
-
-  // TODO : test不要になったら削除する
-  if (testDataButton) {
-    testDataButton.addEventListener("click", testDataPush);
   }
 
   // modalが閉じるときに背景のmodal-backdropを削除する
   if (tournamentModal) {
     tournamentModal.addEventListener("hidden.bs.modal", function () {
+      const tournamentDraw = document.getElementById("tournamentDraw");
+      if (tournamentDraw) {
+        tournamentDraw.innerHTML = "";
+      }
       const backdrops = document.querySelectorAll(".modal-backdrop");
       backdrops.forEach((backdrop) => backdrop.remove());
 
@@ -167,6 +165,18 @@ function startEventHandlers() {
       }
     });
   });
+
+  // reload時にtopに戻る
+  if (startGameButton) {
+    window.addEventListener('load', () => {
+      const perfEntries = performance.getEntriesByType("navigation");
+      const isReload = perfEntries[0].type === 'reload';
+      if (isReload) {
+        const lang = appState.getStateByKey("language");
+        window.location.href = '/' + lang + '/';
+      }
+    });
+  }
 
   checkStartButtonValid();
 }

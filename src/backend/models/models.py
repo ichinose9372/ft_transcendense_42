@@ -3,6 +3,7 @@ import uuid
 
 # Create your models here.
 class Tournament(models.Model):
+    app_label = 'backend'
     tournament_name = models.CharField(max_length=100)
     tournament_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
 
@@ -10,15 +11,17 @@ class Tournament(models.Model):
         return f"{self.tournament_name} ({self.tournament_id})"
 
 class Match(models.Model):
+    app_label = 'backend'
     match_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    finished_time_stamp = models.DateTimeField(auto_now_add=True)
+    finished_time_stamp = models.DateTimeField()
     parent_match = models.ForeignKey('self', on_delete=models.CASCADE, null=True)
-    tournament = models.ForeignKey(Tournament, on_delete=models.CASCADE) 
+    tournament = models.ForeignKey(Tournament, on_delete=models.CASCADE)
 
     def __str__(self):
         return str(self.match_id)
 
 class Score(models.Model):
+    app_label = 'backend'
     match = models.ForeignKey(Match, on_delete=models.CASCADE) #matchIdが欲しかったらScore.match_id
     score = models.IntegerField()
     participant_name = models.CharField(max_length=100)

@@ -1,0 +1,26 @@
+{
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"name": "Python: Django",
+			"type": "debugpy",
+			"request": "launch",
+			"program": "${workspaceFolder}/src/backend/manage.py",
+			"args": [
+				"runserver",
+				"8080"
+			],
+			"django": true,
+			"justMyCode": true,
+			"preLaunchTask": "migrate"
+		},
+		{
+			"name": "Python Debugger: test",
+			"type": "debugpy",
+			"request": "launch",
+			"program": "${workspaceFolder}/src/backend/manage.py",
+			"console": "integratedTerminal",
+			"args": "test ${command:pickArgs}"
+		}
+	]
+}

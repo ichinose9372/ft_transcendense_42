@@ -1,26 +1,55 @@
-<!-- TODO : ファイル名変えたい+Djangoの形式に合わせたい -->
+{% load i18n %}
+
 <!DOCTYPE html>
-<html lang="ja">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Pong Game</title>
-        <link rel="stylesheet" href="css/style.css"> <!-- CSSファイルの読み込み -->
-    </head>
-    <body>
-        <!-- ユーザー名表示エリア -->
-        <div id="userInfo">
-            <span id="userName1">User1</span>
-            <span id="userName2">User2</span>
-        </div>
+<html lang="en" class="font-medium">
 
-        <div id="gameArea">
-            <canvas id="pongCanvas" width="800" height="400"></canvas>
-        </div>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>Pong</title>
+	<!-- bootstrap -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous" />
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
 
-        <button id="startButton">ゲーム開始</button>
+	<!-- google fonts -->
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+	<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap" rel="stylesheet" />
+	<!-- custom css -->
+	{% load static %}
+	<link rel="stylesheet" href='{% static "css/font.css" %}' />
+	<link rel="stylesheet" href='{% static "css/global.css" %}' />
+	<link rel="stylesheet" href='{% static "css/pong.css" %}' />
+	<!-- favicon reference : https://www.irasutoya.com/2013/06/blog-post_2974.html -->
+	<link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" />
+</head>
 
-        <script src="js/pong.js"></script>
-    </body>
+<body id="app">
+	{% block content %} {% endblock %}
+
+	<!-- dayjs -->
+	<script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
+	<!-- Three.js -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+	<!-- bootstrap -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+		crossorigin="anonymous"></script>
+	<!-- chart.js -->
+	<script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+
+	{% load static %}
+	<script src="{% static 'js/utils/class.js' %}"></script>
+	<script src="{% static 'js/utils/state.js' %}"></script>
+	<script src="{% static 'js/utils/router.js' %}"></script>
+	<script src="{% static 'js/game/start.js' %}"></script>
+	<script src="{% static 'js/game/top.js' %}"></script>
+	<script src="{% static 'js/game/pong.js' %}"></script>
+	<script src="{% static 'js/game/end.js' %}"></script>
+	<script src="{% static 'js/tournament/tournament.js' %}"></script>
+	<script src="{% static 'js/tournament/tournamentDraw.js' %}"></script>
+	<script src="{% static 'js/dashboard/dashboard.js' %}"></script>
+</body>
 
 </html>

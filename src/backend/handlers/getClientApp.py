@@ -6,7 +6,13 @@ from django.shortcuts import render
 
 # snemoto frontendからレンダリング
 def top(request):
-	return render(request, "top.html")
+	return render(request, "templates/top.html")
 
 def start(request):
-	return render(request, "start.html")
+	return render(request, "templates/start.html")
+
+def game(request):
+	return render(request, "templates/game.html")
+
+def end_tournament_view(request):
+	return render(request, "templates/end.html")

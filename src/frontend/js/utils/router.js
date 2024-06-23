@@ -35,12 +35,16 @@ function nonPushLoadPage(url, callback) {
 // ブラウザの戻る/進むボタンが押されたときに発火する関数
 function handlePopState() {
   url = window.location.pathname;
-  if (url === "/") {
+  if (url === "/ja/" || url === "/en/" || url === "/fr/") {
     callback = topEventHandlers;
-  } else if (url === "/start") {
+  } else if (url.includes("/start")){
     callback = startEventHandlers;
-  } else if (url === "/dashboard") {
+  } else if (url.includes("/dashboard")) {
     callback = dashboardEventHandlers;
+  } else if (url.includes("/end")) {
+    callback = gameFinishEventHandlers;
+  } else if (url.includes("/game")) {
+    callback = pongEventHandlers;
   }
   nonPushLoadPage(url, callback);
 }

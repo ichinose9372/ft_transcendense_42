@@ -52,6 +52,8 @@ class Match {
   getWinner() {
     if (this.leftScore > this.rightScore) {
       return this.leftParticipant;
+    } else if (this.leftScore === this.rightScore) {
+      return "";
     } else {
       return this.rightParticipant;
     }
@@ -59,6 +61,8 @@ class Match {
   getLoser() {
     if (this.leftScore < this.rightScore) {
       return this.leftParticipant;
+    } else if (this.leftScore === this.rightScore) {
+      return "";
     } else {
       return this.rightParticipant;
     }

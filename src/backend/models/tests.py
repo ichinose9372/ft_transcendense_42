@@ -10,11 +10,11 @@ from models.models import Tournament, Match, Score
 
 class TopPageTest(TestCase):
 	def test_top_page_returns_200_and_expected_title(self):
-		response = self.client.get("/")
+		response = self.client.get("/en/")
 		self.assertContains(response, "Pong", status_code=200)
 	def test_top_page_uses_expected_template(self):
-		response = self.client.get("/")
-		self.assertTemplateUsed(response, "top.html")
+		response = self.client.get("/en/")
+		self.assertTemplateUsed(response, "templates/top.html")
 
 class PageNotFoundTest(TestCase):
 	def test_returns_404_and_expected_title(self):
@@ -23,13 +23,13 @@ class PageNotFoundTest(TestCase):
 
 	def test_uses_expected_template(self):
 		response = self.client.get("/nosuchapage/")
-		self.assertTemplateUsed(response, "404.html")
+		self.assertTemplateUsed(response, "templates/404.html")
 
 # snemoto for query_paramator
 class getAchievementsTest(TestCase):
 	def test_submit_participant_name(self):
 		participant_name = "Shota Nemoto"
-		response = self.client.get("/dashboard/", {'participant_name': participant_name})
+		response = self.client.get("/en/dashboard/", {'participant_name': participant_name})
 		self.assertContains(response, "getAchievements", status_code=200)
 
 	# def test_uses_expected_template(self):

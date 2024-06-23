@@ -1,20 +1,15 @@
 services:
   elasticsearch:
     image: elasticsearch:8.13.4
-    container_name: elasticsearch
-    environment:
-      discovery.type: single-node
-      ELASTIC_PASSWORD: user42
-      xpack.security.enabled: true
-      xpack.security.http.ssl.enabled: true
-      xpack.security.http.ssl.key: /usr/share/elasticsearch/config/certs/elasticsearch.key
-      xpack.security.http.ssl.certificate: /usr/share/elasticsearch/config/certs/elasticsearch.crt
-      xpack.security.http.ssl.certificate_authorities: "/usr/share/elasticsearch/config/certs/elasticsearch.crt" 
+    container_name: elasticsearch 
     ports:
       - "9200:9200"
-    volumes:
-      - ./ssl:/usr/share/elasticsearch/config/certs
-
+    environment:
+      ELASTIC_PASSWORD: "user42"
+    # volumes:
+    #   - ./ssl:/usr/share/elasticsearch/config/certs
+    # working_dir: /usr/share/elasticsearch/config
+     
   logstash:
     image: logstash:8.13.4
     container_name: logstash
@@ -31,24 +26,24 @@ services:
       xpack.monitoring.elasticsearch.username: elastic
       xpack.monitoring.elasticsearch.password: user42
       xpack.monitoring.elasticsearch.hosts: https://elasticsearch:9200
-      xpack.monitoring.elasticsearch.ssl.certificate_authority: "/etc/logstash/config/certs/elasticsearch.crt"
+      xpack.monitoring.elasticsearch.ssl.certificate_authority: /etc/logstash/config/certs/http_ca.crt
       xpack.monitoring.elasticsearch.ssl.verification_mode: none
 
     healthcheck:
       test: ["CMD-SHELL", "curl -u elastic:user42 -k https://elasticsearch:9200/ || exit 1"]
-      interval: 10s
-      timeout: 30s
+      interval: 5s
+      timeout: 5s
       retries: 5
 
   kibana:
     image: kibana:8.13.4
     container_name: kibana
     environment:
-      ELASTICSEARCH_URL: https://elasticsearch:9200
+      elasticsearch.hosts: "https://elasticsearch:9200"
       server.ssl.enabled: true
-      server.ssl.certificate: /usr/share/kibana/config/certs/elasticsearch.crt
-      server.ssl.key: /usr/share/kibana/config/certs/elasticsearch.crt
-      elasticsearch.ssl.certificateAuthorities: "/usr/share/kibana/config/certs/elasticsearch.crt" 
+      server.ssl.keystore.path: /usr/share/kibana/config/certs/http.p12
+      server.ssl.keystore.password: user42
+      elasticsearch.ssl.certificateAuthorities: /usr/share/kibana/config/certs/http_ca.crt
     ports:
       - "5601:5601"
     depends_on:

@@ -92,3 +92,12 @@ msgstr "ルール"
 
 msgid "End Tournament"
 msgstr "トーナメント終了"
+
+msgid "Small"
+msgstr "小"
+
+msgid "Medium"
+msgstr "中"
+
+msgid "Large"
+msgstr "大"

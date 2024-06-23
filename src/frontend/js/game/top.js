@@ -100,34 +100,31 @@ function topEventHandlers() {
     }
   });
 
-  // function setFontSize(sizeClass) {
-  //   console.log("aaa");
-  //   document.body.classList.remove("font-large", "font-medium", "font-small");
-  //   document.body.classList.add(sizeClass);
-  //   loadPage("/" + appState.getStateByKey("language") + "/", topEventHandlers);
-  // }
+  function setFontSize(sizeClass) {
+    document.querySelector("html").className = sizeClass;
+  }
 
-  // const largeButton = document.getElementById("large-button");
-  // const mediumButton = document.getElementById("medium-button");
-  // const smallButton = document.getElementById("small-button");
+  const largeButton = document.getElementById("large-button");
+  const mediumButton = document.getElementById("medium-button");
+  const smallButton = document.getElementById("small-button");
 
-  // if (largeButton) {
-  //   largeButton.addEventListener("click", () => {
-  //     setFontSize("font-large");
-  //   });
-  // }
+  if (largeButton) {
+    largeButton.addEventListener("click", () => {
+      setFontSize("font-large");
+    });
+  }
 
-  // if (mediumButton) {
-  //   mediumButton.addEventListener("click", () => {
-  //     setFontSize("font-medium");
-  //   });
-  // }
+  if (mediumButton) {
+    mediumButton.addEventListener("click", () => {
+      setFontSize("font-medium");
+    });
+  }
 
-  // if (smallButton) {
-  //   smallButton.addEventListener("click", () => {
-  //     setFontSize("font-small");
-  //   });
-  // }
+  if (smallButton) {
+    smallButton.addEventListener("click", () => {
+      setFontSize("font-small");
+    });
+  }
 }
 
 function initTop() {

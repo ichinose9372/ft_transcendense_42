@@ -21,7 +21,7 @@ services:
     depends_on:
       - elasticsearch
     environment:
-      xpack.monitoring.enabled: true
+      xpack.monitoring.enabled: "true"
       xpack.monitoring.elasticsearch.username: ${ELASTIC_USER}
       xpack.monitoring.elasticsearch.password: ${ELASTIC_PASSWORD}
       xpack.monitoring.elasticsearch.hosts: https://elasticsearch:9200
@@ -41,7 +41,7 @@ services:
     container_name: kibana
     environment:
       elasticsearch.hosts: "https://elasticsearch:9200"
-      server.ssl.enabled: true
+      server.ssl.enabled: "true"
       server.ssl.keystore.path: /usr/share/kibana/config/certs/http.p12
       server.ssl.keystore.password: ${KIBANA_PASSWORD}
       elasticsearch.ssl.certificateAuthorities: /usr/share/kibana/config/certs/http_ca.crt

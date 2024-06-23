@@ -464,9 +464,9 @@ function updateScore() {
 function checkGameOver() {
   const startButton = document.getElementById("start-button");
   const pauseButton = document.getElementById("pause-button");
-  if (leftScore === 2 || rightScore === 2) {
+  if (leftScore === 11 || rightScore === 11) {
     // ゲームを終了し、勝者を表示
-    const winner = leftScore === 2 ? currentMatch.leftParticipant : currentMatch.rightParticipant;
+    const winner = leftScore === 11 ? currentMatch.leftParticipant : currentMatch.rightParticipant;
 
     // ゲームを一時停止する
     isPaused = true;
@@ -556,13 +556,6 @@ function animate() {
 
 // アニメーションループを開始
 animate();
-
-// ゲーム終了時に matches をローカルストレージに保存
-function saveMatchesToStorage() {
-  const matches = appState.getStateByKey("matches");
-  // console.log("pong.js end -> matches: ", matches)
-  localStorage.setItem("savedMatches", JSON.stringify(matches));
-}
 
 function onWindowResize() {
   // カメラのアスペクト比を更新

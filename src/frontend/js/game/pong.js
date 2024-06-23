@@ -1,3 +1,8 @@
+
+// ボールの初期位置と速度
+let ballSpeed = 0.5;
+let ballVelocity = new THREE.Vector3(ballSpeed, ballSpeed, 0);
+
 function pongEventHandlers() {
   const gameContainer = document.getElementById("game-container");
   if (gameContainer) {
@@ -39,6 +44,41 @@ function pongEventHandlers() {
         window.location.href = '/' + lang + '/';
       }
     });
+  }
+    if (gameContainer) {
+      // スピードモード切替チェックボックスの作成と初期設定
+      const speedCheckbox = document.createElement("input");
+      speedCheckbox.type = "checkbox";
+      speedCheckbox.id = "speed-checkbox";
+      speedCheckbox.style.position = "absolute"; // チェックボックスを絶対位置で配置
+      speedCheckbox.style.top = "10px"; // 上から10pxの位置
+      speedCheckbox.style.right = "10px"; // 右から10pxの位置
+      speedCheckbox.addEventListener("change", toggleSpeedMode);
+      document.body.appendChild(speedCheckbox); // bodyに直接追加
+  
+      // ラベル "Speed" の追加
+      const labelForSpeed = document.createElement("label");
+      labelForSpeed.htmlFor = "speed-checkbox";
+      labelForSpeed.textContent = "Speed";
+      labelForSpeed.style.position = "absolute";
+      labelForSpeed.style.top = "10px"; // 上から10pxの位置
+      labelForSpeed.style.right = "50px"; // チェックボックスの左に配置
+      labelForSpeed.style.color = "white"; // ラベルの色を白に設定
+      document.body.appendChild(labelForSpeed);
+
+      // 初期状態でチェックボックスの状態を設定
+      speedCheckbox.checked = false; // 初期状態では速度0.5、チェックはオフ
+      toggleSpeedMode(); // 初期状態で速度設定を適用
+    }
+}
+
+// スピードモードの切替機能
+function toggleSpeedMode() {
+  const speedCheckbox = document.getElementById("speed-checkbox");
+  if (speedCheckbox.checked) {
+    ballVelocity.set((ballVelocity.x > 0 ? 1 : -1) * 0.8, (ballVelocity.y > 0 ? 1 : -1) * 0.8, 0); // 速度を1に設定
+  } else {
+    ballVelocity.set((ballVelocity.x > 0 ? 1 : -1) * 0.5, (ballVelocity.y > 0 ? 1 : -1) * 0.5, 0); // 速度を0.5に設定
   }
 }
 
@@ -165,11 +205,14 @@ const dashedLine = new THREE.Mesh(dashedLineGeometry, dashedLineMaterial);
 dashedLine.position.set(0, 0, 0);
 scene.add(dashedLine);
 
-// ボールの初期位置と速度
-const ballSpeed = 0.5;
-const ballVelocity = new THREE.Vector3(ballSpeed, ballSpeed, 0);
-
 function updateBall() {
+    // チェックボックスの状態を確認して速度を設定
+    const speedCheckbox = document.getElementById("speed-checkbox");
+    if (speedCheckbox && speedCheckbox.checked) {
+      ballVelocity.set((ballVelocity.x > 0 ? 1 : -1) * 0.8, (ballVelocity.y > 0 ? 1 : -1) * 0.8, 0); // 速度を1に設定
+    } else {
+      ballVelocity.set((ballVelocity.x > 0 ? 1 : -1) * 0.5, (ballVelocity.y > 0 ? 1 : -1) * 0.5, 0); // 速度を0.5に設定
+    }
   // ボールの位置を速度に基づいて更新
   ball.position.add(ballVelocity);
 

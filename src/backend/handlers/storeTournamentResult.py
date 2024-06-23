@@ -79,19 +79,9 @@ def storeTournamentResult(request):
             )
 
         scores_data_tuples = list(map(lambda x: [x['matchId'], x['participantName'], x['score']], scores_data))
-
-        print(add_scores(scores_data_tuples))
-        # print(add_scores(scores_data))
-        # print(add_score(scores_data[0]['matchId'], scores_data[0]['participantName'], scores_data[0]['score']))
+        add_scores(scores_data_tuples)
 
         return JsonResponse({'status': 'success', 'message': 'Tournament results stored successfully'})
 
     except Exception as e:
         return JsonResponse({'status': 'error', 'message': str(e)})
-
-# from django.dispatch import receiver
-# from django.db.models.signals import post_save
-# from handlers.models import TournamentResult
-
-# @receiver(post_save, sender=TournamentResult)
-# def handle_tournament_result(tournament, matches, scores):

@@ -179,7 +179,6 @@ def add_scores(scores):
         tx_hash = w3.eth.send_raw_transaction(signed_tx.rawTransaction)
         return tx_hash.hex()
     except Exception as e:
-        print(f"An error occurred: {e}")
         return None
 
 def get_score(index):

@@ -439,7 +439,7 @@ function startPong() {
   const tournamentData = appState.getStateByKey("tournament");
   if (!tournamentData) {
     loadPage("/" + appState.getStateByKey("language") + "/", topEventHandlers);
-    return ;
+    return;
   }
   const startButton = document.getElementById("start-button");
   const pauseButton = document.getElementById("pause-button");

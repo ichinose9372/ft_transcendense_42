@@ -1,11 +1,14 @@
+# expose:コンテナ間通信用のポート公開,ホストマシンには公開しない
+# ports:ホストマシンに公開するポートを指定,ホストマシンからアクセス可
+
 services:
   db:
     build: src/db
     env_file:
       - .env
     restart: always
-    ports:
-      - "5432:5432"
+    expose:
+      - "5432"
     healthcheck:
       test:
         [
@@ -21,7 +24,7 @@ services:
       dockerfile: src/backend/Dockerfile
     restart: always
     ports:
-      - "8000:8000"
+      - "443:443"
     env_file:
       - .env
     depends_on:

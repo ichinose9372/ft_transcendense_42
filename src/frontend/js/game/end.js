@@ -23,7 +23,7 @@ function handleGameFinish() {
     // console.log("matches: ", matches);
     const tournamentData = appState.getStateByKey("tournament");
     if (!tournamentData) {
-        console.log("No tournament data found");
+        loadPage('/' + appState.getStateByKey("language"), topEventHandlers);
         return;
     }
     const tournament = {

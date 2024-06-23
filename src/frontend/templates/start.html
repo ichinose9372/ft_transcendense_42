@@ -30,13 +30,13 @@
     </div>
 
     <div class="text-center mb-4">
-      <button id="addPlayer" class="btn btn-secondary">
+      <button id="addPlayer" class="btn btn-secondary" aria-label="add player">
         <i class="bi bi-person-plus"></i>
       </button>
     </div>
 
     <div class="d-grid gap-4 col-4 mx-auto mt-5">
-      <button type="button" id="startGameButton" class="btn btn-primary">
+      <button type="button" id="startGameButton" class="btn btn-primary" aria-label="make tournament">
         {% blocktranslate %}Make Tournament{% endblocktranslate %}
       </button>
     </div>
@@ -53,10 +53,10 @@
             <div id="tournamentDraw"></div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="close">
               {% blocktranslate %}Close{% endblocktranslate %}
             </button>
-            <button type="button" class="btn btn-primary" id="startTournamentButton">
+            <button type="button" class="btn btn-primary" id="startTournamentButton" aria-label="start">
               {% blocktranslate %}Start{% endblocktranslate %}
             </button>
           </div>

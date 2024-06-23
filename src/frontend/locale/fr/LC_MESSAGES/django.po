@@ -88,3 +88,12 @@ msgstr "Règles"
 
 msgid "End Tournament"
 msgstr "Fin du tournoi"
+
+msgid "Small"
+msgstr "Petit"
+
+msgid "Medium"
+msgstr "Moyen"
+
+msgid "Large"
+msgstr "Grand"

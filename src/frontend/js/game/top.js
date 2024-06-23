@@ -28,9 +28,12 @@ function topEventHandlers() {
 
   if (helpButton) {
     helpButton.addEventListener("click", () => {
-      let ruleModal = new bootstrap.Modal(document.getElementById("helpModal"), {
-        keyboard: false,
-      });
+      let ruleModal = new bootstrap.Modal(
+        document.getElementById("helpModal"),
+        {
+          keyboard: false,
+        }
+      );
       ruleModal.show();
     });
   }
@@ -49,6 +52,14 @@ function topEventHandlers() {
     });
   }
 
+  document.querySelectorAll('.btnlabel').forEach((elem) => {
+    elem.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        elem.click();
+      }
+    })
+  });
+
   document.querySelectorAll('input[name="btnradio"]').forEach((elem) => {
     elem.addEventListener("change", (event) => {
       if (event.target.checked) {
@@ -66,7 +77,7 @@ function topEventHandlers() {
           .then((response) => {
             if (response.ok) {
               appState.setState({ language: selectedLanguage });
-              loadPage('/' + selectedLanguage + '/', topEventHandlers)
+              loadPage("/" + selectedLanguage + "/", topEventHandlers);
               return {
                 status: response.status,
                 statusText: response.statusText,
@@ -76,19 +87,44 @@ function topEventHandlers() {
           .catch((error) => {
             console.error(error);
           });
-
       }
     });
   });
 
-  window.addEventListener('load', () => {
+  window.addEventListener("load", () => {
     const perfEntries = performance.getEntriesByType("navigation");
-    const isReload = perfEntries[0].type === 'reload';
+    const isReload = perfEntries[0].type === "reload";
     if (isReload) {
       const lang = appState.getStateByKey("language");
-      window.location.href = '/' + lang + '/';
+      window.location.href = "/" + lang + "/";
     }
   });
+
+  function setFontSize(sizeClass) {
+    document.querySelector("html").className = sizeClass;
+  }
+
+  const largeButton = document.getElementById("large-button");
+  const mediumButton = document.getElementById("medium-button");
+  const smallButton = document.getElementById("small-button");
+
+  if (largeButton) {
+    largeButton.addEventListener("click", () => {
+      setFontSize("font-large");
+    });
+  }
+
+  if (mediumButton) {
+    mediumButton.addEventListener("click", () => {
+      setFontSize("font-medium");
+    });
+  }
+
+  if (smallButton) {
+    smallButton.addEventListener("click", () => {
+      setFontSize("font-small");
+    });
+  }
 }
 
 function initTop() {

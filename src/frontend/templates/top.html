@@ -5,14 +5,22 @@
 <div class="btn-group position-fixed top-0 end-0 p-3" role="group" aria-label="Basic radio toggle button group">
   {% get_current_language as LANGUAGE_CODE %}
   <input type="radio" class="btn-check" name="btnradio" id="btn-en" autocomplete="off" {% if LANGUAGE_CODE == 'en' %}checked{% endif %}>
-  <label class="btn btn-light" for="btn-en">EN</label>
+  <label class="btn btn-light btnlabel" for="btn-en" tabindex="0" aria-label="en">EN</label>
 
   <input type="radio" class="btn-check" name="btnradio" id="btn-ja" autocomplete="off" {% if LANGUAGE_CODE == 'ja' %}checked{% endif %}>
-  <label class="btn btn-light" for="btn-ja">JA</label>
+  <label class="btn btn-light btnlabel" for="btn-ja" tabindex="0" aria-label="ja" >JA</label>
 
   <input type="radio" class="btn-check" name="btnradio" id="btn-fr" autocomplete="off" {% if LANGUAGE_CODE == 'fr' %}checked{% endif %}>
-  <label class="btn btn-light" for="btn-fr">FR</label>
+  <label class="btn btn-light btnlabel" for="btn-fr" tabindex="0" aria-label="fr">FR</label>
 </div>
+
+<div class="btn-group position-fixed top-0 end-1 p-3 text-right">
+      <button id="small-button" class="btn btn-light">{% blocktranslate %}Small{% endblocktranslate %}</button>
+      <button id="medium-button" class="btn btn-light">{% blocktranslate %}Medium{% endblocktranslate %}</button>
+      <button id="large-button" class="btn btn-light">{% blocktranslate %}Large{% endblocktranslate %}</button>
+  </div>
+</div>
+
 
 <div class="container-fluid d-flex flex-column justify-content-center align-items-center min-vh-100">
   <div class="container">
@@ -23,8 +31,8 @@
         </h1>
       </div>
       <div class="d-grid gap-4 col-4 mx-auto mt-5">
-        <button id="startButton" class="btn btn-primary">{% blocktranslate %}Start{% endblocktranslate %}</button>
-        <button id="dashboardButton" class="btn btn-secondary">
+        <button id="startButton" class="btn btn-primary" aria-label="start">{% blocktranslate %}Start{% endblocktranslate %}</button>
+        <button id="dashboardButton" class="btn btn-secondary" aria-label="dashboard">
           {% blocktranslate %}Dashboard{% endblocktranslate %}
         </button>
       </div>
@@ -32,7 +40,7 @@
   </div>
 </div>
 
-<button type="button" class="btn btn-light btn-lg position-fixed bottom-0 m-3 border-0" id="helpButton">
+<button type="button" class="btn btn-light btn-lg position-fixed bottom-0 m-3 border-0" id="helpButton" aria-label="help">
   <i class="bi bi-question-circle"></i>
 </button>
 
@@ -55,7 +63,7 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="close">
           {% blocktranslate %}Close{% endblocktranslate %}
         </button>
       </div>

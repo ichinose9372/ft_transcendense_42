@@ -40,6 +40,3 @@ curl -X PUT "http://localhost:9200/logstash-000001" -H 'Content-Type: applicatio
   }
 }
 '
-
-# Elasticsearchをバックグラウンドで起動
-exec /usr/local/bin/docker-entrypoint.sh elasticsearch

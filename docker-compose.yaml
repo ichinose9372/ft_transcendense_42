@@ -4,35 +4,33 @@ services:
     container_name: elasticsearch 
     ports:
       - "9200:9200"
-    environment:
-      ELASTIC_PASSWORD: "user42"
-    # volumes:
-    #   - ./ssl:/usr/share/elasticsearch/config/certs
-    # working_dir: /usr/share/elasticsearch/config
+    env_file:
+      - .env
      
   logstash:
     image: logstash:8.13.4
     container_name: logstash
     ports:
-      - "12201:12201/udp"
       - "5044:5044"
     volumes:
-      - ./pipeline:/usr/share/logstash/pipeline
+      - ./src/elk/pipeline:/usr/share/logstash/pipeline
       - ./ssl:/etc/logstash/config/certs
     depends_on:
       - elasticsearch
     environment:
       xpack.monitoring.enabled: true
-      xpack.monitoring.elasticsearch.username: elastic
-      xpack.monitoring.elasticsearch.password: user42
+      xpack.monitoring.elasticsearch.username: ${ELASTIC_USER}
+      xpack.monitoring.elasticsearch.password: ${ELASTIC_PASSWORD}
       xpack.monitoring.elasticsearch.hosts: https://elasticsearch:9200
       xpack.monitoring.elasticsearch.ssl.certificate_authority: /etc/logstash/config/certs/http_ca.crt
       xpack.monitoring.elasticsearch.ssl.verification_mode: none
+    env_file:
+      - .env
 
     healthcheck:
       test: ["CMD-SHELL", "curl -u elastic:user42 -k https://elasticsearch:9200/ || exit 1"]
       interval: 5s
-      timeout: 5s
+      timeout: 2s
       retries: 5
 
   kibana:
@@ -42,7 +40,7 @@ services:
       elasticsearch.hosts: "https://elasticsearch:9200"
       server.ssl.enabled: true
       server.ssl.keystore.path: /usr/share/kibana/config/certs/http.p12
-      server.ssl.keystore.password: user42
+      server.ssl.keystore.password: ${KIBANA_PASSWORD}
       elasticsearch.ssl.certificateAuthorities: /usr/share/kibana/config/certs/http_ca.crt
     ports:
       - "5601:5601"
@@ -50,6 +48,8 @@ services:
       - elasticsearch
     volumes:
       - ./ssl:/usr/share/kibana/config/certs
+    env_file:
+      - .env
 
   db:
     build: src/db
@@ -105,4 +105,4 @@ services:
       - elasticsearch
     entrypoint: /usr/share/elasticsearch/config/init-es.sh
     volumes:
-      - ./init-es.sh:/usr/share/elasticsearch/config/init-es.sh
+      - ./src/elk/init-es.sh:/usr/share/elasticsearch/config/init-es.sh

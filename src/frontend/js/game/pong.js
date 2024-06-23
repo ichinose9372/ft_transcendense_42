@@ -436,6 +436,11 @@ function checkGameOver() {
 }
 
 function startPong() {
+  const tournamentData = appState.getStateByKey("tournament");
+  if (!tournamentData) {
+    loadPage("/" + appState.getStateByKey("language") + "/", topEventHandlers);
+    return ;
+  }
   const startButton = document.getElementById("start-button");
   const pauseButton = document.getElementById("pause-button");
   const gameOverMessage = document.getElementById("game-over-message");

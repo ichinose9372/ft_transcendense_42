@@ -9,7 +9,7 @@ from models.models import Tournament, Match, Score
 import json
 from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import csrf_exempt
-from handlers.storeTournamentResultToBlockchain import add_score, add_scores
+from handlers.storeTournamentResultToBlockchain import add_scores
 
 @csrf_exempt
 @require_http_methods(["POST"])
